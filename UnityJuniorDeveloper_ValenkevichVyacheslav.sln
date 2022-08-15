@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strings", "UnityJuniorDevel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictures", "Pictures\Pictures.csproj", "{2346508F-CB37-42D2-820B-9AE83E35287F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwappingValues", "SwappingValues\SwappingValues.csproj", "{BD9257B0-6086-451C-9490-99C51071AD2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2346508F-CB37-42D2-820B-9AE83E35287F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2346508F-CB37-42D2-820B-9AE83E35287F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2346508F-CB37-42D2-820B-9AE83E35287F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD9257B0-6086-451C-9490-99C51071AD2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9257B0-6086-451C-9490-99C51071AD2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9257B0-6086-451C-9490-99C51071AD2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9257B0-6086-451C-9490-99C51071AD2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
