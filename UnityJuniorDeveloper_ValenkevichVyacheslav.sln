@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityJuniorDeveloper_ValenkevichVyacheslav", "UnityJuniorDeveloper_ValenkevichVyacheslav\UnityJuniorDeveloper_ValenkevichVyacheslav.csproj", "{9460334C-5833-4790-8C9E-40505B1CBFCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strings", "UnityJuniorDeveloper_ValenkevichVyacheslav\Strings.csproj", "{9460334C-5833-4790-8C9E-40505B1CBFCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictures", "Pictures\Pictures.csproj", "{2346508F-CB37-42D2-820B-9AE83E35287F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9460334C-5833-4790-8C9E-40505B1CBFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9460334C-5833-4790-8C9E-40505B1CBFCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9460334C-5833-4790-8C9E-40505B1CBFCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2346508F-CB37-42D2-820B-9AE83E35287F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2346508F-CB37-42D2-820B-9AE83E35287F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2346508F-CB37-42D2-820B-9AE83E35287F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2346508F-CB37-42D2-820B-9AE83E35287F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
