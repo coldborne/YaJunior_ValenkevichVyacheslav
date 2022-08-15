@@ -7,13 +7,13 @@ namespace Pictures
         static void Main(string[] args)
         {
             int picturesCount = 52;
-            int picturesInRow = 3;
+            int picturesInRowCount = 3;
 
-            int filledRows = picturesCount / picturesInRow;
-            int picturesInIncompleteRow = picturesCount % picturesInRow;
+            int filledRowsCount = picturesCount / picturesInRowCount;
+            int picturesInIncompleteRow = picturesCount % picturesInRowCount;
 
             Console.WriteLine("Количество заполненных рядов");
-            Console.WriteLine(filledRows);
+            Console.WriteLine(filledRowsCount);
 
             Console.WriteLine("Количество картинок в незаполненном ряду");
             Console.WriteLine(picturesInIncompleteRow);
