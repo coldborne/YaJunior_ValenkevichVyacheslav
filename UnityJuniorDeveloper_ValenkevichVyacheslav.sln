@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pictures", "Pictures\Pictur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwappingValues", "SwappingValues\SwappingValues.csproj", "{BD9257B0-6086-451C-9490-99C51071AD2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalShop", "CrystalShop\CrystalShop.csproj", "{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BD9257B0-6086-451C-9490-99C51071AD2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD9257B0-6086-451C-9490-99C51071AD2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD9257B0-6086-451C-9490-99C51071AD2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
