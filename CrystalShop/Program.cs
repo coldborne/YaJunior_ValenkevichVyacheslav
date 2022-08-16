@@ -18,7 +18,7 @@ namespace CrystalShop
             }
 
             crystalAmount = goldAmount / goldForOneCrystal;
-            goldAmount -= crystalAmount * goldForOneCrystal;
+            goldAmount %= goldForOneCrystal;
 
             Console.WriteLine($"Куплено кристаллов - {crystalAmount}\nУ Вас осталось золота - {goldAmount}");
         }
