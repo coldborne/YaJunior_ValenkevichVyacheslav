@@ -21,7 +21,6 @@ namespace CrystalShop
             goldAmount -= crystalAmount * goldForOneCrystal;
 
             Console.WriteLine($"Куплено кристаллов - {crystalAmount}\nУ Вас осталось золота - {goldAmount}");
-
         }
     }
 }
