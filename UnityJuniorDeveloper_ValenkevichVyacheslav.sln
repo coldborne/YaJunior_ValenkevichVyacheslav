@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwappingValues", "SwappingV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalShop", "CrystalShop\CrystalShop.csproj", "{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueAtClinic", "QueueAtClinic\QueueAtClinic.csproj", "{F53B45D7-1F02-4449-8415-416F22AFE324}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F53B45D7-1F02-4449-8415-416F22AFE324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F53B45D7-1F02-4449-8415-416F22AFE324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F53B45D7-1F02-4449-8415-416F22AFE324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F53B45D7-1F02-4449-8415-416F22AFE324}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
