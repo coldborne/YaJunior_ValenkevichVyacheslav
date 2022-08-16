@@ -6,12 +6,12 @@ namespace SwappingValues
     {
         static void Main(string[] args)
         {
-            String surname = "Slavka";
-            String name = "Valenkevich";
+            string surname = "Slavka";
+            string name = "Valenkevich";
 
             Console.WriteLine($"Фамилия: {surname}\nИмя: {name}\n");
 
-            String temporaryString = surname;
+            string temporaryString = surname;
             surname = name;
             name = temporaryString;
 
