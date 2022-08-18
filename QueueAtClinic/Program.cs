@@ -12,7 +12,7 @@ namespace QueueAtClinic
             Console.WriteLine("Введите количество существ, которых Вы терпеть не можете, в очереди");
             bool isIntValue = int.TryParse(Console.ReadLine(), out int peopleInQueue);
 
-            if (!isIntValue)
+            if (isIntValue == false)
             {
                 Console.WriteLine("Можно вводить только числа");
             }
