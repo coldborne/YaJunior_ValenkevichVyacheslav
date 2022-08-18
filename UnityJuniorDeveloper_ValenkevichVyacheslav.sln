@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Second.CSharp", "Second.CSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasteringCycles", "MasteringCycles\MasteringCycles.csproj", "{A30E0748-5608-4F1C-A1F8-F101C515421E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExitControl", "ExitControl\ExitControl.csproj", "{C1938B90-A51E-4F03-8004-F7C591208A55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{A30E0748-5608-4F1C-A1F8-F101C515421E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A30E0748-5608-4F1C-A1F8-F101C515421E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A30E0748-5608-4F1C-A1F8-F101C515421E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1938B90-A51E-4F03-8004-F7C591208A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1938B90-A51E-4F03-8004-F7C591208A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1938B90-A51E-4F03-8004-F7C591208A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1938B90-A51E-4F03-8004-F7C591208A55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{BCCEA04D-B621-4749-B50A-DBFDA4BE5FE1} = {FCC8478F-00F0-48EE-BED1-40960626EB26}
 		{F53B45D7-1F02-4449-8415-416F22AFE324} = {FCC8478F-00F0-48EE-BED1-40960626EB26}
 		{A30E0748-5608-4F1C-A1F8-F101C515421E} = {3EED3E3C-264E-4314-8388-591CA86468CC}
+		{C1938B90-A51E-4F03-8004-F7C591208A55} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
