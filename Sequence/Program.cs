@@ -8,9 +8,10 @@ namespace Sequence
         {
             int currentNumber = 5;
             int endNumber = 96;
+            int iteratorStep = 7;
 
             //Цикл for выбран, так как мы знаем, с какого значения цикл начинается, знаем, насколько нужно повышать итератор, а также каким число закончить цикл
-            for(; currentNumber <= endNumber; currentNumber+=7)
+            for (; currentNumber <= endNumber; currentNumber += iteratorStep)
             {
                 Console.WriteLine(currentNumber);
             }
