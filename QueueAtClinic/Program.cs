@@ -19,8 +19,9 @@ namespace QueueAtClinic
 
             int minutesWaitingInQueue = peopleInQueue * appointmentMinutesPerPerson;
             int hoursWaitingInQueue = minutesWaitingInQueue / minutesInHour;
+            int remainderOfHourInMinutes = minutesWaitingInQueue % minutesInHour;
 
-            Console.WriteLine("Ваше время ожидания в очереди - " + hoursWaitingInQueue.ToString() + " часов " + minutesWaitingInQueue.ToString() + " минут");
+            Console.WriteLine("Ваше время ожидания в очереди - " + hoursWaitingInQueue.ToString() + " часов " + remainderOfHourInMinutes.ToString() + " минут");
         }
     }
 }
