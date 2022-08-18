@@ -8,14 +8,17 @@ namespace SumOfNumbers
         {
             Random random = new Random();
 
-            int randomNumber = random.Next(101);
+            int maxRandomValue = 100;
+            int randomNumber = random.Next(maxRandomValue+1);
+            int firstDivider = 3;
+            int secondDivider = 5;
             int sumOfNumbers = 0;
 
             Console.WriteLine($"Вам выпало число - {randomNumber}");
 
-            for (int currentNumber = 1; currentNumber <= randomNumber; currentNumber++)
+            for (int currentNumber = 0; currentNumber <= randomNumber; currentNumber++)
             {
-                if (currentNumber % 3 == 0 || currentNumber % 5 == 0)
+                if (currentNumber % firstDivider == 0 || currentNumber % secondDivider == 0)
                 {
                     sumOfNumbers += currentNumber;
                 }

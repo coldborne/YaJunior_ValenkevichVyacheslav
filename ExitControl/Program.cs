@@ -18,14 +18,12 @@ namespace ExitControl
 
                 if(userMessage == messageToComplete)
                 {
-                    Console.WriteLine("Завершаем программу");
                     enteredCorrectMessage = true;
-                    break;
+                    Console.WriteLine("Завершаем программу");
                 }
                 else
                 {
                     Console.WriteLine("По такому сообщению программа не завершится");
-                    continue;
                 }
             }
         }

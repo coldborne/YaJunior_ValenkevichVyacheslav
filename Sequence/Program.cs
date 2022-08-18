@@ -9,11 +9,10 @@ namespace Sequence
             int currentNumber = 5;
             int endNumber = 96;
 
-            //Цикл while выбран, так как нам неважно, сколько раз выполнится цикл, нам лишь нужно показать условие выхода из цикла
-            while(currentNumber <= endNumber)
+            //Цикл for выбран, так как мы знаем, с какого значения цикл начинается, знаем, насколько нужно повышать итератор, а также каким число закончить цикл
+            for(; currentNumber <= endNumber; currentNumber+=7)
             {
                 Console.WriteLine(currentNumber);
-                currentNumber+=7;
             }
         }
     }
