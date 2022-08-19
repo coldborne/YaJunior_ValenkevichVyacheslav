@@ -147,7 +147,6 @@ namespace ConsoleMenu
             Console.WriteLine("Введите желаемую высоту консоли");
             int newConsoleheight = ReadIntValueFromKeyboard();
 
-
             if (newConsoleWidth > currentWidth || newConsoleheight > currentHeight)
             {
                 Console.WriteLine("Невозможно поменять размер консоли на бОльший, чем текущий");
