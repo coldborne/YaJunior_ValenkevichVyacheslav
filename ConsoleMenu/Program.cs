@@ -35,31 +35,13 @@ namespace ConsoleMenu
             switch (chosenTeam)
             {
                 case firstCommand:
-                    if (_isYearPredicted == false)
-                    {
-                        PredictYearOfPurchaseApartment();
-                    }
-
-                    Console.WriteLine(_predictedYearOfPurchaseApartment);
+                    PredictYearOfPurchaseApartment();
                     break;
                 case secondtCommand:
-                    Console.WriteLine("Введите первое число");
-                    int firstNumber = ReadIntValueFromKeyboard();
-                    Console.WriteLine("Введите второе число");
-                    int secondNumber = ReadIntValueFromKeyboard();
-
-                    CompareNumbers(firstNumber, secondNumber);
+                    CompareNumbers();
                     break;
                 case thirdCommand:
-                    Console.WriteLine("Текущий размер консоли: " + Console.WindowWidth + " " + Console.WindowHeight);
-                    Console.WriteLine("Изменить можно только на размер меньше, чем текущий");
-
-                    Console.WriteLine("Введите желаемую ширину консоли");
-                    int newConsoleWidth = ReadIntValueFromKeyboard();
-                    Console.WriteLine("Введите желаемую высоту консоли");
-                    int newConsoleheight = ReadIntValueFromKeyboard();
-
-                    ChangeConsoleSize(newConsoleWidth, newConsoleheight);
+                    ChangeConsoleSize();
                     break;
                 case fourthCommand:
                     EndProgram();
@@ -118,16 +100,26 @@ namespace ConsoleMenu
 
         private static void PredictYearOfPurchaseApartment()
         {
-            Random random = new Random();
+            if (_isYearPredicted == false)
+            {
+                Random random = new Random();
 
-            int currentYear = DateTime.Now.Year;
+                int currentYear = DateTime.Now.Year;
 
-            _predictedYearOfPurchaseApartment = random.Next(currentYear, currentYear + 50);
-            _isYearPredicted = true;
+                _predictedYearOfPurchaseApartment = random.Next(currentYear, currentYear + 50);
+                _isYearPredicted = true;
+            }
+
+            Console.WriteLine(_predictedYearOfPurchaseApartment);
         }
 
-        private static void CompareNumbers(int firstNumber, int secondNumber)
+        private static void CompareNumbers()
         {
+            Console.WriteLine("Введите первое число");
+            int firstNumber = ReadIntValueFromKeyboard();
+            Console.WriteLine("Введите второе число");
+            int secondNumber = ReadIntValueFromKeyboard();
+
             if (firstNumber == secondNumber)
             {
                 Console.WriteLine($"{firstNumber} = {secondNumber}");
@@ -142,10 +134,19 @@ namespace ConsoleMenu
             }
         }
 
-        private static void ChangeConsoleSize(int newConsoleWidth, int newConsoleheight)
+        private static void ChangeConsoleSize()
         {
             int currentWidth = Console.WindowWidth;
             int currentHeight = Console.WindowHeight;
+
+            Console.WriteLine("Текущий размер консоли: " + currentWidth + " " + currentHeight);
+            Console.WriteLine("Изменить можно только на размер меньше, чем текущий");
+
+            Console.WriteLine("Введите желаемую ширину консоли");
+            int newConsoleWidth = ReadIntValueFromKeyboard();
+            Console.WriteLine("Введите желаемую высоту консоли");
+            int newConsoleheight = ReadIntValueFromKeyboard();
+
 
             if (newConsoleWidth > currentWidth || newConsoleheight > currentHeight)
             {
