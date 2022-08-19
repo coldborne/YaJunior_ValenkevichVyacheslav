@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter", "Curren
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleMenu", "ConsoleMenu\ConsoleMenu.csproj", "{D0B820E8-9F47-4919-A65F-4A16F1601000}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NameOutput", "NameOutput\NameOutput.csproj", "{A4E04FC3-42DE-4AB1-86F9-833D9A87E267}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{D0B820E8-9F47-4919-A65F-4A16F1601000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0B820E8-9F47-4919-A65F-4A16F1601000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0B820E8-9F47-4919-A65F-4A16F1601000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E04FC3-42DE-4AB1-86F9-833D9A87E267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E04FC3-42DE-4AB1-86F9-833D9A87E267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E04FC3-42DE-4AB1-86F9-833D9A87E267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E04FC3-42DE-4AB1-86F9-833D9A87E267}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{8EC25147-43C8-42B4-AB96-BB8B6771D4E7} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{E31AC2AF-3E21-4A4D-AFD5-C52542DCCFD1} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{D0B820E8-9F47-4919-A65F-4A16F1601000} = {3EED3E3C-264E-4314-8388-591CA86468CC}
+		{A4E04FC3-42DE-4AB1-86F9-833D9A87E267} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
