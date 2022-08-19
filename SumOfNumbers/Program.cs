@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SumOfNumbers
 {
@@ -8,8 +9,8 @@ namespace SumOfNumbers
         {
             Random random = new Random();
 
-            int maxRandomValue = 100;
-            int randomNumber = random.Next(maxRandomValue+1);
+            int upperLimitOfRandom = 100;
+            int randomNumber = random.Next(upperLimitOfRandom + 1);
             int firstDivider = 3;
             int secondDivider = 5;
             int sumOfNumbers = 0;
