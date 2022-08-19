@@ -24,7 +24,7 @@ namespace SumOfNumbers
                 }
             }
 
-            Console.WriteLine($"Сумма чисел кратных 3 и 5 в диапозоне от 1 до {randomNumber} = {sumOfNumbers}");
+            Console.WriteLine($"Сумма чисел кратных {firstDivider} и {secondDivider} в диапозоне от 1 до {randomNumber} = {sumOfNumbers}");
         }
     }
 }
