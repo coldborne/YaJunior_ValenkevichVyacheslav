@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NameOutput", "NameOutput\Na
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerOfTwo", "PowerOfTwo\PowerOfTwo.csproj", "{0624B960-567A-426F-9327-4965E6BDFEFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketExpression", "BracketExpression\BracketExpression.csproj", "{E2791AC9-065B-4EA4-833A-3A34F6BDFBBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{0624B960-567A-426F-9327-4965E6BDFEFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0624B960-567A-426F-9327-4965E6BDFEFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0624B960-567A-426F-9327-4965E6BDFEFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2791AC9-065B-4EA4-833A-3A34F6BDFBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2791AC9-065B-4EA4-833A-3A34F6BDFBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2791AC9-065B-4EA4-833A-3A34F6BDFBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2791AC9-065B-4EA4-833A-3A34F6BDFBBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{D0B820E8-9F47-4919-A65F-4A16F1601000} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{A4E04FC3-42DE-4AB1-86F9-833D9A87E267} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{0624B960-567A-426F-9327-4965E6BDFEFE} = {3EED3E3C-264E-4314-8388-591CA86468CC}
+		{E2791AC9-065B-4EA4-833A-3A34F6BDFBBF} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}

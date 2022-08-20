@@ -6,24 +6,26 @@ namespace PowerOfTwo
     {
         static void Main(string[] args)
         {
+            int baseNumber = 2;
+            int exponent = 0;
+
             Random random = new Random();
             int maximumRandomNumberLimit = 100;
             int number = random.Next(maximumRandomNumberLimit + 1);
 
             Console.WriteLine("Число - " + number);
 
-            int numberCopy = number;
-            int powerOfTwo = 0;
+            int temporaryNumber = 1;
 
-            while (numberCopy > 0)
+            while (temporaryNumber <= number)
             {
-                numberCopy /= 2;
-                powerOfTwo++;
+                temporaryNumber *= baseNumber;
+                exponent++;
             }
 
-            int nearestHigherNumber = Convert.ToInt32(Math.Pow(2, powerOfTwo));
+            int nearestHigherNumber = Convert.ToInt32(Math.Pow(baseNumber, exponent));
 
-            Console.WriteLine("Степень двойки превосходящего числа - " + powerOfTwo);
+            Console.WriteLine("Степень двойки превосходящего числа - " + exponent);
             Console.WriteLine("Превосходящее число " + nearestHigherNumber);
         }
     }
