@@ -4,10 +4,11 @@ namespace ConsoleMenu
 {
     internal class Program
     {
-        private const string firstCommand = "PredictYearOfPurchaseApartment";
-        private const string secondtCommand = "CompareNumbers";
-        private const string thirdCommand = "ChangeConsoleSize";
-        private const string fourthCommand = "Esc";
+        private const string PredictionCommand = "PredictYearOfPurchaseApartment";
+        private const string CompareCommand = "CompareNumbers";
+        private const string ConsoleResizeCommand = "ChangeConsoleSize";
+        private const string ProgramTerminationCommand = "Esc";
+        private const string EmptyString = "";
 
         private static bool _isExitCommandChosen = false;
 
@@ -20,12 +21,12 @@ namespace ConsoleMenu
 
             while (_isExitCommandChosen == false)
             {
-                string chosenTeam = GetChosenCommand();
-                ChooseCommand(chosenTeam);
+                string receivedCommand = ReceiveCommand();
+                ChooseCommand(receivedCommand);
             }
         }
 
-        private static string GetChosenCommand()
+        private static string ReceiveCommand()
         {
             return ReadStringValueFromKeyboard();
         }
@@ -34,16 +35,16 @@ namespace ConsoleMenu
         {
             switch (chosenTeam)
             {
-                case firstCommand:
+                case PredictionCommand:
                     PredictYearOfPurchaseApartment();
                     break;
-                case secondtCommand:
+                case CompareCommand:
                     CompareNumbers();
                     break;
-                case thirdCommand:
+                case ConsoleResizeCommand:
                     ChangeConsoleSize();
                     break;
-                case fourthCommand:
+                case ProgramTerminationCommand:
                     EndProgram();
                     break;
                 default:
@@ -55,7 +56,8 @@ namespace ConsoleMenu
         private static string ReadStringValueFromKeyboard()
         {
             string valueFromKeyboard = Console.ReadLine().Trim();
-            if (valueFromKeyboard == "")
+
+            if (valueFromKeyboard == EmptyString)
             {
                 Console.WriteLine("Программа не может состоять из пустой строки");
                 return ReadStringValueFromKeyboard();
@@ -92,10 +94,10 @@ namespace ConsoleMenu
         private static void ListCommands()
         {
             Console.WriteLine("Наша программа умеет выполнять следующие команды:");
-            Console.WriteLine($"{firstCommand} - предсказать год, когда Вы купите квартиру");
-            Console.WriteLine($"{secondtCommand} - сравнить два числа");
-            Console.WriteLine($"{thirdCommand} - изменить размер консоли");
-            Console.WriteLine($"{fourthCommand} - выход из программы");
+            Console.WriteLine($"{PredictionCommand} - предсказать год, когда Вы купите квартиру");
+            Console.WriteLine($"{CompareCommand} - сравнить два числа");
+            Console.WriteLine($"{ConsoleResizeCommand} - изменить размер консоли");
+            Console.WriteLine($"{ProgramTerminationCommand} - выход из программы");
         }
 
         private static void PredictYearOfPurchaseApartment()
@@ -105,8 +107,10 @@ namespace ConsoleMenu
                 Random random = new Random();
 
                 int currentYear = DateTime.Now.Year;
+                int NumberYearsAfterCurrentYear = 50;
+                int maximumYearForRandom = currentYear + NumberYearsAfterCurrentYear;
 
-                _predictedYearOfPurchaseApartment = random.Next(currentYear, currentYear + 50);
+                _predictedYearOfPurchaseApartment = random.Next(currentYear, maximumYearForRandom + 1);
                 _isYearPredicted = true;
             }
 
