@@ -17,6 +17,7 @@ namespace Multiples
             int multiplesOfMultiplierCount = 0;
 
             int temporaryVariable = multiplier;
+
             while (temporaryVariable < lowerLimit)
             {
                 temporaryVariable += multiplier;
