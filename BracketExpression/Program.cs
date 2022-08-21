@@ -10,7 +10,7 @@ namespace BracketExpression
             int depth = 0;
             char closingBracket = ')';
             char openingBracket = '(';
-            string stringOfBrackets = "(()()())";
+            string stringOfBrackets = ")(";
 
             foreach (var symbol in stringOfBrackets)
             {
@@ -26,6 +26,11 @@ namespace BracketExpression
                 else if (symbol == closingBracket)
                 {
                     expressionValidityScore--;
+                }
+
+                if (expressionValidityScore < 0)
+                {
+                    break;
                 }
             }
 
