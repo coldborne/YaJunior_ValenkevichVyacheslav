@@ -228,6 +228,7 @@ namespace CurrencyConverter
                 return ReadNumberFromKeyboard();
             }
         }
+
         private static float ReadFloatFromKeyboard()
         {
             bool isIntValue = float.TryParse(Console.ReadLine(), out float value);
