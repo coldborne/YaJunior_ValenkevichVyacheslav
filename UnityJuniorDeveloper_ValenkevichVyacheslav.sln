@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BracketExpression", "Bracke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordProgram", "PasswordProgram\PasswordProgram.csproj", "{5D744B0E-1029-472A-93E3-E79E64E23076}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multiples", "Multiples\Multiples.csproj", "{E9187424-2B0B-47C1-BC73-E0C1841D1885}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{5D744B0E-1029-472A-93E3-E79E64E23076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D744B0E-1029-472A-93E3-E79E64E23076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D744B0E-1029-472A-93E3-E79E64E23076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9187424-2B0B-47C1-BC73-E0C1841D1885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9187424-2B0B-47C1-BC73-E0C1841D1885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9187424-2B0B-47C1-BC73-E0C1841D1885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9187424-2B0B-47C1-BC73-E0C1841D1885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +129,7 @@ Global
 		{0624B960-567A-426F-9327-4965E6BDFEFE} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{E2791AC9-065B-4EA4-833A-3A34F6BDFBBF} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{5D744B0E-1029-472A-93E3-E79E64E23076} = {3EED3E3C-264E-4314-8388-591CA86468CC}
+		{E9187424-2B0B-47C1-BC73-E0C1841D1885} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
