@@ -16,10 +16,10 @@ namespace BossFight
         private static int _standartFireballSpellDamage = 300;
         private static int _damageFromCover = 20;
         private static int _herbsRestoresHealth = 50;
-        private static int damageBoostAfterUseBoostPotion = 30;
+        private static int _damageBoostAfterUseBoostPotion = 30;
 
         private static int _fireballChargesCount = 3;
-        private static int _OpportunityTogoInToCover = 5;
+        private static int _opportunityToGoInToCover = 5;
         private static int _medicinalHerbsCount = 5;
         private static int _damageBoostPotionCount = 1;
 
@@ -35,7 +35,7 @@ namespace BossFight
             Console.WriteLine("Добро пожаловать на ринг");
             Console.WriteLine($"Ваше первоначальное здоровье - {_mageHealth}, первоначальное здоровье врага - {_enemyHealth}");
             Console.WriteLine($"Количество огненных шаров - {_fireballChargesCount}");
-            Console.WriteLine($"Количество возможностей избежать урона - {_OpportunityTogoInToCover}");
+            Console.WriteLine($"Количество возможностей избежать урона - {_opportunityToGoInToCover}");
             Console.WriteLine($"Количество лечебных трав - {_medicinalHerbsCount}");
             Console.WriteLine($"Количество зелей, увеличивающих урон - {_damageBoostPotionCount}");
             Console.ResetColor();
@@ -54,7 +54,7 @@ namespace BossFight
                 }
                 else
                 {
-                    EnemyStandartAttack();
+                    DealDamageStandardEnemyAttack();
 
                     if (_mageHealth <= 0)
                     {
@@ -107,7 +107,7 @@ namespace BossFight
                         isSelectedSpell = true;
                         break;
                     case 3:
-                        MageStandartAttack();
+                        DealDamageStandardMageAttack();
                         isSelectedSpell = true;
                         break;
                     case 4:
@@ -146,7 +146,7 @@ namespace BossFight
 
         private static void AvoidDamage()
         {
-            if (_OpportunityTogoInToCover > 0)
+            if (_opportunityToGoInToCover > 0)
             {
                 Console.WriteLine("1 - Избежать урона и нанести урон в ответ, 2 - Избежать урона и восстановить себе немного здоровья");
 
@@ -169,15 +169,16 @@ namespace BossFight
                         default:
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.WriteLine("Пожалуйста, сделайте уже хоть что-нибудь, Вас вообще-то враг ждёт!");
+                            Console.ResetColor();
                             break;
                     }
                 }
 
-                _OpportunityTogoInToCover--;
+                _opportunityToGoInToCover--;
                 _isSelectedAvoidSpell = true;
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"У вас осталось {_OpportunityTogoInToCover} возможности избежать урона");
+                Console.WriteLine($"У вас осталось {_opportunityToGoInToCover} возможности избежать урона");
             }
             else
             {
@@ -215,7 +216,7 @@ namespace BossFight
             Console.WriteLine($"У Вас осталось {_medicinalHerbsCount} лечебных трав");
         }
 
-        private static void MageStandartAttack()
+        private static void DealDamageStandardMageAttack()
         {
             Random random = new Random();
             int maximumForChance = 1;
@@ -243,7 +244,7 @@ namespace BossFight
         {
             if (_damageBoostPotionCount > 0)
             {
-                _standartMageDamage += damageBoostAfterUseBoostPotion;
+                _standartMageDamage += _damageBoostAfterUseBoostPotion;
                 _damageBoostPotionCount--;
 
                 Console.WriteLine($"Вы выпили зелье, теперь Ваш стандартный урон составляет - {_standartMageDamage}");
@@ -255,7 +256,7 @@ namespace BossFight
             }
         }
 
-        private static void EnemyStandartAttack()
+        private static void DealDamageStandardEnemyAttack()
         {
             if (_isSelectedAvoidSpell == false)
             {
@@ -270,25 +271,26 @@ namespace BossFight
 
         private static int ReadIntValueFromKeyboard()
         {
-            bool isIntValue = int.TryParse(Console.ReadLine(), out int value);
+            int value = 0;
+            bool isIntValue = false;
 
-            if (isIntValue == true)
+            while (isIntValue == false)
             {
-                if (value <= 0)
+                string userInput = Console.ReadLine();
+                isIntValue = int.TryParse(userInput, out value);
+
+                if (isIntValue == false)
+                {
+                    Console.WriteLine("Можно вводить только числа");
+                }
+                else if (value <= 0)
                 {
                     Console.WriteLine("Можно вводить только положительные числа");
-                    return ReadIntValueFromKeyboard();
-                }
-                else
-                {
-                    return value;
+                    isIntValue = false;
                 }
             }
-            else
-            {
-                Console.WriteLine("Можно вводить только числа");
-                return ReadIntValueFromKeyboard();
-            }
+
+            return value;
         }
     }
 }
