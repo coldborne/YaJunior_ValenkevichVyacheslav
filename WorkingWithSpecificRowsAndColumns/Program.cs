@@ -21,16 +21,25 @@ namespace WorkingWithSpecificRowsAndColumns
         private static int CalculateSumOfElements(int[,] intMatrix, int lineNumber)
         {
             int sumOfMatrixElements = 0;
+            int matrixLength = intMatrix.GetLength(0);
+            int matrixHeight = intMatrix.GetLength(1);
 
-            for (int i = 0; i < intMatrix.GetLength(0); i++)
+            if (lineNumber < matrixLength && lineNumber > 0)
             {
-                if (i == lineNumber - 1)
+                for (int i = 0; i < matrixLength; i++)
                 {
-                    for (int j = 0; j < intMatrix.GetLength(1); j++)
+                    if (i == lineNumber - 1)
                     {
-                        sumOfMatrixElements += intMatrix[i, j];
+                        for (int j = 0; j < matrixHeight; j++)
+                        {
+                            sumOfMatrixElements += intMatrix[i, j];
+                        }
                     }
                 }
+            }
+            else
+            {
+                Console.WriteLine("Такой строки в матрице нет");
             }
 
             return sumOfMatrixElements;
@@ -39,16 +48,25 @@ namespace WorkingWithSpecificRowsAndColumns
         private static int CalculateProductOfElements(int[,] intMatrix, int columnNumber)
         {
             int productOfElements = 1;
+            int matrixLength = intMatrix.GetLength(0);
+            int matrixHeight = intMatrix.GetLength(1);
 
-            for (int i = 0; i < intMatrix.GetLength(0); i++)
+            if (columnNumber < matrixLength && columnNumber > 0)
             {
-                for (int j = 0; j < intMatrix.GetLength(1); j++)
+                for (int i = 0; i < matrixLength; i++)
                 {
-                    if (j == columnNumber - 1)
+                    for (int j = 0; j < matrixHeight; j++)
                     {
-                        productOfElements *= intMatrix[i, j];
+                        if (j == columnNumber - 1)
+                        {
+                            productOfElements *= intMatrix[i, j];
+                        }
                     }
                 }
+            }
+            else
+            {
+                Console.WriteLine("Такого столбца в матрице нет");
             }
 
             return productOfElements;
