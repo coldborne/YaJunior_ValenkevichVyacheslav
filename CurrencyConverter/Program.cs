@@ -47,7 +47,7 @@ namespace CurrencyConverter
             Console.WriteLine($"{Usd} - {_usdAmount}, {Rub} - {_rubAmount}, {Eur} - {_eurAmount}");
         }
 
-        private static void SelectCurrencyToSale()
+        private static void SelectCurrencies()
         {
             Console.WriteLine("Какую валюту Вы хотите обменять?");
             Console.WriteLine($"1 - {Usd}, 2- {Eur} 3 - {Rub}");
