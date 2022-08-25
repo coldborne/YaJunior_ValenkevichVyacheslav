@@ -41,6 +41,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multiples", "Multiples\Mult
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BossFight", "BossFight\BossFight.csproj", "{5D3736FE-19EF-4D6A-90D0-78F2CB13FF5E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third.CSharp", "Third.CSharp", "{CE315330-A965-47E9-9B6E-812CEC3BF2AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithSpecificRowsAndColumns", "WorkingWithSpecificRowsAndColumns\WorkingWithSpecificRowsAndColumns.csproj", "{045669AD-2A83-4F70-9F25-579E3248C4EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +119,10 @@ Global
 		{5D3736FE-19EF-4D6A-90D0-78F2CB13FF5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D3736FE-19EF-4D6A-90D0-78F2CB13FF5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D3736FE-19EF-4D6A-90D0-78F2CB13FF5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{045669AD-2A83-4F70-9F25-579E3248C4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{045669AD-2A83-4F70-9F25-579E3248C4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{045669AD-2A83-4F70-9F25-579E3248C4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{045669AD-2A83-4F70-9F25-579E3248C4EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +145,7 @@ Global
 		{5D744B0E-1029-472A-93E3-E79E64E23076} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{E9187424-2B0B-47C1-BC73-E0C1841D1885} = {3EED3E3C-264E-4314-8388-591CA86468CC}
 		{5D3736FE-19EF-4D6A-90D0-78F2CB13FF5E} = {3EED3E3C-264E-4314-8388-591CA86468CC}
+		{045669AD-2A83-4F70-9F25-579E3248C4EE} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
