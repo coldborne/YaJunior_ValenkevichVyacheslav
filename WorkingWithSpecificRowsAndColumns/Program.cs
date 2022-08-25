@@ -6,7 +6,10 @@ namespace WorkingWithSpecificRowsAndColumns
     {
         static void Main(string[] args)
         {
-            int[,] intMatrix = new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+            const int linesAmount = 3;
+            const int columnsAmount = 3;
+            int[,] intMatrix = new int[linesAmount, columnsAmount] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+
             int lineNumber = 2;
             int columnNumber = 1;
 
