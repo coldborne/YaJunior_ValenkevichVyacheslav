@@ -24,7 +24,7 @@ namespace WorkingWithSpecificRowsAndColumns
             int matrixLength = intMatrix.GetLength(0);
             int matrixHeight = intMatrix.GetLength(1);
 
-            if (lineNumber < matrixLength && lineNumber > 0)
+            if (lineNumber <= matrixLength && lineNumber > 0)
             {
                 for (int i = 0; i < matrixLength; i++)
                 {
@@ -51,7 +51,7 @@ namespace WorkingWithSpecificRowsAndColumns
             int matrixLength = intMatrix.GetLength(0);
             int matrixHeight = intMatrix.GetLength(1);
 
-            if (columnNumber < matrixLength && columnNumber > 0)
+            if (columnNumber <= matrixLength && columnNumber > 0)
             {
                 for (int i = 0; i < matrixLength; i++)
                 {
