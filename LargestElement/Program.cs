@@ -6,20 +6,19 @@ namespace LargestElement
     {
         static void Main(string[] args)
         {
-            int[,] A = new int[10, 10];
+            int[,] numbers = new int[10, 10];
 
-            A = InitializeMatrix(A);
+            numbers = InitializeMatrix(numbers);
 
-            OutputMatrix(A);
+            OutputMatrix(numbers);
 
-            int maxValueInMatrix = FindMaximumElement(A);
-            int newValueInsteadMaxValueInMatrix = 0;
+            int maxValueInMatrix = FindMaximumElement(numbers);
 
-            ReplaceMaxNumberInMatrix(A, maxValueInMatrix, newValueInsteadMaxValueInMatrix);
+            ReplaceMaxNumberInMatrix(numbers, maxValueInMatrix);
 
             Console.WriteLine("\nМаксимальный элемент в матрице - " + maxValueInMatrix + "\n");
 
-            OutputMatrix(A);
+            OutputMatrix(numbers);
         }
 
         private static void OutputMatrix(int[,] matrix)
@@ -53,8 +52,10 @@ namespace LargestElement
             return maxValue;
         }
 
-        private static void ReplaceMaxNumberInMatrix(int[,] matrix, int maxValue, int newValue)
+        private static void ReplaceMaxNumberInMatrix(int[,] matrix, int maxValue)
         {
+            int newValue = 0;
+
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
