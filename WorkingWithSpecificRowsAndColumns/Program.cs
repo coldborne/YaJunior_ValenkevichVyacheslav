@@ -8,24 +8,24 @@ namespace WorkingWithSpecificRowsAndColumns
         {
             const int LinesAmount = 3;
             const int ColumnsAmount = 3;
-            int[,] intMatrix = new int[LinesAmount, ColumnsAmount] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+            int[,] matrix = new int[LinesAmount, ColumnsAmount] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
             int lineNumber = 2;
             int columnNumber = 1;
 
-            int sumOfElements = CalculateSumOfElements(intMatrix, lineNumber);
-            int productOfElements = CalculateProductOfElements(intMatrix, columnNumber);
-            OutputMatrix(intMatrix);
+            int sumOfElements = CalculateSum(matrix, lineNumber);
+            int productOfElements = CalculateProduc(matrix, columnNumber);
+            OutputMatrix(matrix);
 
             Console.WriteLine($"Сумма элементов {lineNumber}ой строки = {sumOfElements}");
             Console.WriteLine($"Произведение элементов {columnNumber}ого столбца = {productOfElements}");
         }
 
-        private static int CalculateSumOfElements(int[,] intMatrix, int lineNumber)
+        private static int CalculateSum(int[,] matrix, int lineNumber)
         {
             int sumOfMatrixElements = 0;
-            int matrixLength = intMatrix.GetLength(0);
-            int matrixHeight = intMatrix.GetLength(1);
+            int matrixLength = matrix.GetLength(0);
+            int matrixHeight = matrix.GetLength(1);
 
             if (lineNumber <= matrixLength && lineNumber > 0)
             {
@@ -35,7 +35,7 @@ namespace WorkingWithSpecificRowsAndColumns
                     {
                         for (int j = 0; j < matrixHeight; j++)
                         {
-                            sumOfMatrixElements += intMatrix[i, j];
+                            sumOfMatrixElements += matrix[i, j];
                         }
                     }
                 }
@@ -48,11 +48,11 @@ namespace WorkingWithSpecificRowsAndColumns
             return sumOfMatrixElements;
         }
 
-        private static int CalculateProductOfElements(int[,] intMatrix, int columnNumber)
+        private static int CalculateProduc(int[,] matrix, int columnNumber)
         {
             int productOfElements = 1;
-            int matrixLength = intMatrix.GetLength(0);
-            int matrixHeight = intMatrix.GetLength(1);
+            int matrixLength = matrix.GetLength(0);
+            int matrixHeight = matrix.GetLength(1);
 
             if (columnNumber <= matrixLength && columnNumber > 0)
             {
@@ -62,7 +62,7 @@ namespace WorkingWithSpecificRowsAndColumns
                     {
                         if (j == columnNumber - 1)
                         {
-                            productOfElements *= intMatrix[i, j];
+                            productOfElements *= matrix[i, j];
                         }
                     }
                 }
@@ -75,13 +75,13 @@ namespace WorkingWithSpecificRowsAndColumns
             return productOfElements;
         }
 
-        private static void OutputMatrix(int[,] intMatrix)
+        private static void OutputMatrix(int[,] matrix)
         {
-            for (int i = 0; i < intMatrix.GetLength(0); i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < intMatrix.GetLength(1); j++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    Console.Write(intMatrix[i, j] + " ");
+                    Console.Write(matrix[i, j] + " ");
                 }
 
                 Console.WriteLine();
