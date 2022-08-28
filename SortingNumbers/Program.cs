@@ -16,9 +16,10 @@ namespace SortingNumbers
 
             Console.WriteLine("Первоначальный массив:");
 
+            int maxNumber = 20;
+
             for (int i = 0; i < numbers.Length; i++)
             {
-                int maxNumber = 20;
                 numbers[i] = random.Next(maxNumber) + 1;
 
                 Console.Write(numbers[i] + " ");
