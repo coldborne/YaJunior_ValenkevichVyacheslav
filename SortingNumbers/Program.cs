@@ -37,7 +37,7 @@ namespace SortingNumbers
             Console.WriteLine();
         }
 
-        static int[] MergeSort(int[] numbers)
+        private static int[] MergeSort(int[] numbers)
         {
             if (numbers.Length == 1)
             {
@@ -52,7 +52,7 @@ namespace SortingNumbers
             return Merge(first, second);
         }
 
-        static int[] Merge(int[] first, int[] second)
+        private static int[] Merge(int[] first, int[] second)
         {
             int indexMinOfFirst = 0, indexMinOfSecond = 0;
             int[] merged = new int[first.Length + second.Length];
