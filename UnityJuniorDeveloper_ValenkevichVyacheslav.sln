@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingNumbers", "SortingNu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Splitter", "Splitter\Splitter.csproj", "{26E72CBB-B763-4436-887C-C1BD00BF945F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftArrayValues", "ShiftArrayValues\ShiftArrayValues.csproj", "{49772DA8-3D3D-4461-85BB-39AF3338D265}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,10 @@ Global
 		{26E72CBB-B763-4436-887C-C1BD00BF945F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26E72CBB-B763-4436-887C-C1BD00BF945F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26E72CBB-B763-4436-887C-C1BD00BF945F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49772DA8-3D3D-4461-85BB-39AF3338D265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49772DA8-3D3D-4461-85BB-39AF3338D265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49772DA8-3D3D-4461-85BB-39AF3338D265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49772DA8-3D3D-4461-85BB-39AF3338D265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -188,6 +194,7 @@ Global
 		{B1CDB16A-0585-49FF-932B-12CC8CD43FDA} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
 		{0D155209-414E-4C22-97FC-FD3B8E60B583} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
 		{26E72CBB-B763-4436-887C-C1BD00BF945F} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
+		{49772DA8-3D3D-4461-85BB-39AF3338D265} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
