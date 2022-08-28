@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicArray", "DynamicArra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubarrayOfRepetitionsOfNumbers", "SubarrayOfRepetitionsOfNumbers\SubarrayOfRepetitionsOfNumbers.csproj", "{B1CDB16A-0585-49FF-932B-12CC8CD43FDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingNumbers", "SortingNumbers\SortingNumbers.csproj", "{0D155209-414E-4C22-97FC-FD3B8E60B583}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{B1CDB16A-0585-49FF-932B-12CC8CD43FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1CDB16A-0585-49FF-932B-12CC8CD43FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1CDB16A-0585-49FF-932B-12CC8CD43FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D155209-414E-4C22-97FC-FD3B8E60B583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D155209-414E-4C22-97FC-FD3B8E60B583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D155209-414E-4C22-97FC-FD3B8E60B583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D155209-414E-4C22-97FC-FD3B8E60B583}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,6 +180,7 @@ Global
 		{151504FC-B231-4358-AA38-BF07E263EE5A} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
 		{6E4FBD4E-D70E-4079-A146-80B589E0B968} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
 		{B1CDB16A-0585-49FF-932B-12CC8CD43FDA} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
+		{0D155209-414E-4C22-97FC-FD3B8E60B583} = {CE315330-A965-47E9-9B6E-812CEC3BF2AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
