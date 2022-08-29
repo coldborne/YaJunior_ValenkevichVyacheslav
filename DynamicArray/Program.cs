@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DynamicArray
 {
@@ -11,24 +7,25 @@ namespace DynamicArray
         const string Sum = "sum";
         const string Exit = "exit";
 
-        static int[] numbers;
+        static int[] _numbers;
 
         static void Main(string[] args)
         {
-            numbers = new int[0];
+            int startSize = 0;
+            _numbers = new int[startSize];
 
             bool isInputExit = false;
 
             while (isInputExit == false)
             {
-                Console.WriteLine("sum - Сумма всех введенных чисел, exit - Выход из программы\n");
+                Console.Write("sum - Сумма всех введенных чисел, exit - Выход из программы\n");
 
                 string userInput = Console.ReadLine().ToLower();
 
                 switch (userInput)
                 {
                     case Sum:
-                        SumOfNumbers();
+                        SumOfnumbers();
                         break;
                     case Exit:
                         isInputExit = true;
@@ -36,24 +33,24 @@ namespace DynamicArray
                     default:
                         if (CheckVariableIsNumber(userInput) == true)
                         {
-                            AddNumberInArray(userInput);
+                            AddNumber(userInput);
                         }
                         break;
                 }
 
-                Console.Clear();
+                Console.WriteLine();
             }
         }
 
-        private static void SumOfNumbers()
+        private static void SumOfnumbers()
         {
-            if (numbers != null)
+            if (_numbers != null & _numbers.Length != 0)
             {
-                int sumOfNumbers = numbers[0];
+                int sumOfNumbers = _numbers[0];
 
-                for (int i = 0; i < numbers.Length; i++)
+                for (int i = 1; i < _numbers.Length; i++)
                 {
-                    sumOfNumbers += numbers[i];
+                    sumOfNumbers += _numbers[i];
                 }
 
                 Console.WriteLine(sumOfNumbers);
@@ -76,9 +73,20 @@ namespace DynamicArray
             return isIntValue;
         }
 
-        private static void AddNumberInArray(string userInput)
+        private static void AddNumber(string userInput)
         {
             int newNumber = int.Parse(userInput);
+
+            int[] tempNumbers = new int[_numbers.Length + 1];
+
+            for (int i = 0; i < _numbers.Length; i++)
+            {
+                tempNumbers[i] = _numbers[i];
+            }
+
+            tempNumbers[tempNumbers.Length - 1] = newNumber;
+
+            _numbers = tempNumbers;
         }
     }
 }
