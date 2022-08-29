@@ -12,7 +12,7 @@ namespace MasteringCycles
             Console.WriteLine("Сколько раз вывести Ваше сообщение?");
             int numberOfMessages = int.Parse(Console.ReadLine());
 
-            for(int i = 0; i < numberOfMessages; i++)
+            for (int i = 0; i < numberOfMessages; i++)
             {
                 Console.WriteLine(message);
             }
