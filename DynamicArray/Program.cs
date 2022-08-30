@@ -4,10 +4,10 @@ namespace DynamicArray
 {
     internal class Program
     {
-        const string Sum = "sum";
-        const string Exit = "exit";
+        public const string Sum = "sum";
+        public const string Exit = "exit";
 
-        static int[] _numbers;
+        private static int[] _numbers;
 
         static void Main(string[] args)
         {
@@ -18,20 +18,20 @@ namespace DynamicArray
 
             while (isInputExit == false)
             {
-                Console.Write("sum - Сумма всех введенных чисел, exit - Выход из программы\n");
+                Console.Write($"{Sum} - Сумма всех введенных чисел, {Exit} - Выход из программы\n");
 
                 string userInput = Console.ReadLine().ToLower();
 
                 switch (userInput)
                 {
                     case Sum:
-                        SumOfnumbers();
+                        CalculateSumOfnumbers();
                         break;
                     case Exit:
                         isInputExit = true;
                         break;
                     default:
-                        if (CheckVariableIsNumber(userInput) == true)
+                        if (CheckVariableIsNumber(userInput))
                         {
                             AddNumber(userInput);
                         }
@@ -42,7 +42,7 @@ namespace DynamicArray
             }
         }
 
-        private static void SumOfnumbers()
+        private static void CalculateSumOfnumbers()
         {
             if (_numbers != null & _numbers.Length != 0)
             {
@@ -77,14 +77,19 @@ namespace DynamicArray
         {
             int newNumber = int.Parse(userInput);
 
+            ExpandArray();
+
+            _numbers[_numbers.Length - 1] = newNumber;
+        }
+
+        private static void ExpandArray()
+        {
             int[] tempNumbers = new int[_numbers.Length + 1];
 
             for (int i = 0; i < _numbers.Length; i++)
             {
                 tempNumbers[i] = _numbers[i];
             }
-
-            tempNumbers[tempNumbers.Length - 1] = newNumber;
 
             _numbers = tempNumbers;
         }
