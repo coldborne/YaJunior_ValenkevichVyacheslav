@@ -33,12 +33,7 @@ namespace KansasCityShuffle
 
         private static int[] Shuffle(int[] array)
         {
-            List<int> tempList = new List<int>();
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                tempList.Add(array[i]);
-            }
+            List<int> tempList = new List<int>(array);
 
             int currentIndex = 0;
             Random random = new Random();
