@@ -45,7 +45,6 @@ namespace KansasCityShuffle
 
             while (tempList.Count > 0)
             {
-
                 int tempIndex = random.Next(tempList.Count);
                 int tempElement = tempList[tempIndex];
 
