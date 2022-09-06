@@ -41,10 +41,10 @@ namespace KansasCityShuffle
             }
 
             int currentIndex = 0;
+            Random random = new Random();
 
             while (tempList.Count > 0)
             {
-                Random random = new Random();
                 int tempIndex = random.Next(tempList.Count);
                 int tempElement = tempList[tempIndex];
 
