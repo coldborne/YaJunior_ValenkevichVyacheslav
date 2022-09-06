@@ -6,10 +6,10 @@ namespace ReadInt
     {
         static void Main(string[] args)
         {
-            ReadIntValueFromKeyboard();
+            ReadInt();
         }
 
-        private static int ReadIntValueFromKeyboard()
+        private static int ReadInt()
         {
             int value = 0;
             bool isIntValue = false;
