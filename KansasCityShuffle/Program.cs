@@ -31,7 +31,7 @@ namespace KansasCityShuffle
             Console.WriteLine();
         }
 
-        private static int[] Shuffle(int[] array)
+        private static void Shuffle(int[] array)
         {
             List<int> tempList = new List<int>(array);
 
@@ -50,8 +50,6 @@ namespace KansasCityShuffle
                     tempList.Remove(tempElement);
                 }
             }
-
-            return array;
         }
     }
 }
