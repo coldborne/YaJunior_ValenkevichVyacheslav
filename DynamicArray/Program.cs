@@ -31,10 +31,7 @@ namespace DynamicArray
                         isInputExit = true;
                         break;
                     default:
-                        if (CheckVariableIsNumber(userInput))
-                        {
-                            AddNumber(userInput);
-                        }
+                        TryReadNumber(userInput);
                         break;
                 }
 
@@ -58,6 +55,14 @@ namespace DynamicArray
             else
             {
                 Console.WriteLine("Вы ещё не добавили ни одного числа");
+            }
+        }
+
+        private static void TryReadNumber(string userInput)
+        {
+            if (CheckVariableIsNumber(userInput))
+            {
+                AddNumber(userInput);
             }
         }
 
