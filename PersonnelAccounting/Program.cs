@@ -49,8 +49,8 @@ namespace PersonnelAccounting
 
             ReadData(ref fullName, ref position);
 
-            ExpandFullNames();
-            ExpandPositions();
+            _fullNames = Expand(_fullNames);
+            _positions = Expand(_positions);
 
             _fullNames[_fullNames.Length - 1] = fullName;
             _positions[_positions.Length - 1] = position;
@@ -95,28 +95,18 @@ namespace PersonnelAccounting
             }
         }
 
-        private static void ExpandFullNames()
+        private static string[] Expand(string[] array)
         {
-            string[] tempFullNames = new string[_fullNames.Length + 1];
+            string[] tempFullNames = new string[array.Length + 1];
 
-            for (int i = 0; i < _fullNames.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                tempFullNames[i] = _fullNames[i];
+                tempFullNames[i] = array[i];
             }
 
-            _fullNames = tempFullNames;
-        }
+            array = tempFullNames;
 
-        private static void ExpandPositions()
-        {
-            string[] tempPositions = new string[_positions.Length + 1];
-
-            for (int i = 0; i < _positions.Length; i++)
-            {
-                tempPositions[i] = _positions[i];
-            }
-
-            _positions = tempPositions;
+            return array;
         }
 
         private static void ShowAllDossiers()
@@ -144,8 +134,8 @@ namespace PersonnelAccounting
 
             if (numberOfRemovedElement >= 0 && numberOfRemovedElement < _fullNames.Length && numberOfRemovedElement < _positions.Length)
             {
-                ReduceFullNames(numberOfRemovedElement);
-                ReducePositions(numberOfDossier);
+                _fullNames = Reduce(_fullNames, numberOfRemovedElement);
+                _positions = Reduce(_positions, numberOfRemovedElement);
             }
             else
             {
@@ -153,38 +143,23 @@ namespace PersonnelAccounting
             }
         }
 
-        private static void ReduceFullNames(int numberOfRemovedElement)
+        private static string[] Reduce(string[] array, int numberOfRemovedElement)
         {
-            string[] tempFullNames = new string[_fullNames.Length - 1];
+            string[] tempFullNames = new string[array.Length - 1];
 
             for (int i = 0; i < numberOfRemovedElement; i++)
             {
-                tempFullNames[i] = _fullNames[i];
+                tempFullNames[i] = array[i];
             }
 
-            for (int i = numberOfRemovedElement + 1; i < _fullNames.Length; i++)
+            for (int i = numberOfRemovedElement + 1; i < array.Length; i++)
             {
-                tempFullNames[i - 1] = _fullNames[i];
+                tempFullNames[i - 1] = array[i];
             }
 
-            _fullNames = tempFullNames;
-        }
+            array = tempFullNames;
 
-        private static void ReducePositions(int numberOfRemovedElement)
-        {
-            string[] tempPositions = new string[_positions.Length - 1];
-
-            for (int i = 0; i < numberOfRemovedElement; i++)
-            {
-                tempPositions[i] = _positions[i];
-            }
-
-            for (int i = numberOfRemovedElement + 1; i < _positions.Length; i++)
-            {
-                tempPositions[i - 1] = _positions[i];
-            }
-
-            _positions = tempPositions;
+            return array;
         }
 
         private static void SearchDossierByLastName()
