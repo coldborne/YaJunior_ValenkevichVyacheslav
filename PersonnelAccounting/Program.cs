@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace PersonnelAccounting
 {
@@ -49,7 +50,8 @@ namespace PersonnelAccounting
 
             ReadData(ref fullName, ref position);
 
-            ExpandArrays();
+            ExpandFullNames();
+            ExpandPositions();
 
             _fullNames[_fullNames.Length - 1] = fullName;
             _positions[_positions.Length - 1] = position;
@@ -68,7 +70,7 @@ namespace PersonnelAccounting
                 Console.WriteLine("Введите фио");
                 fullName = Console.ReadLine();
 
-                isFullNameCorrect = isContainsFullData(fullName);
+                isFullNameCorrect = IsContainsFullData(fullName);
 
                 if (isFullNameCorrect == false)
                 {
@@ -94,7 +96,7 @@ namespace PersonnelAccounting
             }
         }
 
-        private static void ExpandArrays()
+        private static void ExpandFullNames()
         {
             string[] tempFullNames = new string[_fullNames.Length + 1];
 
@@ -104,7 +106,10 @@ namespace PersonnelAccounting
             }
 
             _fullNames = tempFullNames;
+        }
 
+        private static void ExpandPositions()
+        {
             string[] tempPositions = new string[_positions.Length + 1];
 
             for (int i = 0; i < _positions.Length; i++)
@@ -136,48 +141,51 @@ namespace PersonnelAccounting
         {
             Console.WriteLine($"В системе зарегистрировано {_fullNames.Length} досье. Укажите номер досье, которое желаете удалить");
             int numberOfDossier = ReadIntValue();
-
-            ReduceArrays(numberOfDossier);
-        }
-
-        private static void ReduceArrays(int numberOfDossier)
-        {
             int numberOfRemovedElement = numberOfDossier - 1;
 
             if (numberOfRemovedElement >= 0 && numberOfRemovedElement < _fullNames.Length && numberOfRemovedElement < _positions.Length)
             {
-                string[] tempFullNames = new string[_fullNames.Length - 1];
-
-                for (int i = 0; i < numberOfRemovedElement; i++)
-                {
-                    tempFullNames[i] = _fullNames[i];
-                }
-
-                for (int i = numberOfRemovedElement + 1; i < _fullNames.Length; i++)
-                {
-                    tempFullNames[i - 1] = _fullNames[i];
-                }
-
-                _fullNames = tempFullNames;
-
-                string[] tempPositions = new string[_positions.Length - 1];
-
-                for (int i = 0; i < numberOfRemovedElement; i++)
-                {
-                    tempPositions[i] = _positions[i];
-                }
-
-                for (int i = numberOfRemovedElement + 1; i < _positions.Length; i++)
-                {
-                    tempPositions[i - 1] = _positions[i];
-                }
-
-                _positions = tempPositions;
+                ReduceFullNames(numberOfRemovedElement);
+                ReducePositions(numberOfDossier);
             }
             else
             {
                 Console.WriteLine("Досье под таким номером не найдено");
             }
+        }
+
+        private static void ReduceFullNames(int numberOfRemovedElement)
+        {
+            string[] tempFullNames = new string[_fullNames.Length - 1];
+
+            for (int i = 0; i < numberOfRemovedElement; i++)
+            {
+                tempFullNames[i] = _fullNames[i];
+            }
+
+            for (int i = numberOfRemovedElement + 1; i < _fullNames.Length; i++)
+            {
+                tempFullNames[i - 1] = _fullNames[i];
+            }
+
+            _fullNames = tempFullNames;
+        }
+
+        private static void ReducePositions(int numberOfRemovedElement)
+        {
+            string[] tempPositions = new string[_positions.Length - 1];
+
+            for (int i = 0; i < numberOfRemovedElement; i++)
+            {
+                tempPositions[i] = _positions[i];
+            }
+
+            for (int i = numberOfRemovedElement + 1; i < _positions.Length; i++)
+            {
+                tempPositions[i - 1] = _positions[i];
+            }
+
+            _positions = tempPositions;
         }
 
         private static void SearchDossierByLastName()
@@ -221,11 +229,13 @@ namespace PersonnelAccounting
             return value;
         }
 
-        private static bool isContainsFullData(string fullName)
+        private static bool IsContainsFullData(string fullName)
         {
             string[] words = fullName.Split(' ');
+            int minimumAmountWords = 2;
+            int maximumAmountWords = 3;
 
-            return words.Length >= 2 && words.Length <= 3;
+            return words.Length >= minimumAmountWords && words.Length <= maximumAmountWords;
         }
     }
 }
