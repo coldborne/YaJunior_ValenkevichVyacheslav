@@ -8,7 +8,6 @@ namespace UiElement
         {
             int maxHealth = 500;
             int health = 300;
-
             ConsoleColor colorOfBar = ConsoleColor.Green;
             int positionX = 0;
             int positionY = 0;
@@ -22,8 +21,8 @@ namespace UiElement
             string bar = "";
 
             int scalePercentage = (int)(100 * (float)currentScaleValue / (float)maxScaleValue);
-            int maxUIScaleValue = 10;
 
+            int maxUIScaleValue = 10;
             int scaleValue = scalePercentage / 10;
 
             for (int i = 0; i < scaleValue; i++)
