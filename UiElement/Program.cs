@@ -23,7 +23,7 @@ namespace UiElement
             int scalePercentage = (int)(100 * (float)currentScaleValue / (float)maxScaleValue);
 
             int maxUIScaleValue = 10;
-            int scaleValue = scalePercentage / 10;
+            int scaleValue = scalePercentage / maxUIScaleValue;
 
             for (int i = 0; i < scaleValue; i++)
             {
