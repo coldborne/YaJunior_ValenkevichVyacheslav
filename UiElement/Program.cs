@@ -6,22 +6,27 @@ namespace UiElement
     {
         static void Main(string[] args)
         {
-            int percent = 40;
-            ConsoleColor colorOfBar = ConsoleColor.DarkYellow;
+            int maxHealth = 500;
+            int health = 300;
+
+            ConsoleColor colorOfBar = ConsoleColor.Green;
             int positionX = 0;
             int positionY = 0;
 
-            DrawBar(percent, colorOfBar, positionX, positionY);
+            DrawBar(health, maxHealth, colorOfBar, positionX, positionY);
         }
 
-        private static void DrawBar(int value, ConsoleColor color, int positionX, int positionY)
+        private static void DrawBar(int currentScaleValue, int maxScaleValue, ConsoleColor color, int positionX, int positionY)
         {
             ConsoleColor defaultColor = Console.BackgroundColor;
             string bar = "";
 
-            value /= 10;
+            int scalePercentage = (int)(100 * (float)currentScaleValue / (float)maxScaleValue);
+            int maxUIScaleValue = 10;
 
-            for (int i = 0; i < value; i++)
+            int scaleValue = scalePercentage / 10;
+
+            for (int i = 0; i < scaleValue; i++)
             {
                 bar += ' ';
             }
@@ -42,9 +47,7 @@ namespace UiElement
 
             bar = "";
 
-            int maxValue = 10;
-
-            for (int i = value; i < maxValue; i++)
+            for (int i = scaleValue; i < maxUIScaleValue; i++)
             {
                 bar += ' ';
             }
