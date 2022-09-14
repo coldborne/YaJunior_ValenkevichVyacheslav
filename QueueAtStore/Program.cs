@@ -10,7 +10,7 @@ namespace QueueAtStore
             Queue<int> purchaseAmounts = new Queue<int>();
             int amountOfMoneyInStore = 0;
 
-            purchaseAmounts = AddElements(purchaseAmounts);
+            AddElements(purchaseAmounts);
 
             Process(ref purchaseAmounts, ref amountOfMoneyInStore);
 
@@ -18,7 +18,7 @@ namespace QueueAtStore
             Console.WriteLine("Деньги в кассе - " + amountOfMoneyInStore);
         }
 
-        private static Queue<int> AddElements(Queue<int> purchaseAmounts)
+        private static void AddElements(Queue<int> purchaseAmounts)
         {
             int numberOfItemsInQueue = 5;
             Random random = new Random();
@@ -28,15 +28,13 @@ namespace QueueAtStore
             {
                 purchaseAmounts.Enqueue(random.Next(maxNumberOfRandom) + 1);
             }
-
-            return purchaseAmounts;
         }
 
         private static void Process(ref Queue<int> purchaseAmounts, ref int amountOfMoneyInStore)
         {
             while (purchaseAmounts.Count > 0)
             {
-                Display(ref purchaseAmounts, ref amountOfMoneyInStore);
+                Display(purchaseAmounts, amountOfMoneyInStore);
 
                 amountOfMoneyInStore += purchaseAmounts.Dequeue();
 
@@ -45,7 +43,7 @@ namespace QueueAtStore
             }
         }
 
-        private static void Display(ref Queue<int> purchaseAmounts, ref int amountOfMoneyInStore)
+        private static void Display(Queue<int> purchaseAmounts, int amountOfMoneyInStore)
         {
             Console.WriteLine("Все необработанные покупки от первой до последней");
 
