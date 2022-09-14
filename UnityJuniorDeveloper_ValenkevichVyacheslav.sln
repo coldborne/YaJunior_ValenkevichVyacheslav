@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueAtStore", "QueueAtStor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicArrayPRO", "DynamicArrayPRO\DynamicArrayPRO.csproj", "{5D21A9C1-AFD7-433D-A325-08FB6643893D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonnelAccountingPRO", "PersonnelAccountingPRO\PersonnelAccountingPRO.csproj", "{E7889C50-37F1-49E4-B6AE-099806457323}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,6 +219,10 @@ Global
 		{5D21A9C1-AFD7-433D-A325-08FB6643893D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D21A9C1-AFD7-433D-A325-08FB6643893D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D21A9C1-AFD7-433D-A325-08FB6643893D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7889C50-37F1-49E4-B6AE-099806457323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7889C50-37F1-49E4-B6AE-099806457323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7889C50-37F1-49E4-B6AE-099806457323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7889C50-37F1-49E4-B6AE-099806457323}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,6 +261,7 @@ Global
 		{DC365E59-D161-4D5B-BF2C-FCA597C964D3} = {8E6FB6B4-27D4-4204-9E98-98BF9A042A50}
 		{F22187E9-8261-4F74-AD99-543775E4413A} = {8E6FB6B4-27D4-4204-9E98-98BF9A042A50}
 		{5D21A9C1-AFD7-433D-A325-08FB6643893D} = {8E6FB6B4-27D4-4204-9E98-98BF9A042A50}
+		{E7889C50-37F1-49E4-B6AE-099806457323} = {8E6FB6B4-27D4-4204-9E98-98BF9A042A50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
