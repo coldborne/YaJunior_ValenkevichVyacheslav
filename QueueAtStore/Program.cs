@@ -12,7 +12,7 @@ namespace QueueAtStore
 
             AddElements(purchaseAmounts);
 
-            Process(ref purchaseAmounts, ref amountOfMoneyInStore);
+            Serve(ref purchaseAmounts, ref amountOfMoneyInStore);
 
             Console.WriteLine("Необработанных покупок не осталось");
             Console.WriteLine("Деньги в кассе - " + amountOfMoneyInStore);
@@ -30,7 +30,7 @@ namespace QueueAtStore
             }
         }
 
-        private static void Process(ref Queue<int> purchaseAmounts, ref int amountOfMoneyInStore)
+        private static void Serve(ref Queue<int> purchaseAmounts, ref int amountOfMoneyInStore)
         {
             while (purchaseAmounts.Count > 0)
             {
