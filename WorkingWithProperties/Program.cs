@@ -9,9 +9,9 @@ namespace WorkingWithProperties
             Player slava = new Player();
             slava.ShowInfo();
 
-            int x = 10;
-            int y = 12;
-            (int, int) coordinates = (x, y);
+            int xCoordinate = 10;
+            int yCoordinate = 12;
+            (int, int) coordinates = (xCoordinate, yCoordinate);
 
             Player vlad = new Player(coordinates);
             vlad.ShowInfo();
