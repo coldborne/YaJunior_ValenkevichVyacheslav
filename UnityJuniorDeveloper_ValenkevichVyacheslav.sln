@@ -83,6 +83,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonnelAccountingPRO", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergingIntoOneCollection", "MergingIntoOneCollection\MergingIntoOneCollection.csproj", "{9CE816DE-BB21-4C5E-92E1-52311681A852}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OOP", "OOP", "{845A2AD8-7C0F-4D37-82B6-02003A4529DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWithClasses", "WorkingWithClasses\WorkingWithClasses.csproj", "{55E8339F-D47D-4C03-88A3-B6D927A47B07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +233,10 @@ Global
 		{9CE816DE-BB21-4C5E-92E1-52311681A852}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CE816DE-BB21-4C5E-92E1-52311681A852}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CE816DE-BB21-4C5E-92E1-52311681A852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E8339F-D47D-4C03-88A3-B6D927A47B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E8339F-D47D-4C03-88A3-B6D927A47B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E8339F-D47D-4C03-88A3-B6D927A47B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E8339F-D47D-4C03-88A3-B6D927A47B07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -269,6 +277,7 @@ Global
 		{5D21A9C1-AFD7-433D-A325-08FB6643893D} = {8E6FB6B4-27D4-4204-9E98-98BF9A042A50}
 		{E7889C50-37F1-49E4-B6AE-099806457323} = {8E6FB6B4-27D4-4204-9E98-98BF9A042A50}
 		{9CE816DE-BB21-4C5E-92E1-52311681A852} = {8E6FB6B4-27D4-4204-9E98-98BF9A042A50}
+		{55E8339F-D47D-4C03-88A3-B6D927A47B07} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
