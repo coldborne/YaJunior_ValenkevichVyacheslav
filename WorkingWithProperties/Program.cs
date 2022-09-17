@@ -13,8 +13,8 @@ namespace WorkingWithProperties
             int yCoordinate = 12;
             (int, int) coordinates = (xCoordinate, yCoordinate);
 
-            Player vlad = new Player(coordinates);
-            vlad.ShowInfo();
+            Player suffocater = new Player(coordinates);
+            suffocater.ShowInfo();
         }
     }
 
