@@ -9,58 +9,86 @@ namespace PlayerDatabase
         {
             Game fortnite = new Game();
 
-            bool isGameOn = true;
-
             fortnite.AddNewPlayer();
 
-            fortnite.Ban();
+            fortnite.BanPlayer();
+
+            fortnite.DeletePlayer();
 
             fortnite = null;
             GC.Collect();
+
+            Console.WriteLine("Игра закрыта");
         }
     }
 
     public class Game
     {
-        private Database database;
+        private Database _database;
 
         public Game()
         {
-            database = new Database();
+            _database = new Database();
         }
 
         public void AddNewPlayer()
+        {
+            Console.WriteLine("Добавление игрока: ");
+
+            Player newPlayer = CreatePlayer();
+
+            _database.AddInPlayers(newPlayer);
+        }
+
+        public Player CreatePlayer()
         {
             Console.WriteLine("Имя игрока?");
             string nickname = Console.ReadLine();
 
             Player newPlayer = new Player(nickname);
 
-            database.AddInPlayers(newPlayer);
+            return newPlayer;
         }
 
         public void DeletePlayer()
         {
-            Console.WriteLine("Id игрока?");
-            string userInput = Console.ReadLine();
-            int id = int.Parse(userInput);
+            Console.WriteLine("Удаление игрока: ");
 
-            database.RemovePlayer(id);
+            Console.WriteLine("Id игрока?");
+            GetId(out int id);
+
+            _database.TryRemovePlayer(id, out bool wasRemoved);
         }
 
-        public void Ban()
+        public void BanPlayer()
         {
+            Console.WriteLine("Бан игрока: ");
             Console.WriteLine("Id игрока");
-            string userInput = Console.ReadLine();
-            int.TryParse(userInput, out int id);
+            GetId(out int id);
 
-            Player player = database.GetPlayer(id);
+            Player player = _database.TryGetPlayer(id);
 
             if (player != null)
             {
-                bool isBanned = player.getIsBanned();
+                _database.ChangeIsBannedOfPlayer(id);
+            }
+        }
 
-                database.MovePlayer(id, isBanned);
+        private void GetId(out int id)
+        {
+            id = 0;
+            bool isNumber = false;
+
+            while (isNumber == false)
+            {
+                string userInput = Console.ReadLine();
+
+                isNumber = int.TryParse(userInput, out id);
+
+                if (isNumber == false)
+                {
+                    Console.WriteLine("Введенно нецелое число, попробуйте ещё раз");
+                }
             }
         }
     }
@@ -69,116 +97,89 @@ namespace PlayerDatabase
     {
         private static List<int> allId = new List<int>();
 
-        private int _id;
         private int _level;
         private string _nickname;
-        private bool _isBanned;
 
         public Player(string nickname)
         {
-            _id = allId.Count + 1;
-            allId.Add(_id);
+            Id = allId.Count + 1;
+            allId.Add(Id);
             _level = 1;
             _nickname = nickname;
-            _isBanned = false;
         }
 
-        public int getId()
-        {
-            return _id;
-        }
+        public int Id { get; private set; }
+        public bool IsBanned { get; private set; }
 
-        public bool getIsBanned()
+        public void ChangeIsBanned()
         {
-            return _isBanned;
+            IsBanned = !IsBanned;
         }
     }
 
     public class Database
     {
-        private Dictionary<int, Player> players;
-        private Dictionary<int, Player> bannedPlayers;
+        private Dictionary<int, Player> _players;
 
         public Database()
         {
-            players = new Dictionary<int, Player>();
-            bannedPlayers = new Dictionary<int, Player>();
+            _players = new Dictionary<int, Player>();
         }
 
         public void AddInPlayers(Player player)
         {
-            players.Add(player.getId(), player);
+            _players.Add(player.Id, player);
+            Console.WriteLine("Игрок добавлен");
         }
 
-        public bool TryGetPlayer(int id, out Player player, ref bool isBanned)
-        {
-            if (players.ContainsKey(id))
-            {
-                player = players[id];
-                isBanned = player.getIsBanned();
-                return true;
-            }
-            else if (bannedPlayers.ContainsKey(id))
-            {
-                player = players[id];
-                isBanned = player.getIsBanned();
-                return true;
-            }
-            else
-            {
-                player = null;
-                isBanned = false;
-                Console.WriteLine("Игрок под таким id не найден");
-                return false;
-            }
-        }
-
-        public Player GetPlayer(int id)
+        public Player TryGetPlayer(int id)
         {
             Player player = null;
 
-            if (players.ContainsKey(id))
+            if (_players.ContainsKey(id))
             {
-                return players[id];
-            }
-            else if (bannedPlayers.ContainsKey(id))
-            {
-                return bannedPlayers[id];
+                player = GetPlayer(id);
             }
             else
             {
-                Console.WriteLine("Игрок под таким id не найден");
-                return null;
+                Console.WriteLine("Игрок под таким id не найден (Возможно, уже удалён, на данный момент нет базы данных удалённых игроков)");
+            }
+
+            return player;
+        }
+
+        private Player GetPlayer(int id)
+        {
+            return _players[id];
+        }
+
+        public void TryRemovePlayer(int id, out bool wasRemoved)
+        {
+            Player player = TryGetPlayer(id);
+
+            if (player != null)
+            {
+                _players.Remove(id);
+
+                wasRemoved = true;
+                Console.WriteLine("Игрок удалён");
+            }
+            else
+            {
+                wasRemoved = false;
             }
         }
 
-        public void RemovePlayer(int id)
+        public void ChangeIsBannedOfPlayer(int id)
         {
-            if (players.ContainsKey(id))
+            if (_players[id].IsBanned == false)
             {
-                players.Remove(id);
-            }
-            else if (bannedPlayers.ContainsKey(id))
-            {
-                bannedPlayers.Remove(id);
+                _players[id].ChangeIsBanned();
+                Console.WriteLine("Игрок забанен");
             }
             else
             {
-                Console.WriteLine("Игрок под таким id не найден");
-            }
-        }
-
-        public void MovePlayer(int id, bool isBanned)
-        {
-            if (isBanned)
-            {
-                players.Add(id, players[id]);
-                bannedPlayers.Remove(id);
-            }
-            else
-            {
-                bannedPlayers.Add(id, players[id]);
-                players.Remove(id);
+                Console.WriteLine("Игрок уже забанен");
             }
         }
     }
