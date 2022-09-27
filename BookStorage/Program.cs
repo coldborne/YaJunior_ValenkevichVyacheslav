@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
+using System.Reflection;
 
 namespace BookStorage
 {
@@ -11,94 +10,43 @@ namespace BookStorage
         static void Main(string[] args)
         {
             StorageBook storageBook = new StorageBook();
-        }
-    }
 
-    public class Book
-    {
-        public string Name { get; private set; }
-        public string Author { get; private set; }
-        public int ReleaseYear { get; private set; }
+            Console.WriteLine("Добро пожаловать в наше хранилище игр");
+            Console.WriteLine("Выберите одно из возможных действий:");
 
-        public Book(string name, string author, int releaseYear)
-        {
-            Name = name;
-            Author = author;
-            ReleaseYear = releaseYear;
-        }
-    }
+            bool isStorageOpen = true;
 
-    public class StorageBook
-    {
-        public List<Book> Books { get; private set; }
-
-        public StorageBook()
-        {
-            Books = new List<Book>();
-        }
-
-        public void ShowAllBooks()
-        {
-            foreach (Book book in Books)
+            while (isStorageOpen)
             {
-                Console.WriteLine("Книга - " + book);
-            }
-        }
+                Console.WriteLine("1 - добавить книгу, 2 - убрать книгу, 3 - показать все книги, 4 - показать книги по конкретному параметру, 5 - Выход");
 
-        public void AddBook()
-        {
-            Book book = CreateBook();
+                int selectedCommand = ReadInt();
 
-            Books.Add(book);
-        }
-
-        public bool TryRemoveBook()
-        {
-            return true;
-        }
-
-        public void ShowBook(string parametr)
-        {
-
-        }
-
-        public Book CreateBook()
-        {
-            Console.WriteLine("Введите название книги");
-            string bookName = ReadString();
-
-            Console.WriteLine("Введите автора книги");
-            string bookAuthor = ReadString();
-
-            Console.WriteLine("Введите год выпуска книги");
-            int bookReleaseYear = ReadInt();
-
-            return new Book(bookName, bookAuthor, bookReleaseYear);
-        }
-
-        public string ReadString()
-        {
-            string userInput = null;
-            bool isInputRight = false;
-
-            while (isInputRight == false)
-            {
-                userInput = Console.ReadLine();
-
-                if (userInput.Trim() == "" || userInput == null)
+                switch (selectedCommand)
                 {
-                    Console.WriteLine("Строка должна содержать хотя бы один символ неравный пробелу");
-                }
-                else
-                {
-                    isInputRight = true;
+                    case 1:
+                        storageBook.AddBook();
+                        break;
+                    case 2:
+                        storageBook.TryRemoveBook();
+                        break;
+                    case 3:
+                        storageBook.ShowAllBooks();
+                        break;
+                    case 4:
+                        storageBook.ShowBook();
+                        break;
+                    case 5:
+                        isStorageOpen = false;
+                        break;
+                    default:
+                        Console.WriteLine("Введена недопустимая команда");
+                        break;
                 }
             }
-
-            return userInput;
         }
 
-        public int ReadInt()
+        public static int ReadInt()
         {
             int userInputInt = 0;
             bool isInputRight = false;
@@ -117,7 +65,9 @@ namespace BookStorage
                 {
                     if (userInputInt > 2022)
                     {
-                        Console.WriteLine($"Текущий год - {Program.CurrentYear}, год выпуска не может быть больше текущего года");
+                        Console.WriteLine(
+                            $"Текущий год - {Program.CurrentYear}, год выпуска не может быть больше текущего года");
+
                         isInputRight = false;
                     }
                 }

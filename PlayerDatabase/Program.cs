@@ -100,6 +100,9 @@ namespace PlayerDatabase
         private int _level;
         private string _nickname;
 
+        public int Id { get; private set; }
+        public bool IsBanned { get; private set; }
+        
         public Player(string nickname)
         {
             Id = allId.Count + 1;
@@ -107,9 +110,6 @@ namespace PlayerDatabase
             _level = 1;
             _nickname = nickname;
         }
-
-        public int Id { get; private set; }
-        public bool IsBanned { get; private set; }
 
         public void ChangeIsBanned()
         {

@@ -12,9 +12,9 @@ namespace CardDeck
 
             bool isGameStarted = true;
 
-            for (int i = 0; i < game.; i++)
+            for (int i = 0; i < 10; i++)
             {
-
+                Console.WriteLine("Лол Rider");
             }
 
             //while (isGameStarted)
@@ -42,19 +42,19 @@ namespace CardDeck
 
     public class CardDeck
     {
-        private List<Card> _cards { get; set; }
+        public List<Card> Cards { get; private set; }
 
         public List<Card> Deck { get; private set; }
 
         public CardDeck()
         {
-            _cards = new List<Card>(54);
+            Cards = new List<Card>(54);
 
             AddCards();
 
             ShuffleCardDeck();
         }
-
+        
         private void AddCards()
         {
             foreach (var suit in Enum.GetNames(typeof(CardSuit)))
@@ -62,7 +62,7 @@ namespace CardDeck
                 foreach (var value in Enum.GetNames(typeof(CardValue)))
                 {
                     Card card = new Card(value, suit);
-                    _cards.Add(card);
+                    Cards.Add(card);
                     //Console.WriteLine(card.ToString());
                 }
             }
@@ -70,7 +70,7 @@ namespace CardDeck
 
         public void ShuffleCardDeck()
         {
-            Deck = _cards;
+            Deck = Cards;
 
             Random random = new Random();
             Deck = Deck.OrderBy(card => random.Next()).ToList();
@@ -99,6 +99,10 @@ namespace CardDeck
         private List<Card> _cardsInHand;
         private int _maxCardsInHandAmount = 6;
 
+        public Player()
+        {
+            _cardsInHand = new List<Card>();
+        }
         public void TakeCard(Card card)
         {
             if (_cardsInHand.Count < _maxCardsInHandAmount)
