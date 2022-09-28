@@ -33,7 +33,7 @@ namespace BookStorage
             return true;
         }
 
-        public Book CreateBook()
+        private Book CreateBook()
         {
             Console.WriteLine("Введите название книги");
             string bookName = ReadString();
@@ -51,25 +51,27 @@ namespace BookStorage
         {
             Console.WriteLine("Выберите один из возможных параметров:");
 
-            Type bookType = typeof(Book);
-            PropertyInfo[] bookFields = bookType.GetProperties();
+            // Type bookType = typeof(Book);
+            // PropertyInfo[] bookFields = bookType.GetProperties();
+            //
+            // for (int i = 0; i < bookFields.Length; i++)
+            // {
+            //     Console.Write($"{i + 1} - {bookFields[i].Name} ");
+            // }
 
-            for (int i = 0; i < bookFields.Length; i++)
-            {
-                Console.Write($"{i + 1} - {bookFields[i].Name} ");
-            }
-
+            Console.WriteLine("1 - Название, 2 - Автор, 3 - Год издания");
+            
             int selectedCommand = Program.ReadInt();
 
             switch (selectedCommand)
             {
                 case 1:
+                    var userInput = ReadString();
                     break;
                 case 2:
+                    var userInput = Program.ReadInt();
                     break;
                 case 3:
-                    break;
-                case 4:
                     break;
                 default:
                     Console.WriteLine("Введена недопустимая команда");
@@ -77,7 +79,7 @@ namespace BookStorage
             }
         }
 
-        public string ReadString()
+        private string ReadString()
         {
             string userInput = null;
             bool isInputRight = false;
@@ -85,8 +87,8 @@ namespace BookStorage
             while (isInputRight == false)
             {
                 userInput = Console.ReadLine();
-
-                if (userInput.Trim() == "")
+                
+                if (userInput == null || userInput.Trim() == "")
                 {
                     Console.WriteLine("Строка должна содержать хотя бы один символ неравный пробелу");
                 }
