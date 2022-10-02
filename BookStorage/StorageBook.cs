@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 
 namespace BookStorage
 {
     public class StorageBook
     {
-        public List<Book> Books { get; private set; }
+        private List<Book> _books;
 
         public StorageBook()
         {
-            Books = new List<Book>();
+            _books = new List<Book>();
         }
 
         public void ShowAllBooks()
         {
-            foreach (Book book in Books)
+            foreach (Book book in _books)
             {
                 book.ShowInfo();
             }
@@ -25,7 +25,7 @@ namespace BookStorage
         {
             Book book = CreateBook();
 
-            Books.Add(book);
+            _books.Add(book);
         }
 
         public bool TryRemoveBook()
@@ -36,46 +36,63 @@ namespace BookStorage
         private Book CreateBook()
         {
             Console.WriteLine("Введите название книги");
-            string bookName = ReadString();
+            string name = ReadString();
 
             Console.WriteLine("Введите автора книги");
-            string bookAuthor = ReadString();
+            string author = ReadString();
 
             Console.WriteLine("Введите год выпуска книги");
-            int bookReleaseYear = Program.ReadInt();
+            int releaseYear = Program.ReadInt();
 
-            return new Book(bookName, bookAuthor, bookReleaseYear);
+            return new Book(name, author, releaseYear);
         }
 
-        public void ShowBook()
+        public void ShowBooks()
         {
-            Console.WriteLine("Выберите один из возможных параметров:");
-
-            // Type bookType = typeof(Book);
-            // PropertyInfo[] bookFields = bookType.GetProperties();
-            //
-            // for (int i = 0; i < bookFields.Length; i++)
-            // {
-            //     Console.Write($"{i + 1} - {bookFields[i].Name} ");
-            // }
-
-            Console.WriteLine("1 - Название, 2 - Автор, 3 - Год издания");
+            ChooseOption(out int releaseYear, out string name, out string author);
             
-            int selectedCommand = Program.ReadInt();
-
-            switch (selectedCommand)
+            foreach (var book in _books.Where(book => book.Name == name || book.Author == author || book.ReleaseYear == releaseYear))
             {
-                case 1:
-                    var userInput = ReadString();
-                    break;
-                case 2:
-                    var userInput = Program.ReadInt();
-                    break;
-                case 3:
-                    break;
-                default:
-                    Console.WriteLine("Введена недопустимая команда");
-                    break;
+                book.ShowInfo();
+            }
+        }
+
+        private void ChooseOption(out int releaseYear, out string name, out string author)
+        {
+            releaseYear = -100;
+            name = null;
+            author = null;
+            
+            bool isCommandRight = false;
+            
+            Console.WriteLine("Выберите один из возможных параметров:");
+            Console.WriteLine("1 - Название, 2 - Автор, 3 - Год издания");
+
+            while (isCommandRight == false)
+            {
+                int selectedCommand = Program.ReadInt();
+
+                switch (selectedCommand)
+                {
+                    case 1:
+                        Console.WriteLine("Введите название");
+                        name = ReadString();
+                        isCommandRight = true;
+                        break;
+                    case 2:
+                        Console.WriteLine("Введите автора");
+                        author = ReadString();
+                        isCommandRight = true;
+                        break;
+                    case 3:
+                        Console.WriteLine("Введите год издания");
+                        releaseYear = Program.ReadInt();
+                        isCommandRight = true;
+                        break;
+                    default:
+                        Console.WriteLine("Недопустимая команда");
+                        break;
+                }
             }
         }
 

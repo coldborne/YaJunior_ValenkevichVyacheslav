@@ -34,7 +34,7 @@ namespace BookStorage
                         storageBook.ShowAllBooks();
                         break;
                     case 4:
-                        storageBook.ShowBook();
+                        storageBook.ShowBooks();
                         break;
                     case 5:
                         isStorageOpen = false;
