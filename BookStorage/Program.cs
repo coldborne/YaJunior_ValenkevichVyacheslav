@@ -5,7 +5,7 @@ namespace BookStorage
 {
     internal class Program
     {
-        public static int CurrentYear = DateTime.Now.Year;
+        private static int _currentYear = DateTime.Now.Year;
 
         static void Main(string[] args)
         {
@@ -28,13 +28,13 @@ namespace BookStorage
                         storageBook.AddBook();
                         break;
                     case 2:
-                        storageBook.TryRemoveBook();
+                        storageBook.RemoveBook();
                         break;
                     case 3:
                         storageBook.ShowAllBooks();
                         break;
                     case 4:
-                        storageBook.ShowBooks();
+                        storageBook.ShowBooksByOption();
                         break;
                     case 5:
                         isStorageOpen = false;
@@ -66,7 +66,8 @@ namespace BookStorage
                     if (userInputInt > 2022)
                     {
                         Console.WriteLine(
-                            $"Текущий год - {Program.CurrentYear}, год выпуска не может быть больше текущего года");
+                            $"Текущий год - {Program._currentYear}, год выпуска не может быть больше текущего года");
+                        Console.WriteLine("Попробуйте ещё раз");
 
                         isInputRight = false;
                     }

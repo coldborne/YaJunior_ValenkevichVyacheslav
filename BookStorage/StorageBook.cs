@@ -15,9 +15,16 @@ namespace BookStorage
 
         public void ShowAllBooks()
         {
-            foreach (Book book in _books)
+            if (_books.Count > 0)
             {
-                book.ShowInfo();
+                foreach (Book book in _books)
+                {
+                    book.ShowInfo();
+                }
+            }
+            else
+            {
+                Console.WriteLine("В хранилище нет книг");
             }
         }
 
@@ -25,12 +32,37 @@ namespace BookStorage
         {
             Book book = CreateBook();
 
-            _books.Add(book);
+            if (book != null)
+            {
+                _books.Add(book);
+            }
         }
 
-        public bool TryRemoveBook()
+        public void RemoveBook()
         {
-            return true;
+            if (_books.Count > 0)
+            {
+                Console.WriteLine("Введите название книги");
+                string name = ReadString();
+                
+                Console.WriteLine("Введите автора книги");
+                string author = ReadString();
+                
+                Console.WriteLine("Введите год выпуска книги");
+                int releaseYear = Program.ReadInt();
+
+                List<Book> _booksCopy = new List<Book>(_books);
+                
+                foreach (var book in _booksCopy.Where(book =>
+                             book.Name == name && book.Author == author && book.ReleaseYear == releaseYear))
+                {
+                    _books.Remove(book);
+                }
+            }
+            else
+            {
+                Console.WriteLine("В хранилище нет книг");
+            }
         }
 
         private Book CreateBook()
@@ -44,16 +76,31 @@ namespace BookStorage
             Console.WriteLine("Введите год выпуска книги");
             int releaseYear = Program.ReadInt();
 
+            foreach (var book in _books.Where(book =>
+                         book.Name == name && book.Author == author && book.ReleaseYear == releaseYear))
+            {
+                Console.WriteLine("Такая книга уже существует");
+                return null;
+            }
+            
             return new Book(name, author, releaseYear);
         }
 
-        public void ShowBooks()
+        public void ShowBooksByOption()
         {
-            ChooseOption(out int releaseYear, out string name, out string author);
-            
-            foreach (var book in _books.Where(book => book.Name == name || book.Author == author || book.ReleaseYear == releaseYear))
+            if (_books.Count > 0)
             {
-                book.ShowInfo();
+                ChooseOption(out int releaseYear, out string name, out string author);
+            
+                foreach (var book in _books.Where(book =>
+                             book.Name == name || book.Author == author || book.ReleaseYear == releaseYear))
+                {
+                    book.ShowInfo();
+                } 
+            }
+            else
+            {
+                Console.WriteLine("В хранилище нет книг");
             }
         }
 
