@@ -22,7 +22,7 @@ namespace UiElement
             int maximumPercentage = 100;
             int percentage = (int)(maximumPercentage * (float)currentValue / maxValue);
 
-            if (percentage >= 0 & percentage <= 100)
+            if (percentage >= 0 & percentage <= maximumPercentage)
             {
                 return percentage;
             }
