@@ -26,14 +26,8 @@ namespace UiElement
             {
                 return percentage;
             }
-            else if (percentage < 0)
-            {
-                return 0;
-            }
-            else
-            {
-                return 100;
-            }
+            
+            return percentage < 0 ? 0 : 100;
         }
 
         private static void DrawBar(int scalePercentage, ConsoleColor color, int positionX, int positionY)
