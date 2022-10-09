@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Reflection;
 
 namespace BookStorage
 {
     internal class Program
     {
-        private static int _currentYear = DateTime.Now.Year;
-
         static void Main(string[] args)
         {
             StorageBook storageBook = new StorageBook();
@@ -18,25 +15,27 @@ namespace BookStorage
 
             while (isStorageOpen)
             {
-                Console.WriteLine("1 - добавить книгу, 2 - убрать книгу, 3 - показать все книги, 4 - показать книги по конкретному параметру, 5 - Выход");
+                Console.WriteLine(
+                    "1 - добавить книгу, 2 - убрать книгу, 3 - показать все книги, " +
+                    "4 - показать книги по конкретному параметру, 5 - Выход");
 
-                int selectedCommand = ReadInt();
+                int selectedCommand = UserUtils.ReadInt();
 
                 switch (selectedCommand)
                 {
-                    case 1:
+                    case (int)Commands.First:
                         storageBook.AddBook();
                         break;
-                    case 2:
-                        storageBook.RemoveBook();
+                    case (int)Commands.Second:
+                        storageBook.TryRemoveBook();
                         break;
-                    case 3:
+                    case (int)Commands.Third:
                         storageBook.ShowAllBooks();
                         break;
-                    case 4:
+                    case (int)Commands.Fourth:
                         storageBook.ShowBooksByOption();
                         break;
-                    case 5:
+                    case (int)Commands.Fifth:
                         isStorageOpen = false;
                         break;
                     default:
@@ -44,37 +43,6 @@ namespace BookStorage
                         break;
                 }
             }
-        }
-
-        public static int ReadInt()
-        {
-            int userInputInt = 0;
-            bool isInputRight = false;
-
-            while (isInputRight == false)
-            {
-                string userInput = Console.ReadLine();
-
-                isInputRight = int.TryParse(userInput, out userInputInt);
-
-                if (isInputRight == false)
-                {
-                    Console.WriteLine("Можно вводить только целые числа");
-                }
-                else
-                {
-                    if (userInputInt > 2022)
-                    {
-                        Console.WriteLine(
-                            $"Текущий год - {Program._currentYear}, год выпуска не может быть больше текущего года");
-                        Console.WriteLine("Попробуйте ещё раз");
-
-                        isInputRight = false;
-                    }
-                }
-            }
-
-            return userInputInt;
         }
     }
 }

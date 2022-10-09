@@ -13,6 +13,36 @@ namespace BookStorage
             _books = new List<Book>();
         }
 
+        public void AddBook()
+        {
+            Book book = CreateBook();
+
+            _books.Add(book);
+        }
+
+        public void TryRemoveBook()
+        {
+            if (_books.Count > 0)
+            {
+                Book book = TryToFindBook();
+
+                if (book != null)
+                {
+                    _books.Remove(book);
+
+                    Console.WriteLine("Была успешно удалена одна книга");
+                }
+                else
+                {
+                    Console.WriteLine("Книга не была найдена");
+                }
+            }
+            else
+            {
+                Console.WriteLine("В хранилище нет книг");
+            }
+        }
+
         public void ShowAllBooks()
         {
             if (_books.Count > 0)
@@ -28,36 +58,11 @@ namespace BookStorage
             }
         }
 
-        public void AddBook()
-        {
-            Book book = CreateBook();
-
-            if (book != null)
-            {
-                _books.Add(book);
-            }
-        }
-
-        public void RemoveBook()
+        public void ShowBooksByOption()
         {
             if (_books.Count > 0)
             {
-                Console.WriteLine("Введите название книги");
-                string name = ReadString();
-                
-                Console.WriteLine("Введите автора книги");
-                string author = ReadString();
-                
-                Console.WriteLine("Введите год выпуска книги");
-                int releaseYear = Program.ReadInt();
-
-                List<Book> _booksCopy = new List<Book>(_books);
-                
-                foreach (var book in _booksCopy.Where(book =>
-                             book.Name == name && book.Author == author && book.ReleaseYear == releaseYear))
-                {
-                    _books.Remove(book);
-                }
+                ChooseOption();
             }
             else
             {
@@ -68,101 +73,97 @@ namespace BookStorage
         private Book CreateBook()
         {
             Console.WriteLine("Введите название книги");
-            string name = ReadString();
+            string name = UserUtils.ReadString();
 
             Console.WriteLine("Введите автора книги");
-            string author = ReadString();
+            string author = UserUtils.ReadString();
 
             Console.WriteLine("Введите год выпуска книги");
-            int releaseYear = Program.ReadInt();
+            int releaseYear = UserUtils.ReadInt();
 
-            foreach (var book in _books.Where(book =>
-                         book.Name == name && book.Author == author && book.ReleaseYear == releaseYear))
-            {
-                Console.WriteLine("Такая книга уже существует");
-                return null;
-            }
-            
             return new Book(name, author, releaseYear);
         }
 
-        public void ShowBooksByOption()
+        private Book TryToFindBook()
         {
-            if (_books.Count > 0)
-            {
-                ChooseOption(out int releaseYear, out string name, out string author);
-            
-                foreach (var book in _books.Where(book =>
-                             book.Name == name || book.Author == author || book.ReleaseYear == releaseYear))
-                {
-                    book.ShowInfo();
-                } 
-            }
-            else
-            {
-                Console.WriteLine("В хранилище нет книг");
-            }
+            Console.WriteLine("Введите название книги");
+            string name = UserUtils.ReadString();
+
+            Console.WriteLine("Введите автора книги");
+            string author = UserUtils.ReadString();
+
+            Console.WriteLine("Введите год выпуска книги");
+            int releaseYear = UserUtils.ReadInt();
+
+            return _books.Find(book => 
+                book.Name == name && book.Author == author && book.ReleaseYear == releaseYear);
         }
 
-        private void ChooseOption(out int releaseYear, out string name, out string author)
+        private void ChooseOption()
         {
-            releaseYear = -100;
-            name = null;
-            author = null;
-            
             bool isCommandRight = false;
-            
+
             Console.WriteLine("Выберите один из возможных параметров:");
             Console.WriteLine("1 - Название, 2 - Автор, 3 - Год издания");
 
             while (isCommandRight == false)
             {
-                int selectedCommand = Program.ReadInt();
+                int selectedCommand = UserUtils.ReadInt();
 
                 switch (selectedCommand)
                 {
-                    case 1:
-                        Console.WriteLine("Введите название");
-                        name = ReadString();
-                        isCommandRight = true;
+                    case (int)Commands.First:
+                        ShowBookByName();
                         break;
-                    case 2:
-                        Console.WriteLine("Введите автора");
-                        author = ReadString();
-                        isCommandRight = true;
+                    case (int)Commands.Second:
+                        ShowBookByAuthor();
                         break;
-                    case 3:
-                        Console.WriteLine("Введите год издания");
-                        releaseYear = Program.ReadInt();
-                        isCommandRight = true;
+                    case (int)Commands.Third:
+                        ShowBookByReleaseYear();
                         break;
                     default:
                         Console.WriteLine("Недопустимая команда");
                         break;
                 }
+
+                if (selectedCommand >= (int)Commands.First && selectedCommand <= (int)Commands.Third)
+                {
+                    isCommandRight = true;
+                }
             }
         }
 
-        private string ReadString()
+        private void ShowBookByName()
         {
-            string userInput = null;
-            bool isInputRight = false;
+            Console.WriteLine("Введите название книги");
+            string name = UserUtils.ReadString();
 
-            while (isInputRight == false)
+            foreach (var book in _books.Where(book => book.Name == name))
             {
-                userInput = Console.ReadLine();
-                
-                if (userInput == null || userInput.Trim() == "")
-                {
-                    Console.WriteLine("Строка должна содержать хотя бы один символ неравный пробелу");
-                }
-                else
-                {
-                    isInputRight = true;
-                }
+                book.ShowInfo();
             }
+        }
 
-            return userInput;
+        private void ShowBookByAuthor()
+        {
+            Console.WriteLine("Введите автора книги");
+            string author = UserUtils.ReadString();
+
+            foreach (var book in _books.Where(book => book.Author == author))
+            {
+                book.ShowInfo();
+            }
+        }
+
+        private void ShowBookByReleaseYear()
+        {
+            Console.WriteLine("Введите год издания книги");
+            int releaseYear = UserUtils.ReadInt();
+
+            foreach (var book in _books.Where(book => book.ReleaseYear == releaseYear))
+            {
+                book.ShowInfo();
+            }
         }
     }
 }
