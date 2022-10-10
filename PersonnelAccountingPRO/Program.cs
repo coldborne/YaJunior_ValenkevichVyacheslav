@@ -5,7 +5,7 @@ namespace PersonnelAccountingPRO
 {
     internal class Program
     {
-        private static Dictionary<string, string> dossiers = new Dictionary<string, string>();
+        private static List<Dossier> _dossiers = new List<Dossier>();
 
         static void Main(string[] args)
         {
@@ -16,8 +16,9 @@ namespace PersonnelAccountingPRO
             while (isProgramWork)
             {
                 Console.WriteLine("1 - Добавить досье, 2 - Вывести все досье, 3 - Удалить одно досье, 4 - Выход");
+                
                 Console.WriteLine("Чтобы перейти к нужному функционалу, введите нужную цифру");
-                int commandNumber = ReadIntValue();
+                int commandNumber = UserUtils.ReadIntValue();
 
                 switch (commandNumber)
                 {
@@ -34,6 +35,7 @@ namespace PersonnelAccountingPRO
                         isProgramWork = false;
                         break;
                     default:
+                        Console.WriteLine("Недоступная команда");
                         break;
                 }
             }
@@ -41,12 +43,9 @@ namespace PersonnelAccountingPRO
 
         private static void AddDossier()
         {
-            string fullName = null;
-            string position = null;
+            Dossier dossier = CreateDossier();
 
-            ReadData(ref fullName, ref position);
-
-            dossiers.Add(fullName, position);
+            _dossiers.Add(dossier);
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Досье добавлено");
@@ -88,17 +87,36 @@ namespace PersonnelAccountingPRO
             }
         }
 
+        private static bool IsContainsFullData(string fullName)
+        {
+            string[] words = fullName.Split(' ');
+            const int minimumAmountWords = 2;
+            const int maximumAmountWords = 3;
+
+            return words.Length >= minimumAmountWords && words.Length <= maximumAmountWords;
+        }
+
+        private static Dossier CreateDossier()
+        {
+            string fullName = null;
+            string position = null;
+
+            ReadData(ref fullName, ref position);
+
+            return new Dossier(fullName, position);
+        }
+
         private static void ShowAllDossiers()
         {
-            if (dossiers.Count == 0)
+            if (_dossiers.Count == 0)
             {
                 Console.WriteLine("Ни одно досье пока не добавлено");
             }
             else
             {
-                foreach (var dossier in dossiers)
+                foreach (var dossier in _dossiers)
                 {
-                    Console.WriteLine($"ФИО: {dossier.Key}  позиция: {dossier.Value}");
+                    Console.WriteLine($"ФИО: {dossier.Fullname}  позиция: {dossier.Position}");
                 }
 
                 Console.WriteLine();
@@ -107,46 +125,31 @@ namespace PersonnelAccountingPRO
 
         private static void DeleteDossier()
         {
-            Console.WriteLine($"В системе зарегистрировано {dossiers.Count} досье. Укажите ФИО из досье, которое желаете удалить");
-
-            string fullname = Console.ReadLine();
-
-            if (dossiers.ContainsKey(fullname))
+            if (_dossiers.Count == 0)
             {
-                dossiers.Remove(fullname);
+                Console.WriteLine("Ни одно досье пока не добавлено");
             }
             else
             {
-                Console.WriteLine("Досье с такими данными не найдено");
-            }
-        }
+                Console.WriteLine($"В системе зарегистрировано {_dossiers.Count} досье");
+                
+                Console.WriteLine("Укажите ФИО из досье, которое желаете удалить");
+                string fullname = Console.ReadLine();
 
-        private static int ReadIntValue()
-        {
-            int value = 0;
-            bool isIntValue = false;
+                Console.WriteLine("Укажите должность из досье, которое желаете удалить");
+                string position = Console.ReadLine();
 
-            while (isIntValue == false)
-            {
-                string userInput = Console.ReadLine();
-                isIntValue = int.TryParse(userInput, out value);
+                Dossier dossier = _dossiers.Find(x => x.Fullname == fullname && x.Position == position);
 
-                if (isIntValue == false)
+                if (dossier != null)
                 {
-                    Console.WriteLine("Можно вводить только числа");
+                    _dossiers.Remove(dossier);
+                }
+                else
+                {
+                    Console.WriteLine("Досье с такими данными не найдено");
                 }
             }
-
-            return value;
-        }
-
-        private static bool IsContainsFullData(string fullName)
-        {
-            string[] words = fullName.Split(' ');
-            int minimumAmountWords = 2;
-            int maximumAmountWords = 3;
-
-            return words.Length >= minimumAmountWords && words.Length <= maximumAmountWords;
         }
     }
 }
