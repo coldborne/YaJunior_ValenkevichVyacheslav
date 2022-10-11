@@ -2,6 +2,14 @@
 
 namespace PersonnelAccountingPRO
 {
+    public enum Commands: byte
+    {
+        First = 1,
+        Second,
+        Third,
+        Fourth
+    }
+    
     public class UserUtils
     {
         public static int ReadIntValue()

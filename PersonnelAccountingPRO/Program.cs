@@ -22,16 +22,16 @@ namespace PersonnelAccountingPRO
 
                 switch (commandNumber)
                 {
-                    case 1:
+                    case (int)Commands.First:
                         AddDossier();
                         break;
-                    case 2:
+                    case (int)Commands.Second:
                         ShowAllDossiers();
                         break;
-                    case 3:
+                    case (int)Commands.Third:
                         DeleteDossier();
                         break;
-                    case 4:
+                    case (int)Commands.Fourth:
                         isProgramWork = false;
                         break;
                     default:
@@ -139,7 +139,7 @@ namespace PersonnelAccountingPRO
                 Console.WriteLine("Укажите должность из досье, которое желаете удалить");
                 string position = Console.ReadLine();
 
-                Dossier dossier = _dossiers.Find(x => x.Fullname == fullname && x.Position == position);
+                Dossier dossier = _dossiers.Find(searchedDossier  => searchedDossier.Fullname == fullname && searchedDossier.Position == position);
 
                 if (dossier != null)
                 {
