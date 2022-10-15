@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Shop
 {
@@ -32,10 +31,7 @@ namespace Shop
         {
             foreach (Goods goods in _storage.Goods)
             {
-                foreach (var product in ProductName.ProductNames.Where(productName => goods.Product.GetType() == productName.Key))
-                {
-                    Console.WriteLine($"Продукт - {product.Value}, Количество - {goods.ProductQuantity}");
-                }
+                Console.WriteLine($"Продукт - {ProductName.ProductNames[goods.Product.GetType()]}, Количество - {goods.ProductQuantity}");
             }
         }
     }
