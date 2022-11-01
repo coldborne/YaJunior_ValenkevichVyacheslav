@@ -16,13 +16,7 @@ namespace Aquarium
         {
             Aquarium aquarium = new Aquarium();
 
-            Console.WriteLine("Введите начальное количество рыбок");
-            int fishCount = UserUtils.ReadFishCount(aquarium);
-
-            for (int i = 0; i < fishCount; i++)
-            {
-                aquarium.TryAddFish();
-            }
+            aquarium.Init();
 
             bool isAquariumWithoutDamage = true;
 
@@ -35,9 +29,9 @@ namespace Aquarium
                 Console.WriteLine($"{(int)Commands.Second} - Вынуть рыбку");
                 Console.WriteLine($"{(int)Commands.Third} - Пропустить итерацию");
                 Console.WriteLine($"{(int)Commands.Fourth} - Сломать аквариум");
-                
+
                 int userInput = UserUtils.ReadCommand();
-                
+
                 aquarium.ReduceFishesAge();
 
                 aquarium.CleanAquariumOfDeadFish();
@@ -48,7 +42,7 @@ namespace Aquarium
                         aquarium.TryAddFish();
                         break;
                     case (int)Commands.Second:
-                        aquarium.PullOutRandomFish();
+                        aquarium.TryPullOutRandomFish();
                         break;
                     case (int)Commands.Third:
                         break;

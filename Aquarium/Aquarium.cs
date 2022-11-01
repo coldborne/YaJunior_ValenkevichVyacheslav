@@ -5,14 +5,9 @@ namespace Aquarium
 {
     public class Aquarium
     {
-        private List<Fish> _fishes;
+        private readonly List<Fish> _fishes;
 
-        public int MaxFishesAmount { get; private set; } = 20;
-
-        public ConsoleColor GetRandomColor()
-        {
-            return (ConsoleColor)UserUtils.Random.Next(1, 16);
-        }
+        public int MaxFishesAmount { get; private set; } = 5;
 
         public Aquarium()
         {
@@ -44,18 +39,27 @@ namespace Aquarium
             return false;
         }
 
-        public void PullOutRandomFish()
+        public bool TryPullOutRandomFish()
         {
+            if (_fishes == null || _fishes.Count == 0)
+            {
+                Console.WriteLine("Аквариум уже пуст");
+                return false;
+            }
+
             int indexOfFish = UserUtils.Random.Next(0, _fishes.Count);
 
             _fishes.RemoveAt(indexOfFish);
+
+            return true;
         }
 
         public void ShowAllFishes()
         {
-            foreach (Fish fish in _fishes)
+            for (int i = 0; i < _fishes.Count; i++)
             {
-                fish.ShowInfo();
+                Console.WriteLine($"{i + 1}-ая");
+                _fishes[i].ShowInfo();
             }
         }
 
@@ -75,6 +79,22 @@ namespace Aquarium
             {
                 fish.TryReduceAge();
             }
+        }
+
+        public void Init()
+        {
+            Console.WriteLine("Введите начальное количество рыбок");
+            int fishCount = UserUtils.ReadFishCount(this);
+            
+            for (int i = 0; i < fishCount; i++)
+            {
+                TryAddFish();
+            }
+        }
+
+        private ConsoleColor GetRandomColor()
+        {
+            return (ConsoleColor)UserUtils.Random.Next(1, 16);
         }
 
         private List<Fish> TryToFindDeadFish()

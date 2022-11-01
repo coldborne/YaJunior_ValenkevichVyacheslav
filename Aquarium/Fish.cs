@@ -5,25 +5,25 @@ namespace Aquarium
     public class Fish
     {
         private int _dyingRate;
+        private string _name;
+        private ConsoleColor _color;
         
         public int Age { get; private set; }
-        public ConsoleColor Color { get; private set; }
-        public string Name { get; private set; }
-
+        
         public Fish()
         {
-            Age = UserUtils.Random.Next(1,11);
-            Color = ConsoleColor.Gray;
+            Age = UserUtils.Random.Next(1, 11);
+            _color = ConsoleColor.Gray;
             _dyingRate = 1;
-            Name = GenerateName();
+            _name = GenerateName();
         }
 
         public Fish(ConsoleColor color)
         {
-            Age = UserUtils.Random.Next(1,11);
-            Color = color;
+            Age = UserUtils.Random.Next(1, 11);
+            _color = color;
             _dyingRate = 1;
-            Name = GenerateName();
+            _name = GenerateName();
         }
 
         public bool TryReduceAge()
@@ -45,25 +45,26 @@ namespace Aquarium
 
         public void ShowInfo()
         {
-            Console.WriteLine("______");
             Console.WriteLine($"Возраст - {Age}");
-            Console.WriteLine($"Цвет - {Color}");
-            Console.WriteLine($"Имя - {Name}");
-            Console.WriteLine("_____");
+            Console.WriteLine($"Цвет - {_color}");
+            Console.WriteLine($"Имя - {_name}");
         }
-        
+
         private string GenerateName()
         {
-            int nameLength = 5;
+            const int nameLength = 5;
             string name = "";
-            
+
             while (name.Length < nameLength)
             {
-                Char symbol = (char)UserUtils.Random.Next(97, 123);
-                if (Char.IsLetterOrDigit(symbol))
+                char symbol = (char)UserUtils.Random.Next(97, 123);
+
+                if (char.IsLetterOrDigit(symbol))
+                {
                     name += symbol;
+                }
             }
-            
+
             return name;
         }
     }

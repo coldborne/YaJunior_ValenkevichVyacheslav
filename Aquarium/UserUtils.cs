@@ -4,9 +4,7 @@ namespace Aquarium
 {
     public static class UserUtils
     {
-        private static Random _random = new Random();
-
-        public static Random Random => _random;
+        public static Random Random { get; } = new Random();
 
         public static int ReadFishCount(Aquarium aquarium)
         {
@@ -26,7 +24,7 @@ namespace Aquarium
                 {
                     if (number <= 0 || number > aquarium.MaxFishesAmount)
                     {
-                        Console.WriteLine("Число должно быть больше нуля и меньше/равно " + aquarium.MaxFishesAmount);
+                        Console.WriteLine("Число должно быть больше 0 и меньше/равно " + aquarium.MaxFishesAmount);
 
                         isInputInt = false;
                     }
@@ -35,7 +33,7 @@ namespace Aquarium
 
             return number;
         }
-        
+
         public static int ReadCommand()
         {
             int userInputInt = 0;
@@ -53,8 +51,9 @@ namespace Aquarium
                 }
                 else
                 {
-                    int CommandsLength = Enum.GetNames(typeof(Commands)).Length;
-                    if (userInputInt <= 0 || userInputInt > CommandsLength)
+                    int commandsLength = Enum.GetNames(typeof(Commands)).Length;
+                    
+                    if (userInputInt <= 0 || userInputInt > commandsLength)
                     {
                         Console.WriteLine("Недопустимое число");
                         isInputRight = false;
