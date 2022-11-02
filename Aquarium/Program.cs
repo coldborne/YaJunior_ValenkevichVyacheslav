@@ -22,7 +22,7 @@ namespace Aquarium
 
             while (isAquariumWithoutDamage)
             {
-                aquarium.ShowAllFishes();
+                aquarium.ShowAllFish();
 
                 Console.WriteLine("Выберите действие");
                 Console.WriteLine($"{(int)Commands.First} - Добавить рыбку");
@@ -32,7 +32,7 @@ namespace Aquarium
 
                 int userInput = UserUtils.ReadCommand();
 
-                aquarium.ReduceFishesAge();
+                aquarium.ReduceFishAge();
 
                 aquarium.CleanAquariumOfDeadFish();
 

@@ -22,9 +22,9 @@ namespace Aquarium
                 }
                 else
                 {
-                    if (number <= 0 || number > aquarium.MaxFishesAmount)
+                    if (number <= 0 || number > aquarium.MaxFishAmount)
                     {
-                        Console.WriteLine("Число должно быть больше 0 и меньше/равно " + aquarium.MaxFishesAmount);
+                        Console.WriteLine("Число должно быть больше 0 и меньше/равно " + aquarium.MaxFishAmount);
 
                         isInputInt = false;
                     }
