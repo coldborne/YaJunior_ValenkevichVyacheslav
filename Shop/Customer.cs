@@ -4,13 +4,30 @@ namespace Shop
 {
     public class Customer
     {
-        private int _money;
-        private int _bagCapacity;
-        private List<Product> _productsInBag;
+        private const int _maxBagWeight = 20;
 
-        public bool CanBuy(Product product)
+        private int _money;
+        private int _bagWeight;
+        private List<Item> _productsInBag;
+
+        public void PutGoodsInBag(Item item)
         {
-            return true;
+            _productsInBag.Add(item);
+        }
+        
+        public bool CanBuy(Product product, int productQuantity)
+        {
+            float capacity = product.Weight * productQuantity;
+            float price = product.Price * productQuantity;
+
+            float sumOfGoods = 0;
+
+            foreach (var goods in _productsInBag)
+            {
+                sumOfGoods += goods.Product.Price + goods.ProductQuantity;
+            }
+
+            return capacity + _bagWeight <= _maxBagWeight && price <= _money - sumOfGoods;
         }
     }
 }

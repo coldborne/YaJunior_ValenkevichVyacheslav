@@ -27,12 +27,18 @@ namespace Shop
             }
         }
 
-        public void ShowGoods()
+        public void ShowItemsInStorage()
         {
-            foreach (Goods goods in _storage.Goods)
-            {
-                Console.WriteLine($"Продукт - {ProductName.ProductNames[goods.Product.GetType()]}, Количество - {goods.ProductQuantity}");
-            }
+            _storage.ShowItems();
+        }
+        
+        public Item TakeItemFromStorage()
+        {
+            var item = _storage.TakeItem();
+            
+            item = new Item(new Apple(10, 15), 10);
+
+            return item;
         }
     }
 }

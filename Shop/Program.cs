@@ -43,7 +43,7 @@ namespace Shop
 
         private static void SelectProducts(Shop shop)
         {
-            shop.ShowGoods();
+            shop.ShowItemsInStorage();
         }
     }
 }

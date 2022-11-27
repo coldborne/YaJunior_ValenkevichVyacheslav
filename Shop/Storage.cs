@@ -1,34 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Shop
 {
     public class Storage
     {
-        public List<Goods> Goods;
+        private List<Item> _items;
         
         public Storage()
         {
-            Goods = new List<Goods>();
+            _items = new List<Item>();
             
-            Goods apples = CreateGoods(new Apple(0.176f, 14), 100);
-            Goods peaches = CreateGoods(new Peach(0.15f, 30), 120);
-            Goods candies = CreateGoods(new Candy(0.015f, 5), 50);
-            Goods backpacks = CreateGoods(new Backpack(0.4f, 1200), 4);
+            Item apples = CreateItem(new Apple(0.176f, 14), 100);
+            Item peaches = CreateItem(new Peach(0.15f, 30), 120);
+            Item candies = CreateItem(new Candy(0.015f, 5), 50);
+            Item backpacks = CreateItem(new Backpack(0.4f, 1200), 4);
             
-            AddGoods(apples);
-            AddGoods(peaches);
-            AddGoods(candies);
-            AddGoods(backpacks);
+            AddItem(apples);
+            AddItem(peaches);
+            AddItem(candies);
+            AddItem(backpacks);
         }
 
-        private void AddGoods(Goods goods)
+        private void AddItem(Item item)
         {
-            Goods.Add(goods);
+            _items.Add(item);
         }
 
-        private Goods CreateGoods(Product product, int productQuantity)
+        private Item CreateItem(Product product, int productQuantity)
         {
-            return new Goods(product, productQuantity);
+            return new Item(product, productQuantity);
+        }
+        
+        public void ShowItems()
+        {
+            foreach (Item goods in _items)
+            {
+                Console.WriteLine($"Продукт - {ProductName.ProductNames[goods.Product.GetType()]}, Количество - {goods.ProductQuantity}");
+            }
+        }
+
+        public Item TakeItem(int quantity)
+        {
+            return _items[0];
         }
     }
 }
