@@ -1,185 +1,112 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace PlayerDatabase
 {
-    internal class Program
+    public enum Commands : byte
     {
-        static void Main(string[] args)
-        {
-            Game fortnite = new Game();
-
-            fortnite.AddNewPlayer();
-
-            fortnite.BanPlayer();
-
-            fortnite.DeletePlayer();
-
-            fortnite = null;
-            GC.Collect();
-
-            Console.WriteLine("Игра закрыта");
-        }
+        First = 1,
+        Second,
+        Third,
+        Fourth,
+        Fifth
     }
 
-    public class Game
+    internal class Program
     {
-        private Database _database;
+        private static Database _database = new Database();
 
-        public Game()
+        static void Main(string[] args)
         {
-            _database = new Database();
+            bool isProgrammWorking = true;
+
+            while (isProgrammWorking)
+            {
+                Console.WriteLine("Выберите действие");
+                Console.WriteLine($"{(int)Commands.First} - Добавить игрока");
+                Console.WriteLine($"{(int)Commands.Second} - Удалить игрока");
+                Console.WriteLine($"{(int)Commands.Third} - Забанить игрока");
+                Console.WriteLine($"{(int)Commands.Fourth} - Разбанить игрока");
+                Console.WriteLine($"{(int)Commands.Fifth} - Выйти");
+
+                int userChosenCommand = UserUtils.ReadCommand();
+
+                switch (userChosenCommand)
+                {
+                    case (int)Commands.First:
+                        AddNewPlayer();
+                        break;
+                    case (int)Commands.Second:
+                        DeletePlayer();
+                        break;
+                    case (int)Commands.Third:
+                        BanPlayer();
+                        break;
+                    case (int)Commands.Fourth:
+                        UnbanPlayer();
+                        break;
+                    case (int)Commands.Fifth:
+                        isProgrammWorking = false;
+                        break;
+                }
+            }
         }
 
-        public void AddNewPlayer()
+        private static void AddNewPlayer()
         {
             Console.WriteLine("Добавление игрока: ");
 
             Player newPlayer = CreatePlayer();
 
-            _database.AddInPlayers(newPlayer);
+            _database.TryAddPlayer(newPlayer);
         }
 
-        public Player CreatePlayer()
+        private static Player CreatePlayer()
         {
-            Console.WriteLine("Имя игрока?");
-            string nickname = Console.ReadLine();
+            string nickname = UserUtils.GenerateName();
 
-            Player newPlayer = new Player(nickname);
-
-            return newPlayer;
+            return new Player(nickname);
         }
 
-        public void DeletePlayer()
+        private static void DeletePlayer()
         {
             Console.WriteLine("Удаление игрока: ");
 
-            Console.WriteLine("Id игрока?");
-            GetId(out int id);
-
-            _database.TryRemovePlayer(id, out bool wasRemoved);
-        }
-
-        public void BanPlayer()
-        {
-            Console.WriteLine("Бан игрока: ");
-            Console.WriteLine("Id игрока");
-            GetId(out int id);
+            Console.WriteLine("Введите Id игрока");
+            int id = UserUtils.ReadInt();
 
             Player player = _database.TryGetPlayer(id);
 
             if (player != null)
             {
-                _database.ChangeIsBannedOfPlayer(id);
+                _database.TryRemovePlayer(player);
             }
         }
 
-        private void GetId(out int id)
+        private static void BanPlayer()
         {
-            id = 0;
-            bool isNumber = false;
+            Console.WriteLine("Бан игрока: ");
+            Console.WriteLine("Id игрока");
+            int id = UserUtils.ReadInt();
 
-            while (isNumber == false)
-            {
-                string userInput = Console.ReadLine();
-
-                isNumber = int.TryParse(userInput, out id);
-
-                if (isNumber == false)
-                {
-                    Console.WriteLine("Введенно нецелое число, попробуйте ещё раз");
-                }
-            }
-        }
-    }
-
-    public class Player
-    {
-        private static List<int> allId = new List<int>();
-
-        private int _level;
-        private string _nickname;
-
-        public int Id { get; private set; }
-        public bool IsBanned { get; private set; }
-        
-        public Player(string nickname)
-        {
-            Id = allId.Count + 1;
-            allId.Add(Id);
-            _level = 1;
-            _nickname = nickname;
-        }
-
-        public void ChangeIsBanned()
-        {
-            IsBanned = !IsBanned;
-        }
-    }
-
-    public class Database
-    {
-        private Dictionary<int, Player> _players;
-
-        public Database()
-        {
-            _players = new Dictionary<int, Player>();
-        }
-
-        public void AddInPlayers(Player player)
-        {
-            _players.Add(player.Id, player);
-            Console.WriteLine("Игрок добавлен");
-        }
-
-        public Player TryGetPlayer(int id)
-        {
-            Player player = null;
-
-            if (_players.ContainsKey(id))
-            {
-                player = GetPlayer(id);
-            }
-            else
-            {
-                Console.WriteLine("Игрок под таким id не найден (Возможно, уже удалён, на данный момент нет базы данных удалённых игроков)");
-            }
-
-            return player;
-        }
-
-        private Player GetPlayer(int id)
-        {
-            return _players[id];
-        }
-
-        public void TryRemovePlayer(int id, out bool wasRemoved)
-        {
-            Player player = TryGetPlayer(id);
+            Player player = _database.TryGetPlayer(id);
 
             if (player != null)
             {
-                _players.Remove(id);
-
-                wasRemoved = true;
-                Console.WriteLine("Игрок удалён");
-            }
-            else
-            {
-                wasRemoved = false;
+                _database.TryBan(id);
             }
         }
 
-        public void ChangeIsBannedOfPlayer(int id)
+        private static void UnbanPlayer()
         {
-            if (_players[id].IsBanned == false)
+            Console.WriteLine("Бан игрока: ");
+            Console.WriteLine("Id игрока");
+            int id = UserUtils.ReadInt();
+
+            Player player = _database.TryGetPlayer(id);
+
+            if (player != null)
             {
-                _players[id].ChangeIsBanned();
-                Console.WriteLine("Игрок забанен");
-            }
-            else
-            {
-                Console.WriteLine("Игрок уже забанен");
+                _database.TryUnban(id);
             }
         }
     }
