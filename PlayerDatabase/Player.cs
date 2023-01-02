@@ -18,9 +18,14 @@
             _nickname = nickname;
         }
 
-        public void ChangeIsBanned()
+        public void Ban()
         {
-            IsBanned = !IsBanned;
+            IsBanned = true;
+        }
+        
+        public void Unban()
+        {
+            IsBanned = false;
         }
     }
 }

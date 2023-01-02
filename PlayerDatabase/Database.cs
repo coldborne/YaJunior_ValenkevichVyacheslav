@@ -52,7 +52,7 @@ namespace PlayerDatabase
         {
             if (_players.Any(existingPlayer => existingPlayer.Id == id && existingPlayer.IsBanned == false))
             {
-                _players.Find(player => player.Id == id).ChangeIsBanned();
+                _players.Find(player => player.Id == id).Ban();
 
                 Console.WriteLine("Игрок забанен");
 
@@ -68,7 +68,7 @@ namespace PlayerDatabase
         {
             if (_players.Any(existingPlayer => existingPlayer.Id == id && existingPlayer.IsBanned))
             {
-                _players.Find(player => player.Id == id).ChangeIsBanned();
+                _players.Find(player => player.Id == id).Unban();
 
                 Console.WriteLine("Игрок разбанен");
 
