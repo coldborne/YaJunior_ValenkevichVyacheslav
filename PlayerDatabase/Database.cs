@@ -80,18 +80,24 @@ namespace PlayerDatabase
             return false;
         }
 
-        public Player TryGetPlayer(int id)
+        public bool TryGetPlayer(out Player player)
         {
+            Console.WriteLine("Введите Id игрока");
+            int id = UserUtils.ReadInt();
+            
             foreach (Player existingPlayer in _players)
             {
                 if (existingPlayer.Id == id)
                 {
-                    return existingPlayer;
+                    player = existingPlayer;
+                    return true;
                 }
             }
 
             Console.WriteLine("Игрок с таким id не найден в БД");
-            return null;
+            player = null;
+            
+            return false;
         }
 
         private void Init()

@@ -4,16 +4,18 @@ namespace PlayerDatabase
 {
     public class UserUtils
     {
-        private static Random Random { get; } = new Random();
+        private static Random _random = new Random();
 
         public static string GenerateName()
         {
             const int nameLength = 5;
             string name = "";
+            int startValueForSymbols = 97;
+            int endValueForSymbols = 123;
 
             while (name.Length < nameLength)
             {
-                char symbol = (char)Random.Next(97, 123);
+                char symbol = (char)_random.Next(startValueForSymbols, endValueForSymbols);
 
                 if (char.IsLetterOrDigit(symbol))
                 {
@@ -66,10 +68,9 @@ namespace PlayerDatabase
                 string userInput = Console.ReadLine();
                 isIntValue = int.TryParse(userInput, out value);
 
-                if (isIntValue == false)
-                {
-                    Console.WriteLine("Можно вводить только числа");
-                }
+                if (isIntValue) { continue; }
+
+                Console.WriteLine("Можно вводить только числа");
             }
 
             return value;

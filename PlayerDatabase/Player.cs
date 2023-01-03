@@ -2,7 +2,7 @@
 {
     public class Player
     {
-        private static int _numberForGenerateId = 0;
+        private static int _numberForGenerateId;
 
         private int _level;
         private string _nickname;
@@ -12,8 +12,7 @@
 
         public Player(string nickname)
         {
-            Id = _numberForGenerateId + 1;
-            _numberForGenerateId++;
+            Id = _numberForGenerateId++ + 1;
             _level = 1;
             _nickname = nickname;
         }

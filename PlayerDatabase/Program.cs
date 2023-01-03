@@ -15,7 +15,7 @@ namespace PlayerDatabase
     {
         private static Database _database = new Database();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             bool isProgrammWorking = true;
 
@@ -35,15 +35,19 @@ namespace PlayerDatabase
                     case (int)Commands.First:
                         AddNewPlayer();
                         break;
+                    
                     case (int)Commands.Second:
                         DeletePlayer();
                         break;
+                    
                     case (int)Commands.Third:
                         BanPlayer();
                         break;
+                    
                     case (int)Commands.Fourth:
                         UnbanPlayer();
                         break;
+                    
                     case (int)Commands.Fifth:
                         isProgrammWorking = false;
                         break;
@@ -71,12 +75,9 @@ namespace PlayerDatabase
         {
             Console.WriteLine("Удаление игрока: ");
 
-            Console.WriteLine("Введите Id игрока");
-            int id = UserUtils.ReadInt();
+            bool wasPlayerReceived = _database.TryGetPlayer(out Player player);
 
-            Player player = _database.TryGetPlayer(id);
-
-            if (player != null)
+            if (wasPlayerReceived)
             {
                 _database.TryRemovePlayer(player);
             }
@@ -85,28 +86,24 @@ namespace PlayerDatabase
         private static void BanPlayer()
         {
             Console.WriteLine("Бан игрока: ");
-            Console.WriteLine("Id игрока");
-            int id = UserUtils.ReadInt();
 
-            Player player = _database.TryGetPlayer(id);
+            bool wasPlayerReceived = _database.TryGetPlayer(out Player player);
 
-            if (player != null)
+            if (wasPlayerReceived)
             {
-                _database.TryBan(id);
+                _database.TryBan(player.Id);
             }
         }
 
         private static void UnbanPlayer()
         {
-            Console.WriteLine("Бан игрока: ");
-            Console.WriteLine("Id игрока");
-            int id = UserUtils.ReadInt();
+            Console.WriteLine("Разбан игрока: ");
 
-            Player player = _database.TryGetPlayer(id);
+            bool wasPlayerReceived = _database.TryGetPlayer(out Player player);
 
-            if (player != null)
+            if (wasPlayerReceived)
             {
-                _database.TryUnban(id);
+                _database.TryUnban(player.Id);
             }
         }
     }
