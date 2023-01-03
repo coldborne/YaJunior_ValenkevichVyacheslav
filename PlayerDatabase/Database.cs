@@ -57,6 +57,8 @@ namespace PlayerDatabase
             Player player = CreatePlayer();
 
             _players.Add(player);
+            
+            Console.WriteLine("Игрок успешно добавлен в БД");
         }
 
         private Player CreatePlayer()
@@ -76,6 +78,8 @@ namespace PlayerDatabase
             if (wasPlayerReceived)
             {
                 _players.Remove(player);
+                
+                Console.WriteLine("Игрок успешно удалён из БД");
             }
         }
 
