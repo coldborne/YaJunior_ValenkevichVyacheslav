@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PlayerDatabase
 {
@@ -10,107 +9,154 @@ namespace PlayerDatabase
 
         public Database()
         {
-            _players = new List<Player>();
             Init();
         }
 
-        public bool TryAddPlayer(Player player)
+        public void Work()
         {
-            if (player == null) return false;
+            bool isProgramWorking = true;
 
-            if (_players.Any(existingPlayer => existingPlayer.Id == player.Id))
+            while (isProgramWorking)
             {
-                Console.WriteLine("Игрок с таким id уже существует в БД");
-                return false;
+                Console.WriteLine("Выберите действие");
+                Console.WriteLine($"{(int)Commands.First} - Добавить игрока");
+                Console.WriteLine($"{(int)Commands.Second} - Удалить игрока");
+                Console.WriteLine($"{(int)Commands.Third} - Забанить игрока");
+                Console.WriteLine($"{(int)Commands.Fourth} - Разбанить игрока");
+                Console.WriteLine($"{(int)Commands.Fifth} - Выйти");
+
+                int userChosenCommand = UserUtils.ReadCommand();
+
+                switch (userChosenCommand)
+                {
+                    case (int)Commands.First:
+                        AddPlayer();
+                        break;
+
+                    case (int)Commands.Second:
+                        DeletePlayer();
+                        break;
+
+                    case (int)Commands.Third:
+                        BanPlayer();
+                        break;
+
+                    case (int)Commands.Fourth:
+                        UnbanPlayer();
+                        break;
+
+                    case (int)Commands.Fifth:
+                        isProgramWorking = false;
+                        break;
+                }
             }
+        }
+
+        private void AddPlayer()
+        {
+            Player player = CreatePlayer();
 
             _players.Add(player);
-            Console.WriteLine("Игрок добавлен в БД");
-
-            return true;
         }
 
-        public bool TryRemovePlayer(Player player)
+        private Player CreatePlayer()
         {
-            if (player == null) return false;
+            Console.WriteLine("Введите имя игрока: ");
+            string name = Console.ReadLine();
 
-            if (_players.Any(existingPlayer => existingPlayer.Id == player.Id))
+            return new Player(name);
+        }
+
+        private void DeletePlayer()
+        {
+            Console.WriteLine("Удаление игрока: ");
+
+            bool wasPlayerReceived = TryGetPlayer(out Player player);
+
+            if (wasPlayerReceived)
             {
                 _players.Remove(player);
-
-                Console.WriteLine("Игрок удалён из БД");
-
-                return true;
             }
-
-            Console.WriteLine("Игрок не найден в БД");
-
-            return false;
         }
 
-        public bool TryBan(int id)
+        private void BanPlayer()
         {
-            if (_players.Any(existingPlayer => existingPlayer.Id == id && existingPlayer.IsBanned == false))
+            bool wasPlayerReceived = TryGetPlayer(out Player player);
+
+            if (wasPlayerReceived)
             {
-                _players.Find(player => player.Id == id).Ban();
+                if (player.IsBanned == false)
+                {
+                    player.Ban();
 
-                Console.WriteLine("Игрок забанен");
-
-                return true;
+                    Console.WriteLine("Игрок забанен");
+                }
+                else
+                {
+                    Console.WriteLine("Игрок уже забанен");
+                }
             }
-
-            Console.WriteLine("Игрок уже забанен или не существует в БД");
-
-            return false;
         }
 
-        public bool TryUnban(int id)
+        private void UnbanPlayer()
         {
-            if (_players.Any(existingPlayer => existingPlayer.Id == id && existingPlayer.IsBanned))
+            bool wasPlayerReceived = TryGetPlayer(out Player player);
+
+            if (wasPlayerReceived)
             {
-                _players.Find(player => player.Id == id).Unban();
+                if (player.IsBanned)
+                {
+                    player.Unban();
 
-                Console.WriteLine("Игрок разбанен");
-
-                return true;
+                    Console.WriteLine("Игрок разбанен");
+                }
+                else
+                {
+                    Console.WriteLine("Игрок не находится в забаненном состоянии");
+                }
             }
-
-            Console.WriteLine("Игрок не забанен или не существует в БД");
-
-            return false;
         }
 
-        public bool TryGetPlayer(out Player player)
+        private bool TryGetPlayer(out Player player)
         {
             Console.WriteLine("Введите Id игрока");
             int id = UserUtils.ReadInt();
-            
+
+            Console.WriteLine("Происходит поиск игрока: ");
             foreach (Player existingPlayer in _players)
             {
                 if (existingPlayer.Id == id)
                 {
                     player = existingPlayer;
+
+                    Console.WriteLine("Игрок найден!");
                     return true;
                 }
             }
 
             Console.WriteLine("Игрок с таким id не найден в БД");
             player = null;
-            
+
             return false;
         }
 
         private void Init()
         {
             Console.WriteLine("Происходит инициализация новой БД");
-            Console.WriteLine("Происходит добавление данных в БД");
+            _players = new List<Player>();
 
-            int startPlayersCount = 10;
+            Console.WriteLine("Происходит добавление данных в БД");
+            const int startPlayersCount = 10;
 
             for (int i = 0; i < startPlayersCount; i++)
             {
-                TryAddPlayer(new Player(UserUtils.GenerateName()));
+                _players.Add(GeneratePlayer());
             }
+        }
+
+        private Player GeneratePlayer()
+        {
+            return new Player(UserUtils.GenerateName());
         }
     }
 }
