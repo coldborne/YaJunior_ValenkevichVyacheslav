@@ -4,7 +4,7 @@ namespace PlayerDatabase
 {
     public class UserUtils
     {
-        private static Random _random = new Random();
+        private static readonly Random _random = new Random();
 
         public static string GenerateName()
         {
