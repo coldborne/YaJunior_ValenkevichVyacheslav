@@ -21,7 +21,7 @@
         {
             IsBanned = true;
         }
-        
+
         public void Unban()
         {
             IsBanned = false;

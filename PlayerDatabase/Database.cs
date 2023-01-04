@@ -3,6 +3,15 @@ using System.Collections.Generic;
 
 namespace PlayerDatabase
 {
+    public enum Commands : byte
+    {
+        AddPlayer = 1,
+        DeletePlayer,
+        BanPlayer,
+        UnbanPlayer,
+        Exit
+    }
+    
     public class Database
     {
         private List<Player> _players;
@@ -19,33 +28,33 @@ namespace PlayerDatabase
             while (isProgramWorking)
             {
                 Console.WriteLine("Выберите действие");
-                Console.WriteLine($"{(int)Commands.First} - Добавить игрока");
-                Console.WriteLine($"{(int)Commands.Second} - Удалить игрока");
-                Console.WriteLine($"{(int)Commands.Third} - Забанить игрока");
-                Console.WriteLine($"{(int)Commands.Fourth} - Разбанить игрока");
-                Console.WriteLine($"{(int)Commands.Fifth} - Выйти");
+                Console.WriteLine($"{(int)Commands.AddPlayer} - Добавить игрока");
+                Console.WriteLine($"{(int)Commands.DeletePlayer} - Удалить игрока");
+                Console.WriteLine($"{(int)Commands.BanPlayer} - Забанить игрока");
+                Console.WriteLine($"{(int)Commands.UnbanPlayer} - Разбанить игрока");
+                Console.WriteLine($"{(int)Commands.Exit} - Выйти");
 
                 int userChosenCommand = UserUtils.ReadCommand();
 
                 switch (userChosenCommand)
                 {
-                    case (int)Commands.First:
+                    case (int)Commands.AddPlayer:
                         AddPlayer();
                         break;
 
-                    case (int)Commands.Second:
+                    case (int)Commands.DeletePlayer:
                         DeletePlayer();
                         break;
 
-                    case (int)Commands.Third:
+                    case (int)Commands.BanPlayer:
                         BanPlayer();
                         break;
 
-                    case (int)Commands.Fourth:
+                    case (int)Commands.UnbanPlayer:
                         UnbanPlayer();
                         break;
 
-                    case (int)Commands.Fifth:
+                    case (int)Commands.Exit:
                         isProgramWorking = false;
                         break;
                 }
@@ -57,7 +66,7 @@ namespace PlayerDatabase
             Player player = CreatePlayer();
 
             _players.Add(player);
-            
+
             Console.WriteLine("Игрок успешно добавлен в БД");
         }
 
@@ -78,7 +87,7 @@ namespace PlayerDatabase
             if (wasPlayerReceived)
             {
                 _players.Remove(player);
-                
+
                 Console.WriteLine("Игрок успешно удалён из БД");
             }
         }
@@ -127,6 +136,7 @@ namespace PlayerDatabase
             int id = UserUtils.ReadInt();
 
             Console.WriteLine("Происходит поиск игрока: ");
+
             foreach (Player existingPlayer in _players)
             {
                 if (existingPlayer.Id == id)
