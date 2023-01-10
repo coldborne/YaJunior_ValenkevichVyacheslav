@@ -51,7 +51,9 @@ namespace BraveNewWorld
 
                 if (_bag.Length == 5)
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("\nВы победили!");
+                    Console.ForegroundColor = default;
 
                     isWork = false;
 
@@ -120,12 +122,16 @@ namespace BraveNewWorld
         private void DrawBag()
         {
             Console.SetCursorPosition(_bagPositionX, _bagPositionY);
+            
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Сумка:");
 
             foreach (var treasure in _bag)
             {
                 Console.Write(treasure + " ");
             }
+
+            Console.ForegroundColor = default;
         }
 
         private void DrawPlayer()
