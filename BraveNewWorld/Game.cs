@@ -10,6 +10,13 @@ namespace BraveNewWorld
         private int _offsetLeft = 0;
         private int _offsetTop = 2;
 
+        private int _bagPositionX = 0;
+        private int _bagPositionY = 15;
+
+        private int _shiftPlusOne = 1;
+        private int _shiftMinusOne = -1;
+        private int _zeroShift = 0;
+
         private char[] _bag = new char[0];
 
         private char[,] _map =
@@ -56,19 +63,19 @@ namespace BraveNewWorld
                 switch (userPressedButton.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        WorkWithPlayerPosition(0, -1);
+                        WorkWithPlayerPosition(_zeroShift, _shiftMinusOne);
                         break;
 
                     case ConsoleKey.DownArrow:
-                        WorkWithPlayerPosition(0, 1);
+                        WorkWithPlayerPosition(_zeroShift, _shiftPlusOne);
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        WorkWithPlayerPosition(-1, 0);
+                        WorkWithPlayerPosition(_shiftMinusOne, _zeroShift);
                         break;
 
                     case ConsoleKey.RightArrow:
-                        WorkWithPlayerPosition(1, 0);
+                        WorkWithPlayerPosition(_shiftPlusOne, _zeroShift);
                         break;
 
                     case ConsoleKey.Spacebar:
@@ -112,7 +119,7 @@ namespace BraveNewWorld
 
         private void DrawBag()
         {
-            Console.SetCursorPosition(0, 15);
+            Console.SetCursorPosition(_bagPositionX, _bagPositionY);
             Console.WriteLine("Сумка:");
 
             foreach (var treasure in _bag)
