@@ -5,22 +5,34 @@ namespace CardDeck
 {
     public class Player
     {
-        private List<Card> _cardsInHand;
-        private int _maxCardsInHandAmount = 6;
+        public List<Card> CardsInHand { get; }
+        public int MaxCardsInHandAmount { get; private set; }
 
         public Player()
         {
-            _cardsInHand = new List<Card>();
+            CardsInHand = new List<Card>();
+            MaxCardsInHandAmount = 6;
         }
+
         public void TakeCard(Card card)
         {
-            if (_cardsInHand.Count < _maxCardsInHandAmount)
+            if (CardsInHand.Count == MaxCardsInHandAmount)
             {
-                _cardsInHand.Add(card);
+                Console.WriteLine("У пользователя максимальное количество карт в руке");
+                return;
             }
-            else
+
+            if (card != null)
             {
-                Console.WriteLine($"В руке максимальное количество карт (Равное - {_maxCardsInHandAmount}");
+                CardsInHand.Add(card);
+            }
+        }
+
+        public void ShowCardInHand()
+        {
+            foreach (Card card in CardsInHand)
+            {
+                Console.WriteLine(card.ToString());
             }
         }
     }
