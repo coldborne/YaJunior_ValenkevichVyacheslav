@@ -8,7 +8,7 @@ namespace BraveNewWorld
         private int _userPositionY = 1;
 
         private int _offsetLeft = 0;
-        private int _offsetTop = 2;
+        private int _offsetTop = 3;
 
         private int _bagPositionX = 0;
         private int _bagPositionY = 15;
