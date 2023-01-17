@@ -18,6 +18,7 @@ namespace BraveNewWorld
 
         public void Work()
         {
+            Console.Clear();
             Console.WriteLine($"Добро пожаловать в нашу бродилку. Цель - собрать все сокровища (Помечены как {Symbols.Treasure})");
             Console.WriteLine("Движение стрелочками");
 
@@ -61,23 +62,28 @@ namespace BraveNewWorld
         private bool WorkWithUser(ref (int X, int Y) userPosition, int zeroShift, int shiftMinusOne, int shiftPlusOne,
             ref char[] bag, ref char[,] map)
         {
+            const ConsoleKey MoveUp = ConsoleKey.UpArrow;
+            const ConsoleKey MoveDown = ConsoleKey.DownArrow;
+            const ConsoleKey MoveRight = ConsoleKey.RightArrow;
+            const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
+            
             ConsoleKeyInfo userPressedButton = Console.ReadKey();
 
             switch (userPressedButton.Key)
             {
-                case ConsoleKey.UpArrow:
+                case MoveUp:
                     userPosition = WorkWithPlayer(userPosition, zeroShift, shiftMinusOne, ref bag, ref map);
                     return false;
 
-                case ConsoleKey.DownArrow:
+                case MoveDown:
                     userPosition = WorkWithPlayer(userPosition, zeroShift, shiftPlusOne, ref bag, ref map);
                     return false;
 
-                case ConsoleKey.LeftArrow:
+                case MoveLeft:
                     userPosition = WorkWithPlayer(userPosition, shiftMinusOne, zeroShift, ref bag, ref map);
                     return false;
 
-                case ConsoleKey.RightArrow:
+                case MoveRight:
                     userPosition = WorkWithPlayer(userPosition, shiftPlusOne, zeroShift, ref bag, ref map);
                     return false;
 
@@ -207,11 +213,11 @@ namespace BraveNewWorld
 
         private char[] TakeTreasure(int plannedPlayerPositionX, int plannedPlayerPositionY, char[] bag, ref char[,] map)
         {
-            map[plannedPlayerPositionY, plannedPlayerPositionX] = (char)Symbols.PickedTreasure;
-
             bag = ExpandBag(bag);
 
             bag[bag.Length - 1] = (char)Symbols.Treasure;
+            
+            map[plannedPlayerPositionY, plannedPlayerPositionX] = (char)Symbols.PickedTreasure;
 
             return bag;
         }
