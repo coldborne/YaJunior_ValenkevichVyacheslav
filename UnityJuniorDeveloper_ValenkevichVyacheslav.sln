@@ -103,6 +103,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gladiator fights", "Gladiat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoo", "Zoo\Zoo.csproj", "{77FC142A-7E79-4AC5-97C0-5C5A565289A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopNearHouse", "ShopNearHouse\ShopNearHouse.csproj", "{24D27BB8-368E-4057-9BBC-8D0BA30A431F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -285,6 +287,10 @@ Global
 		{77FC142A-7E79-4AC5-97C0-5C5A565289A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77FC142A-7E79-4AC5-97C0-5C5A565289A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77FC142A-7E79-4AC5-97C0-5C5A565289A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D27BB8-368E-4057-9BBC-8D0BA30A431F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D27BB8-368E-4057-9BBC-8D0BA30A431F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D27BB8-368E-4057-9BBC-8D0BA30A431F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D27BB8-368E-4057-9BBC-8D0BA30A431F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -334,6 +340,7 @@ Global
 		{1D03229F-0915-4A16-B5E5-C7F2571205C0} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 		{F561601D-AEB3-49BB-B102-E8A35C751581} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 		{77FC142A-7E79-4AC5-97C0-5C5A565289A0} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
+		{24D27BB8-368E-4057-9BBC-8D0BA30A431F} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}

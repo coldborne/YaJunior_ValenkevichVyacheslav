@@ -2,37 +2,15 @@
 
 namespace BraveNewWorld
 {
+    public enum Symbols
+    {
+        Treasure = 'O',
+        Wall = '#',
+        PickedTreasure = 'X'
+    }
+    
     public class Game
     {
-        private int _userPositionX = 1;
-        private int _userPositionY = 1;
-
-        private int _offsetLeft = 0;
-        private int _offsetTop = 3;
-
-        private int _bagPositionX = 0;
-        private int _bagPositionY = 15;
-
-        private int _shiftPlusOne = 1;
-        private int _shiftMinusOne = -1;
-        private int _zeroShift = 0;
-
-        private char[] _bag = new char[0];
-
-        private char[,] _map =
-        {
-            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
-            { '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O', '#' },
-            { '#', '#', '#', '#', 'O', '#', '#', '#', '#', '#' },
-            { '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', '#' },
-            { '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#' },
-            { '#', ' ', '#', '#', ' ', '#', ' ', '#', ' ', '#' },
-            { '#', ' ', '#', ' ', ' ', '#', ' ', ' ', 'O', '#' },
-            { '#', 'O', '#', ' ', ' ', '#', '#', '#', ' ', '#' },
-            { '#', ' ', '#', ' ', ' ', ' ', 'O', '#', ' ', '#' },
-            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' }
-        };
-
         public Game()
         {
             Console.CursorVisible = false;
@@ -40,93 +18,142 @@ namespace BraveNewWorld
 
         public void Work()
         {
-            Console.WriteLine("Добро пожаловать в нашу бродилку. Цель - собрать все сокровища (Помечены как O)");
+            Console.WriteLine($"Добро пожаловать в нашу бродилку. Цель - собрать все сокровища (Помечены как {Symbols.Treasure})");
             Console.WriteLine("Движение стрелочками");
 
-            bool isWork = true;
+            bool isExit = false;
+            const int treasureForWinCount = 5;
 
-            while (isWork)
+            (int X, int Y) userPosition = (1, 1);
+            
+            const int shiftPlusOne = 1;
+            const int shiftMinusOne = -1;
+            const int zeroShift = 0;
+            
+            char[] bag = new char[0];
+            
+            char[,] map =
             {
-                Draw();
+                { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+                { '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O', '#' },
+                { '#', '#', '#', '#', 'O', '#', '#', '#', '#', '#' },
+                { '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', '#' },
+                { '#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#' },
+                { '#', ' ', '#', '#', ' ', '#', ' ', '#', ' ', '#' },
+                { '#', ' ', '#', ' ', ' ', '#', ' ', ' ', 'O', '#' },
+                { '#', 'O', '#', ' ', ' ', '#', '#', '#', ' ', '#' },
+                { '#', ' ', '#', ' ', ' ', ' ', 'O', '#', ' ', '#' },
+                { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' }
+            };
 
-                if (_bag.Length == 5)
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("\nВы победили!");
-                    Console.ForegroundColor = default;
+            while (isExit == false)
+            {
+                Draw(userPosition, bag, map);
 
-                    isWork = false;
+                isExit = CheckWin(bag, treasureForWinCount);
+                
+                if (isExit) continue;
 
-                    continue;
-                }
-
-                ConsoleKeyInfo userPressedButton = Console.ReadKey();
-
-                switch (userPressedButton.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        WorkWithPlayerPosition(_zeroShift, _shiftMinusOne);
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        WorkWithPlayerPosition(_zeroShift, _shiftPlusOne);
-                        break;
-
-                    case ConsoleKey.LeftArrow:
-                        WorkWithPlayerPosition(_shiftMinusOne, _zeroShift);
-                        break;
-
-                    case ConsoleKey.RightArrow:
-                        WorkWithPlayerPosition(_shiftPlusOne, _zeroShift);
-                        break;
-
-                    case ConsoleKey.Spacebar:
-                        isWork = false;
-                        break;
-                }
+                isExit = WorkWithUser(ref userPosition, zeroShift, shiftMinusOne, shiftPlusOne, ref bag, ref map);
             }
         }
 
-        private void Draw()
+        private bool WorkWithUser(ref (int X, int Y) userPosition, int zeroShift, int shiftMinusOne, int shiftPlusOne,
+            ref char[] bag, ref char[,] map)
         {
-            Console.SetCursorPosition(_offsetLeft, _offsetTop);
+            ConsoleKeyInfo userPressedButton = Console.ReadKey();
 
-            for (int i = 0; i < _map.GetLength(0); i++)
+            switch (userPressedButton.Key)
             {
-                for (int j = 0; j < _map.GetLength(1); j++)
+                case ConsoleKey.UpArrow:
+                    userPosition = WorkWithPlayer(userPosition, zeroShift, shiftMinusOne, ref bag, ref map);
+                    return false;
+
+                case ConsoleKey.DownArrow:
+                    userPosition = WorkWithPlayer(userPosition, zeroShift, shiftPlusOne, ref bag, ref map);
+                    return false;
+
+                case ConsoleKey.LeftArrow:
+                    userPosition = WorkWithPlayer(userPosition, shiftMinusOne, zeroShift, ref bag, ref map);
+                    return false;
+
+                case ConsoleKey.RightArrow:
+                    userPosition = WorkWithPlayer(userPosition, shiftPlusOne, zeroShift, ref bag, ref map);
+                    return false;
+
+                case ConsoleKey.Spacebar:
+                    return true;
+                
+                default:
+                    return false;
+            }
+        }
+
+        private bool CheckWin(char[] bag, int treasureForWinCount)
+        {
+            if (bag.Length == treasureForWinCount)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("\nВы победили!");
+                Console.ForegroundColor = default;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private void Draw((int, int) userPosition, char[] bag, char[,] map)
+        {
+            const int offsetLeft = 0;
+            const int offsetTop = 3;
+        
+            DrawMap(offsetLeft, offsetTop, map);
+
+            DrawPlayer(userPosition, offsetLeft, offsetTop);
+
+            DrawBag(bag);
+        }
+
+        private void DrawMap(int offsetLeft, int offsetTop, char[,] map)
+        {
+            Console.SetCursorPosition(offsetLeft, offsetTop);
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    switch (_map[i, j])
+                    switch (map[i, j])
                     {
-                        case 'O':
-                            DrawColoredSymbol(i, j, ConsoleColor.Yellow);
+                        case (char)Symbols.Treasure:
+                            DrawColoredSymbol(i, j, ConsoleColor.Yellow, map);
                             break;
-                        
-                        case 'X':
-                            DrawColoredSymbol(i, j, ConsoleColor.Blue);
+
+                        case (char)Symbols.PickedTreasure:
+                            DrawColoredSymbol(i, j, ConsoleColor.Blue, map);
                             break;
-                        
+
                         default:
-                            DrawColoredSymbol(i, j, ConsoleColor.White);
+                            DrawColoredSymbol(i, j, ConsoleColor.White, map);
                             break;
                     }
                 }
 
                 Console.WriteLine();
             }
-            
-            DrawPlayer();
-
-            DrawBag();
         }
 
-        private void DrawBag()
+        private void DrawBag(char[] bag)
         {
-            Console.SetCursorPosition(_bagPositionX, _bagPositionY);
+            const int bagPositionX = 0;
+            const int bagPositionY = 15;
+        
+            Console.SetCursorPosition(bagPositionX, bagPositionY);
             
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Сумка:");
 
-            foreach (var treasure in _bag)
+            foreach (var treasure in bag)
             {
                 Console.Write(treasure + " ");
             }
@@ -134,67 +161,73 @@ namespace BraveNewWorld
             Console.ForegroundColor = default;
         }
 
-        private void DrawPlayer()
+        private void DrawPlayer((int X, int Y) userPosition, int offsetLeft, int offsetTop)
         {
-            Console.SetCursorPosition(_userPositionX + _offsetLeft, _userPositionY + _offsetTop);
+            Console.SetCursorPosition(userPosition.X + offsetLeft, userPosition.Y + offsetTop);
             
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write('@');
             Console.ForegroundColor = default;
         }
 
-        private void DrawColoredSymbol(int left, int top, ConsoleColor color)
+        private void DrawColoredSymbol(int left, int top, ConsoleColor color, char[,] map)
         {
             Console.ForegroundColor = color;
-            Console.Write(_map[left, top]);
+            Console.Write(map[left, top]);
             Console.ForegroundColor = default;
         }
 
-        private void WorkWithPlayerPosition(int left, int top)
+        private (int, int) WorkWithPlayer((int X,int Y) userPosition, int left, int top, ref char[] bag, ref char[,] map)
         {
-            int plannedPlayerPositionY = _userPositionY + top;
-            int plannedPlayerPositionX = _userPositionX + left;
+            int plannedPlayerPositionY = userPosition.Y + top;
+            int plannedPlayerPositionX = userPosition.X + left;
 
-            char plannedPositionOfThePlayer = _map[plannedPlayerPositionY, plannedPlayerPositionX];
+            char plannedPositionOfThePlayer = map[plannedPlayerPositionY, plannedPlayerPositionX];
 
-            if (plannedPositionOfThePlayer == ' ' || plannedPositionOfThePlayer == 'X')
+            if (plannedPositionOfThePlayer != (char)Symbols.Wall)
             {
-                ChangePlayerPosition(left, top);
+                userPosition = ChangePlayerPosition(userPosition, left, top);
             }
 
-            if (plannedPositionOfThePlayer == 'O')
+            if (plannedPositionOfThePlayer == (char)Symbols.Treasure)
             {
-                ChangePlayerPosition(left, top);
-                
-                TakeTreasure(plannedPlayerPositionX, plannedPlayerPositionY);
-            }
-        }
-
-        private void ChangePlayerPosition(int left, int top)
-        {
-            _userPositionY += top;
-            _userPositionX += left;
-        }
-
-        private void TakeTreasure(int plannedPlayerPositionX, int plannedPlayerPositionY)
-        {
-            _map[plannedPlayerPositionY, plannedPlayerPositionX] = 'X';
-
-            ExpandBag();
-
-            _bag[_bag.Length - 1] = 'O';
-        }
-
-        private void ExpandBag()
-        {
-            char[] tempBag = new char[_bag.Length + 1];
-
-            for (int i = 0; i < _bag.Length; i++)
-            {
-                tempBag[i] = _bag[i];
+                bag = TakeTreasure(plannedPlayerPositionX, plannedPlayerPositionY, bag, ref map);
             }
 
-            _bag = tempBag;
+            return userPosition;
+        }
+
+        private (int, int) ChangePlayerPosition((int X,int Y) userPosition, int left, int top)
+        {
+            userPosition.Y += top;
+            userPosition.X += left;
+
+            return userPosition;
+        }
+
+        private char[] TakeTreasure(int plannedPlayerPositionX, int plannedPlayerPositionY, char[] bag, ref char[,] map)
+        {
+            map[plannedPlayerPositionY, plannedPlayerPositionX] = (char)Symbols.PickedTreasure;
+
+            bag = ExpandBag(bag);
+
+            bag[bag.Length - 1] = (char)Symbols.Treasure;
+
+            return bag;
+        }
+
+        private char[] ExpandBag(char[] bag)
+        {
+            char[] tempBag = new char[bag.Length + 1];
+
+            for (int i = 0; i < bag.Length; i++)
+            {
+                tempBag[i] = bag[i];
+            }
+
+            bag = tempBag;
+
+            return bag;
         }
     }
 }
