@@ -55,11 +55,11 @@ namespace BraveNewWorld
                 
                 if (isExit) continue;
 
-                isExit = WorkWithUser(ref userPosition, zeroShift, shiftMinusOne, shiftPlusOne, ref bag, ref map);
+                isExit = TakePlayerMovement(ref userPosition, zeroShift, shiftMinusOne, shiftPlusOne, ref bag, ref map);
             }
         }
 
-        private bool WorkWithUser(ref (int X, int Y) userPosition, int zeroShift, int shiftMinusOne, int shiftPlusOne,
+        private bool TakePlayerMovement(ref (int X, int Y) userPosition, int zeroShift, int shiftMinusOne, int shiftPlusOne,
             ref char[] bag, ref char[,] map)
         {
             const ConsoleKey MoveUp = ConsoleKey.UpArrow;
