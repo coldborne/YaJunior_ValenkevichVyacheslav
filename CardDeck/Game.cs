@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CardDeck
 {
@@ -13,44 +14,44 @@ namespace CardDeck
         }
 
         private Player _player;
-        private Deck _deck;
+        private Croupier _croupier;
 
         public Game()
         {
             _player = new Player();
-            _deck = new Deck();
+            _croupier = new Croupier();
         }
 
         public void Work()
         {
-            bool doesGameWork = true;
+            bool isWork = true;
 
-            while (doesGameWork)
+            while (isWork)
             {
                 Console.WriteLine("Выберите нужное действие");
-                Console.WriteLine("1 - Взять карту");
-                Console.WriteLine("2 - Взять сразу несколько рандомных карт");
-                Console.WriteLine("3 - Показать карты в руке");
-                Console.WriteLine("4 - Завершить игру");
+                Console.WriteLine($"{(int)Commands.TakeCard} - Взять карту");
+                Console.WriteLine($"{(int)Commands.TakeRandomCards} - Взять сразу несколько рандомных карт");
+                Console.WriteLine($"{(int)Commands.ShowPlayerCards} - Показать карты в руке");
+                Console.WriteLine($"{(int)Commands.Exit} - Завершить игру");
 
                 int chosenCommand = UserUtils.ReadInt();
 
                 switch (chosenCommand)
                 {
                     case (int)Commands.TakeCard:
-                        GiveCardToPlayer();
+                        _player.TryTakeCard(_croupier.TryGiveCard());
                         break;
 
                     case (int)Commands.TakeRandomCards:
-                        GiveCardsToPlayer();
+                        HandOverCards();
                         break;
 
                     case (int)Commands.ShowPlayerCards:
-                        _player.ShowCardInHand();
+                        _player.ShowCardsInHand();
                         break;
 
                     case (int)Commands.Exit:
-                        doesGameWork = false;
+                        isWork = false;
                         break;
 
                     default:
@@ -60,30 +61,28 @@ namespace CardDeck
             }
         }
 
-        private void GiveCardToPlayer()
+        private void HandOverCards()
         {
-            int cardNumber = UserUtils.GetRandomInt(0, _deck.Cards.Count);
-
-            Card card = _deck.Cards[cardNumber];
-
-            _player.TakeCard(card);
-
-            _deck.DeleteCard(card);
-        }
-
-        private void GiveCardsToPlayer()
-        {
-            int cardsAmount = UserUtils.GetRandomInt(1, _player.MaxCardsInHandAmount - _player.CardsInHand.Count + 1);
+            int cardsAmount = UserUtils.GetRandomInt(1, _player.MaxCardsInHandAmount - _player.GetCardsInHandAmount() + 1);
+            
+            List<(bool,Card)> cardsInfo = new List<(bool,Card)>();
 
             for (int i = 0; i < cardsAmount; i++)
             {
-                int cardNumber = UserUtils.GetRandomInt(0, _deck.Cards.Count);
+                (bool isExist, Card card) cardInfo = _croupier.TryGiveCard();
 
-                Card card = _deck.Cards[cardNumber];
+                if (cardInfo.isExist)
+                {
+                    cardsInfo.Add(cardInfo);
+                }
+            }
 
-                _player.TakeCard(card);
-
-                _deck.DeleteCard(card);
+            if (cardsInfo.Count > 0)
+            {
+                foreach ((bool,Card) cardInfo in cardsInfo)
+                {
+                    _player.TryTakeCard(cardInfo);
+                }
             }
         }
     }

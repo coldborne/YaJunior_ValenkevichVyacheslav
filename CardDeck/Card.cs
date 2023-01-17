@@ -3,9 +3,9 @@
     public class Card
     {
         private string _value;
-        private string _suit;
+        private char _suit;
 
-        public Card(string value, string suit)
+        public Card(string value, char suit)
         {
             _value = value;
             _suit = suit;
