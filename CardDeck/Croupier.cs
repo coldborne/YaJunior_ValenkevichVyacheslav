@@ -6,17 +6,12 @@ namespace CardDeck
 {
     public class Croupier
     {
-        private readonly List<string> _cardsValue = new List<string>
-            { "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
-
-        private readonly List<char> _cardsSuit = new List<char>
-            { '♦', '♥', '♣', '♠'};
-
         private List<Card> _cards;
 
         public Croupier()
         {
-            _cards = new List<Card>(54);
+            const int cardsCount = 54;
+            _cards = new List<Card>(cardsCount);
 
             Init();
 
@@ -47,9 +42,15 @@ namespace CardDeck
 
         private void Init()
         {
-            foreach (char suit in _cardsSuit)
+            List<string> cardsValue = new List<string> 
+                { "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
+
+            List<char> cardsSuit = new List<char> 
+                { '♦', '♥', '♣', '♠'};
+            
+            foreach (char suit in cardsSuit)
             {
-                foreach (string value in _cardsValue)
+                foreach (string value in cardsValue)
                 {
                     Card card = new Card(value, suit);
 

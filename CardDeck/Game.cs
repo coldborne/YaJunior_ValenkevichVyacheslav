@@ -69,9 +69,9 @@ namespace CardDeck
 
             for (int i = 0; i < cardsAmount; i++)
             {
-                (bool isExist, Card card) cardInfo = _croupier.TryGiveCard();
+                (bool IsExist, Card Card) cardInfo = _croupier.TryGiveCard();
 
-                if (cardInfo.isExist)
+                if (cardInfo.IsExist)
                 {
                     cardsInfo.Add(cardInfo);
                 }

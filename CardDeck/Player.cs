@@ -15,7 +15,7 @@ namespace CardDeck
             MaxCardsInHandAmount = 6;
         }
 
-        public void TryTakeCard((bool isCardExist, Card card) cardInfo)
+        public void TryTakeCard((bool IsCardExist, Card Card) cardInfo)
         {
             if (_cardsInHand.Count == MaxCardsInHandAmount)
             {
@@ -23,9 +23,9 @@ namespace CardDeck
                 return;
             }
 
-            if (cardInfo.isCardExist)
+            if (cardInfo.IsCardExist)
             {
-                _cardsInHand.Add(cardInfo.card);
+                _cardsInHand.Add(cardInfo.Card);
             }
         }
 
