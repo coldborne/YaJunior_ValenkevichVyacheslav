@@ -163,10 +163,10 @@ namespace BraveNewWorld
 
         private void DrawBag(char[] bag)
         {
-            const int bagPositionX = 0;
-            const int bagPositionY = 17;
+            const int BagPositionX = 0;
+            const int BagPositionY = 17;
         
-            Console.SetCursorPosition(bagPositionX, bagPositionY);
+            Console.SetCursorPosition(BagPositionX, BagPositionY);
             
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Сумка:");
