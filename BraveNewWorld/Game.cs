@@ -23,13 +23,13 @@ namespace BraveNewWorld
             Console.WriteLine("Движение стрелочками");
 
             bool isExit = false;
-            const int treasureForWinCount = 5;
+            const int TreasureForWinCount = 5;
 
             (int X, int Y) userPosition = (1, 1);
             
-            const int shiftPlusOne = 1;
-            const int shiftMinusOne = -1;
-            const int zeroShift = 0;
+            const int ShiftPlusOne = 1;
+            const int ShiftMinusOne = -1;
+            const int ZeroShift = 0;
             
             char[] bag = new char[0];
             
@@ -51,47 +51,59 @@ namespace BraveNewWorld
             {
                 Draw(userPosition, bag, map);
 
-                isExit = CheckWin(bag, treasureForWinCount);
+                isExit = CheckWin(bag, TreasureForWinCount);
                 
-                if (isExit) continue;
+                if (isExit)
+                {
+                    continue;
+                }
+                
+                ConsoleKeyInfo userPressedButton = Console.ReadKey();
 
-                isExit = TakePlayerMovement(ref userPosition, zeroShift, shiftMinusOne, shiftPlusOne, ref bag, ref map);
+                if (userPressedButton.Key == ConsoleKey.Spacebar)
+                {
+                    isExit = true;
+                    continue;
+                }
+
+                MoveUser(ref userPosition, ZeroShift, ShiftMinusOne, ShiftPlusOne, map, userPressedButton.Key);
+
+                char symbolOnUserPosition = map[userPosition.Y, userPosition.X];
+                
+                if (symbolOnUserPosition == (char)Symbols.Treasure)
+                {
+                    bag = TakeTreasure(bag);
+                    
+                    map[userPosition.Y, userPosition.X] = (char)Symbols.PickedTreasure;
+                }
             }
         }
 
-        private bool TakePlayerMovement(ref (int X, int Y) userPosition, int zeroShift, int shiftMinusOne, int shiftPlusOne,
-            ref char[] bag, ref char[,] map)
+        private void MoveUser(ref (int X, int Y) userPosition, int zeroShift, int shiftMinusOne, int shiftPlusOne,
+            char[,] map, ConsoleKey userPressedButton)
         {
             const ConsoleKey MoveUp = ConsoleKey.UpArrow;
             const ConsoleKey MoveDown = ConsoleKey.DownArrow;
             const ConsoleKey MoveRight = ConsoleKey.RightArrow;
             const ConsoleKey MoveLeft = ConsoleKey.LeftArrow;
-            
-            ConsoleKeyInfo userPressedButton = Console.ReadKey();
 
-            switch (userPressedButton.Key)
+            switch (userPressedButton)
             {
                 case MoveUp:
-                    userPosition = WorkWithPlayer(userPosition, zeroShift, shiftMinusOne, ref bag, ref map);
-                    return false;
-
-                case MoveDown:
-                    userPosition = WorkWithPlayer(userPosition, zeroShift, shiftPlusOne, ref bag, ref map);
-                    return false;
-
-                case MoveLeft:
-                    userPosition = WorkWithPlayer(userPosition, shiftMinusOne, zeroShift, ref bag, ref map);
-                    return false;
-
-                case MoveRight:
-                    userPosition = WorkWithPlayer(userPosition, shiftPlusOne, zeroShift, ref bag, ref map);
-                    return false;
-
-                case ConsoleKey.Spacebar:
-                    return true;
+                    userPosition = ChangeUserPosition(userPosition, zeroShift, shiftMinusOne, map);
+                    break;
                 
-                default:
-                    return false;
+                case MoveDown:
+                    userPosition = ChangeUserPosition(userPosition, zeroShift, shiftPlusOne, map);
+                    break;
+                
+                case MoveLeft:
+                    userPosition = ChangeUserPosition(userPosition, shiftMinusOne, zeroShift, map);
+                    break;
+                
+                case MoveRight:
+                    userPosition = ChangeUserPosition(userPosition, shiftPlusOne, zeroShift, map);
+                    break;
             }
         }
 
@@ -111,12 +123,12 @@ namespace BraveNewWorld
 
         private void Draw((int, int) userPosition, char[] bag, char[,] map)
         {
-            const int offsetLeft = 0;
-            const int offsetTop = 3;
+            const int OffsetLeft = 0;
+            const int OffsetTop = 5;
         
-            DrawMap(offsetLeft, offsetTop, map);
+            DrawMap(OffsetLeft, OffsetTop, map);
 
-            DrawPlayer(userPosition, offsetLeft, offsetTop);
+            DrawPlayer(userPosition, OffsetLeft, OffsetTop);
 
             DrawBag(bag);
         }
@@ -152,7 +164,7 @@ namespace BraveNewWorld
         private void DrawBag(char[] bag)
         {
             const int bagPositionX = 0;
-            const int bagPositionY = 15;
+            const int bagPositionY = 17;
         
             Console.SetCursorPosition(bagPositionX, bagPositionY);
             
@@ -183,7 +195,7 @@ namespace BraveNewWorld
             Console.ForegroundColor = default;
         }
 
-        private (int, int) WorkWithPlayer((int X,int Y) userPosition, int left, int top, ref char[] bag, ref char[,] map)
+        private (int X,int Y) ChangeUserPosition((int X,int Y) userPosition, int left, int top, char[,] map)
         {
             int plannedPlayerPositionY = userPosition.Y + top;
             int plannedPlayerPositionX = userPosition.X + left;
@@ -192,18 +204,13 @@ namespace BraveNewWorld
 
             if (plannedPositionOfThePlayer != (char)Symbols.Wall)
             {
-                userPosition = ChangePlayerPosition(userPosition, left, top);
-            }
-
-            if (plannedPositionOfThePlayer == (char)Symbols.Treasure)
-            {
-                bag = TakeTreasure(plannedPlayerPositionX, plannedPlayerPositionY, bag, ref map);
+                userPosition = Move(userPosition, left, top);
             }
 
             return userPosition;
         }
 
-        private (int, int) ChangePlayerPosition((int X,int Y) userPosition, int left, int top)
+        private (int X,int Y) Move((int X,int Y) userPosition, int left, int top)
         {
             userPosition.Y += top;
             userPosition.X += left;
@@ -211,13 +218,11 @@ namespace BraveNewWorld
             return userPosition;
         }
 
-        private char[] TakeTreasure(int plannedPlayerPositionX, int plannedPlayerPositionY, char[] bag, ref char[,] map)
+        private char[] TakeTreasure(char[] bag)
         {
             bag = ExpandBag(bag);
 
             bag[bag.Length - 1] = (char)Symbols.Treasure;
-            
-            map[plannedPlayerPositionY, plannedPlayerPositionX] = (char)Symbols.PickedTreasure;
 
             return bag;
         }
