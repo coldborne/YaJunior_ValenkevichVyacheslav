@@ -19,7 +19,7 @@ namespace BraveNewWorld
         public void Work()
         {
             Console.Clear();
-            Console.WriteLine($"Добро пожаловать в нашу бродилку. Цель - собрать все сокровища (Помечены как {Symbols.Treasure})");
+            Console.WriteLine($"Добро пожаловать в нашу бродилку. Цель - собрать все сокровища (Помечены как {(char)Symbols.Treasure})");
             Console.WriteLine("Движение стрелочками");
 
             bool isExit = false;
