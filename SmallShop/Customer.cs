@@ -10,23 +10,18 @@ namespace SmallShop
         private List<Product> _products;
         private int _avaibleWeigth;
 
+        private int FreeWeight => _avaibleWeigth - _products.Sum(productInBag => productInBag.Weight);
+
         public Customer()
         {
             _products = new List<Product>();
             _avaibleWeigth = 50;
+            _money = 500;
         }
-
-        public void ShowProducts()
-        {
-            foreach (Product product in _products)
-            {
-                Console.WriteLine(product.ToString());
-            }
-        }
-
+        
         public bool TryBuyProduct(Product product)
         {
-            if (product == null || product.Price > _money || product.Weight > _avaibleWeigth - _products.Sum(productInBag => productInBag.Weight))
+            if ((IsFreeWeightEnough(product) || IsMoneyEnough(product)) == false)
             {
                 return false;
             }
@@ -35,6 +30,21 @@ namespace SmallShop
             _money -= product.Price;
 
             return true;
+        }
+        
+        public override string ToString()
+        {
+            return string.Join(Environment.NewLine, _products);
+        }
+        
+        private bool IsFreeWeightEnough(Product product)
+        {
+            return product.Weight <= FreeWeight;
+        }
+        
+        private bool IsMoneyEnough(Product product)
+        {
+            return product.Price <= _money;
         }
     }
 }
