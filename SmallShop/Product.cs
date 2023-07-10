@@ -2,21 +2,20 @@ namespace SmallShop
 {
     public class Product
     {
-        private readonly string _name;
-        
-        public int Price { get; private set; }
-        public int Weight { get; private set; }
+        public string Name { get; }
+        public int Price { get; }
+        public int Weight { get; }
 
         public Product(string name, int weight, int price)
         {
             Weight = weight;
-            _name = name;
+            Name = name;
             Price = price;
         }
 
         public override string ToString()
         {
-            return "Название - " + _name + "Вес - " + Weight + "Цена - " + Price;
+            return "Название - " + Name + ", Вес - " + Weight + ", Цена - " + Price;
         }
     }
 }

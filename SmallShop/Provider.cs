@@ -1,30 +1,35 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace SmallShop
 {
     public class Provider
     {
-        public Product GiveProduct()
+        private List<string> _names = new List<string>() { "конфеты", "пирожки", "молоко", "сыр", "котлеты" };
+
+        public List<Product> GiveProducts()
         {
-            return CreateProduct();
+            List<Product> products = new List<Product>();
+
+            foreach (string name in _names)
+            {
+                products.Add(CreateProduct(name));
+            }
+
+            return products;
         }
 
-        private Product CreateProduct()
+        private Product CreateProduct(string name)
         {
-            String[] names = { "Конфеты", "Пирожки", "Молоко", "Сыр", "Котлеты" };
-            int typesProductsAmount = names.Length;
-
-            int minWeight = 10;
-            int maxWeight = 20;
+            int minWeight = 300;
+            int maxWeight = 1500;
 
             int minPrice = 100;
             int maxPrice = 500;
 
             int weight = ProviderRandom.Random.Next(minWeight, maxWeight + 1);
             int price = ProviderRandom.Random.Next(minPrice, maxPrice + 1);
-            string name = names[ProviderRandom.Random.Next(typesProductsAmount)];
-            
-            return new Product(name,weight,price);
+
+            return new Product(name, weight, price);
         }
     }
 }

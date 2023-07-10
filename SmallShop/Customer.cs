@@ -1,50 +1,39 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SmallShop
 {
-    public class Customer
+    public class Customer : Person
     {
-        private int _money;
-        private List<Product> _products;
         private int _avaibleWeigth;
 
-        private int FreeWeight => _avaibleWeigth - _products.Sum(productInBag => productInBag.Weight);
-
-        public Customer()
+        public Customer() : base(500)
         {
-            _products = new List<Product>();
-            _avaibleWeigth = 50;
-            _money = 500;
+            _avaibleWeigth = 5000;
         }
-        
+
+        public int FreeWeight => _avaibleWeigth - Products.Sum(productInBag => productInBag.Weight);
+
         public bool TryBuyProduct(Product product)
         {
-            if ((IsFreeWeightEnough(product) || IsMoneyEnough(product)) == false)
+            if (HasFreeWeight(product.Weight) == false || CanPay(product.Price) == false)
             {
                 return false;
             }
 
-            _products.Add(product);
-            _money -= product.Price;
+            Products.Add(product);
+            Money -= product.Price;
 
             return true;
         }
-        
-        public override string ToString()
+
+        private bool HasFreeWeight(int weight)
         {
-            return string.Join(Environment.NewLine, _products);
+            return weight <= FreeWeight;
         }
-        
-        private bool IsFreeWeightEnough(Product product)
+
+        private bool CanPay(int price)
         {
-            return product.Weight <= FreeWeight;
-        }
-        
-        private bool IsMoneyEnough(Product product)
-        {
-            return product.Price <= _money;
+            return price <= Money;
         }
     }
 }
