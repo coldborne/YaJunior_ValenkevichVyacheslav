@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SmallShop
 {
     public class Provider
     {
         private List<string> _names = new List<string>() { "конфеты", "пирожки", "молоко", "сыр", "котлеты" };
+        private Random _random = new Random();
 
         public List<Product> GiveProducts()
         {
@@ -26,8 +28,8 @@ namespace SmallShop
             int minPrice = 100;
             int maxPrice = 500;
 
-            int weight = ProviderRandom.Random.Next(minWeight, maxWeight + 1);
-            int price = ProviderRandom.Random.Next(minPrice, maxPrice + 1);
+            int weight = _random.Next(minWeight, maxWeight + 1);
+            int price = _random.Next(minPrice, maxPrice + 1);
 
             return new Product(name, weight, price);
         }

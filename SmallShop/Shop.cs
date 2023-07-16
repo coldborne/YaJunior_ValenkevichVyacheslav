@@ -31,7 +31,10 @@ namespace SmallShop
                 Console.WriteLine("Выберите действие");
 
                 Console.WriteLine(
-                    "1 - Показать все товары магазина, 2 - Купить товар, 3 - Показать информацию о покупателе, 4 - Выйти из магазина");
+                    $"{(int)Commands.ShowProducts} - Показать все товары магазина, " +
+                    $"{(int)Commands.MakeDeal} - Купить товар, " +
+                    $"{(int)Commands.ShowCustomerProducts} - Показать информацию о покупателе, " +
+                    $"{(int)Commands.Exit} - Выйти из магазина");
 
                 bool isInputValid = false;
 
