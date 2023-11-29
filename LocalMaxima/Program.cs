@@ -11,10 +11,11 @@ namespace LocalMaxima
 
             Random random = new Random();
             int maximumValue = 100;
+            int minimumValue = 0;
 
             for (int i = 0; i < studentGrades.Length; i++)
             {
-                studentGrades[i] = random.Next(0, maximumValue + 1);
+                studentGrades[i] = random.Next(minimumValue, maximumValue + 1);
             }
 
             Console.WriteLine("Ваш массив:");
