@@ -6,8 +6,8 @@ namespace LocalMaxima
     {
         static void Main(string[] args)
         {
-            const int StudentGradesSize = 30;
-            int[] studentGrades = new int[StudentGradesSize];
+            int studentGradesSize = 30;
+            int[] studentGrades = new int[studentGradesSize];
 
             Random random = new Random();
             int maximumValue = 100;
@@ -40,7 +40,9 @@ namespace LocalMaxima
                 }
             }
 
-            if (studentGrades[studentGrades.Length - 1] >= studentGrades[studentGrades.Length - 2])
+            int lastStudentIndex = studentGrades.Length - 1;
+
+            if (studentGrades[studentGrades.Length - 1] >= studentGrades[lastStudentIndex - 1])
             {
                 Console.Write(studentGrades[studentGrades.Length - 1]);
             }
