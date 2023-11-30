@@ -27,14 +27,14 @@ namespace LocalMaxima
 
             Console.WriteLine("\nВсе локальные максимумы:");
 
-            if (studentGrades[0] >= studentGrades[1])
+            if (studentGrades[0] > studentGrades[1])
             {
                 Console.Write(studentGrades[0] + " ");
             }
 
             for (int i = 1; i < studentGrades.Length - 1; i++)
             {
-                if (studentGrades[i] >= studentGrades[i - 1] && studentGrades[i] >= studentGrades[i + 1])
+                if (studentGrades[i] > studentGrades[i - 1] && studentGrades[i] > studentGrades[i + 1])
                 {
                     Console.Write(studentGrades[i] + " ");
                 }
@@ -42,7 +42,7 @@ namespace LocalMaxima
 
             int lastStudentIndex = studentGrades.Length - 1;
 
-            if (studentGrades[studentGrades.Length - 1] >= studentGrades[lastStudentIndex - 1])
+            if (studentGrades[studentGrades.Length - 1] > studentGrades[lastStudentIndex - 1])
             {
                 Console.Write(studentGrades[studentGrades.Length - 1]);
             }
