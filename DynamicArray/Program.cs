@@ -60,15 +60,15 @@ namespace DynamicArray
 
         private static void TryReadNumber(string userInput)
         {
-            if (CheckVariableIsNumber(userInput))
+            if (IsVariableNumber(userInput, out int value))
             {
-                AddNumber(userInput);
+                AddNumber(value);
             }
         }
 
-        private static bool CheckVariableIsNumber(string userInput)
+        private static bool IsVariableNumber(string userInput, out int number)
         {
-            bool isIntValue = int.TryParse(userInput, out int value);
+            bool isIntValue = int.TryParse(userInput, out number);
 
             if (isIntValue == false)
             {
@@ -78,13 +78,11 @@ namespace DynamicArray
             return isIntValue;
         }
 
-        private static void AddNumber(string userInput)
+        private static void AddNumber(int number)
         {
-            int newNumber = int.Parse(userInput);
-
             ExpandArray();
 
-            _numbers[_numbers.Length - 1] = newNumber;
+            _numbers[_numbers.Length - 1] = number;
         }
 
         private static void ExpandArray()
