@@ -4,8 +4,8 @@ namespace DynamicArray
 {
     internal class Program
     {
-        public const string Sum = "sum";
-        public const string Exit = "exit";
+        public const string SumCommand = "sum";
+        public const string ExitCommand = "exit";
 
         private static int[] _numbers;
 
@@ -18,16 +18,16 @@ namespace DynamicArray
 
             while (isInputExit == false)
             {
-                Console.Write($"{Sum} - Сумма всех введенных чисел, {Exit} - Выход из программы\n");
+                Console.Write($"{SumCommand} - Сумма всех введенных чисел, {ExitCommand} - Выход из программы\n");
 
                 string userInput = Console.ReadLine().ToLower();
 
                 switch (userInput)
                 {
-                    case Sum:
+                    case SumCommand:
                         CalculateSumOfnumbers();
                         break;
-                    case Exit:
+                    case ExitCommand:
                         isInputExit = true;
                         break;
                     default:
