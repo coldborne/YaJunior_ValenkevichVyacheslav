@@ -25,7 +25,18 @@ namespace SortingNumbers
                 Console.Write(numbers[i] + " ");
             }
 
-            numbers = MergeSort(numbers);
+            for (int i = 0; i < numbers.Length - 1; i++)
+            {
+                for (int j = 0; j < numbers.Length - i - 1; j++)
+                {
+                    if (numbers[j] > numbers[j + 1])
+                    {
+                        int temp = numbers[j];
+                        numbers[j] = numbers[j + 1];
+                        numbers[j + 1] = temp;
+                    }
+                }
+            }
 
             Console.WriteLine("\n\nОтсортированный массив:");
 
@@ -35,41 +46,6 @@ namespace SortingNumbers
             }
 
             Console.WriteLine();
-        }
-
-        private static int[] MergeSort(int[] numbers)
-        {
-            if (numbers.Length == 1)
-            {
-                return numbers;
-            }
-
-            int middle = numbers.Length / 2;
-
-            int[] first = MergeSort(numbers.Take(middle).ToArray());
-            int[] second = MergeSort(numbers.Skip(middle).ToArray());
-
-            return Merge(first, second);
-        }
-
-        private static int[] Merge(int[] first, int[] second)
-        {
-            int indexMinOfFirst = 0, indexMinOfSecond = 0;
-            int[] merged = new int[first.Length + second.Length];
-
-            for (int i = 0; i < merged.Length; ++i)
-            {
-                if (indexMinOfFirst < first.Length && indexMinOfSecond < second.Length)
-                {
-                    merged[i] = first[indexMinOfFirst] > second[indexMinOfSecond] ? second[indexMinOfSecond++] : first[indexMinOfFirst++];
-                }
-                else
-                {
-                    merged[i] = indexMinOfSecond < second.Length ? second[indexMinOfSecond++] : first[indexMinOfFirst++];
-                }
-            }
-
-            return merged;
         }
     }
 }
