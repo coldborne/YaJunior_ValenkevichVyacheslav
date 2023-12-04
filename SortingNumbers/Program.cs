@@ -16,7 +16,7 @@ namespace SortingNumbers
 
             Console.WriteLine("Первоначальный массив:");
 
-            int maxNumber = 20;
+            int maxNumber = upperLimit;
 
             for (int i = 0; i < numbers.Length; i++)
             {
@@ -31,9 +31,9 @@ namespace SortingNumbers
                 {
                     if (numbers[j] > numbers[j + 1])
                     {
-                        int temp = numbers[j];
+                        int tempValue = numbers[j];
                         numbers[j] = numbers[j + 1];
-                        numbers[j + 1] = temp;
+                        numbers[j + 1] = tempValue;
                     }
                 }
             }
