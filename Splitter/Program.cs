@@ -10,14 +10,12 @@ namespace Splitter
                 "26 раз мне доверяли сделать финальный победный бросок, и я промахивался. Я терпел поражения снова, и снова, и снова. " +
                 "И именно поэтому я добился успеха.";
 
-            string[] words = phrase.Split(' ', '.', ',');
-
+            char[] separators = { ' ', '.', ',' };
+            string[] words = phrase.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            
             foreach (string word in words)
             {
-                if (word != "")
-                {
-                    Console.WriteLine(word);
-                }
+                Console.WriteLine(word);
             }
         }
     }
