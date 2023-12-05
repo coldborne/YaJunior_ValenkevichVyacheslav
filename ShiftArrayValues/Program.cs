@@ -20,24 +20,29 @@ namespace ShiftArrayValues
 
             Console.Write("\nВведите шаг, на который нужно сдвинуть влево числа: ");
 
-            int step = Convert.ToInt32(Console.ReadLine());
+            int shiftStep = Convert.ToInt32(Console.ReadLine());
 
-            if (step < 0)
+            if (shiftStep < 0)
             {
                 Console.WriteLine("В данной реализации доступен только сдвиг влево, поэтому отрицательный сдвиг тут не прокатит");
             }
             else
             {
-                for (int i = 0; i < step; i++)
+                int optimizedShift = shiftStep % numbers.Length;
+
+                if (optimizedShift != 0) 
                 {
-                    int tempValue = numbers[0];
-
-                    for (int j = 0; j < numbers.Length - 1; j++)
+                    for (int i = 0; i < optimizedShift; i++)
                     {
-                        numbers[j] = numbers[j + 1];
-                    }
+                        int tempValue = numbers[0];
 
-                    numbers[numbers.Length - 1] = tempValue;
+                        for (int j = 0; j < numbers.Length - 1; j++)
+                        {
+                            numbers[j] = numbers[j + 1];
+                        }
+
+                        numbers[numbers.Length - 1] = tempValue;
+                    }
                 }
             }
 
