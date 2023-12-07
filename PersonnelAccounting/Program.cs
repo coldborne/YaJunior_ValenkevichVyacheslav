@@ -139,13 +139,13 @@ namespace PersonnelAccounting
             Console.WriteLine(
                 $"В системе зарегистрировано {fullNames.Length} досье. Укажите номер досье, которое желаете удалить");
             int numberOfDossier = ReadIntValue();
-            int numberOfRemovedElement = numberOfDossier - 1;
+            int indexOfRemovedElement = numberOfDossier - 1;
 
-            if (numberOfRemovedElement >= 0 && numberOfRemovedElement < fullNames.Length &&
-                numberOfRemovedElement < positions.Length)
+            if (indexOfRemovedElement >= 0 && indexOfRemovedElement < fullNames.Length &&
+                indexOfRemovedElement < positions.Length)
             {
-                fullNames = Reduce(fullNames, numberOfRemovedElement);
-                positions = Reduce(positions, numberOfRemovedElement);
+                fullNames = Reduce(fullNames, indexOfRemovedElement);
+                positions = Reduce(positions, indexOfRemovedElement);
             }
             else
             {
@@ -153,16 +153,16 @@ namespace PersonnelAccounting
             }
         }
 
-        private static string[] Reduce(string[] array, int numberOfRemovedElement)
+        private static string[] Reduce(string[] array, int indexOfRemovedElement)
         {
             string[] tempFullNames = new string[array.Length - 1];
 
-            for(int i = 0; i < numberOfRemovedElement; i++)
+            for(int i = 0; i < indexOfRemovedElement; i++)
             {
                 tempFullNames[i] = array[i];
             }
 
-            for(int i = numberOfRemovedElement + 1; i < array.Length; i++)
+            for(int i = indexOfRemovedElement + 1; i < array.Length; i++)
             {
                 tempFullNames[i - 1] = array[i];
             }
