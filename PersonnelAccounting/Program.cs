@@ -4,65 +4,72 @@ namespace PersonnelAccounting
 {
     internal class Program
     {
-        private static string[] _fullNames = new string[0];
-        private static string[] _positions = new string[0];
-
         static void Main(string[] args)
         {
+            const int AddDossierCommand = 1;
+            const int ShowAllDossiersCommand = 2;
+            const int DeleteDossierCommand = 3;
+            const int SearchDossierByLastNameCommand = 4;
+            const int ExitCommand = 5;
+
+            string[] fullNames = new string[0];
+            string[] positions = new string[0];
+
             bool isProgramWork = true;
 
             Console.WriteLine("Добро пожаловать в нашу секретную библиотеку!\nУ нас можно:");
 
             while (isProgramWork)
             {
-                Console.WriteLine("1 - Добавить досье, 2 - Вывести все досье, 3 - Удалить одно досье, 4 - Поиск по фамилии, 5 - Выход");
+                Console.WriteLine(
+                    $"{AddDossierCommand} - Добавить досье, {ShowAllDossiersCommand} - Вывести все досье, {DeleteDossierCommand} - Удалить одно досье, {SearchDossierByLastNameCommand} - Поиск по фамилии, {ExitCommand} - Выход");
                 Console.WriteLine("Чтобы перейти к нужному функционалу, введите нужную цифру");
                 int commandNumber = ReadIntValue();
 
                 switch (commandNumber)
                 {
-                    case 1:
-                        AddDossier();
+                    case AddDossierCommand:
+                        AddDossier(ref fullNames, ref positions);
                         break;
-                    case 2:
-                        ShowAllDossiers();
+                    case ShowAllDossiersCommand:
+                        ShowAllDossiers(fullNames, positions);
                         break;
-                    case 3:
-                        DeleteDossier();
+                    case DeleteDossierCommand:
+                        DeleteDossier(ref fullNames, ref positions);
                         break;
-                    case 4:
-                        SearchDossierByLastName();
+                    case SearchDossierByLastNameCommand:
+                        SearchDossierByLastName(fullNames, positions);
                         break;
-                    case 5:
+                    case ExitCommand:
                         isProgramWork = false;
                         break;
                     default:
+                        Console.WriteLine("Такой команды у нас нет");
                         break;
                 }
             }
         }
 
-        private static void AddDossier()
+        private static void AddDossier(ref string[] fullNames, ref string[] positions)
         {
-            string fullName = null;
-            string position = null;
+            ReadData(out string fullName, out string position);
 
-            ReadData(ref fullName, ref position);
+            fullNames = Expand(fullNames);
+            positions = Expand(positions);
 
-            _fullNames = Expand(_fullNames);
-            _positions = Expand(_positions);
-
-            _fullNames[_fullNames.Length - 1] = fullName;
-            _positions[_positions.Length - 1] = position;
+            fullNames[fullNames.Length - 1] = fullName;
+            positions[positions.Length - 1] = position;
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Досье добавлено");
             Console.ResetColor();
         }
 
-        private static void ReadData(ref string fullName, ref string position)
+        private static void ReadData(out string fullName, out string position)
         {
             bool isFullNameCorrect = false;
+            fullName = string.Empty;
+            position = string.Empty;
 
             while (isFullNameCorrect == false)
             {
@@ -99,7 +106,7 @@ namespace PersonnelAccounting
         {
             string[] tempFullNames = new string[array.Length + 1];
 
-            for (int i = 0; i < array.Length; i++)
+            for(int i = 0; i < array.Length; i++)
             {
                 tempFullNames[i] = array[i];
             }
@@ -109,33 +116,36 @@ namespace PersonnelAccounting
             return array;
         }
 
-        private static void ShowAllDossiers()
+        private static void ShowAllDossiers(string[] fullNames, string[] positions)
         {
-            if (_fullNames.Length == 0)
+            if (fullNames.Length == 0)
             {
                 Console.WriteLine("Ни одно досье пока не добавлено");
             }
             else
             {
-                for (int i = 0; i < _fullNames.Length - 1; i++)
+                for(int i = 0; i < fullNames.Length - 1; i++)
                 {
-                    Console.Write($"{i + 1} - {_fullNames[i]} {_positions[i]} ");
+                    Console.Write($"{i + 1} - {fullNames[i]} {positions[i]} ");
                 }
 
-                Console.Write($"{_fullNames.Length} - {_fullNames[_fullNames.Length - 1]} {_positions[_fullNames.Length - 1]} \n");
+                Console.Write(
+                    $"{fullNames.Length} - {fullNames[fullNames.Length - 1]} {positions[positions.Length - 1]} \n");
             }
         }
 
-        private static void DeleteDossier()
+        private static void DeleteDossier(ref string[] fullNames, ref string[] positions)
         {
-            Console.WriteLine($"В системе зарегистрировано {_fullNames.Length} досье. Укажите номер досье, которое желаете удалить");
+            Console.WriteLine(
+                $"В системе зарегистрировано {fullNames.Length} досье. Укажите номер досье, которое желаете удалить");
             int numberOfDossier = ReadIntValue();
             int numberOfRemovedElement = numberOfDossier - 1;
 
-            if (numberOfRemovedElement >= 0 && numberOfRemovedElement < _fullNames.Length && numberOfRemovedElement < _positions.Length)
+            if (numberOfRemovedElement >= 0 && numberOfRemovedElement < fullNames.Length &&
+                numberOfRemovedElement < positions.Length)
             {
-                _fullNames = Reduce(_fullNames, numberOfRemovedElement);
-                _positions = Reduce(_positions, numberOfRemovedElement);
+                fullNames = Reduce(fullNames, numberOfRemovedElement);
+                positions = Reduce(positions, numberOfRemovedElement);
             }
             else
             {
@@ -147,12 +157,12 @@ namespace PersonnelAccounting
         {
             string[] tempFullNames = new string[array.Length - 1];
 
-            for (int i = 0; i < numberOfRemovedElement; i++)
+            for(int i = 0; i < numberOfRemovedElement; i++)
             {
                 tempFullNames[i] = array[i];
             }
 
-            for (int i = numberOfRemovedElement + 1; i < array.Length; i++)
+            for(int i = numberOfRemovedElement + 1; i < array.Length; i++)
             {
                 tempFullNames[i - 1] = array[i];
             }
@@ -162,19 +172,19 @@ namespace PersonnelAccounting
             return array;
         }
 
-        private static void SearchDossierByLastName()
+        private static void SearchDossierByLastName(string[] fullNames, string[] positions)
         {
             Console.WriteLine("Введите желаемую фамилию");
             string lastName = Console.ReadLine();
 
             bool wasDossierFound = false;
 
-            for (int i = 0; i < _fullNames.Length; i++)
+            for(int i = 0; i < fullNames.Length; i++)
             {
-                if (lastName == _fullNames[i].Split()[0])
+                if (lastName == fullNames[i].Split()[0])
                 {
                     wasDossierFound = true;
-                    Console.WriteLine(_fullNames[i] + " " + _positions[i]);
+                    Console.WriteLine(fullNames[i] + " " + positions[i]);
                 }
             }
 
