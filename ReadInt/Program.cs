@@ -6,7 +6,9 @@ namespace ReadInt
     {
         static void Main(string[] args)
         {
-            ReadInt();
+            int value = ReadInt();
+
+            Console.WriteLine(value);
         }
 
         private static int ReadInt()
