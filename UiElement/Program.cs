@@ -7,12 +7,12 @@ namespace UiElement
         static void Main(string[] args)
         {
             ConsoleColor colorOfBar = ConsoleColor.Green;
-            
+
             int scalePercentage = GetScalePercentage();
 
             int positionX = 0;
             int positionY = Console.CursorTop;
-            
+
             DrawBar(scalePercentage, colorOfBar, positionX, positionY);
         }
 
@@ -40,7 +40,7 @@ namespace UiElement
                 {
                     if (scalePercentage < minScalePercentageValue || scalePercentage > maxScalePercentageValue)
                     {
-                        Console.WriteLine("Процент должен быть от 0 до 100");
+                        Console.WriteLine($"Процент должен быть от {minScalePercentageValue} до {maxScalePercentageValue}");
                     }
                     else
                     {
@@ -58,9 +58,12 @@ namespace UiElement
             string bar;
 
             int maxUIScaleValue = 10;
-            int scaleValue = scalePercentage / maxUIScaleValue;
-
-            bar = FillBar(0, scaleValue, ' ');
+            int maxPercentage = 100;
+            double shadedAreaFraction = (double)scalePercentage / maxPercentage;
+            int scaleValue = (int)(shadedAreaFraction * maxUIScaleValue);
+            
+            //Здесь передать количество повторений
+            bar = FillBar(scaleValue, ' ');
 
             if (positionX < 0 || positionY < 0)
             {
@@ -76,16 +79,18 @@ namespace UiElement
             Console.Write(bar);
             Console.BackgroundColor = defaultColor;
 
-            bar = FillBar(scaleValue, maxUIScaleValue, ' ');
+            int blankArea= maxUIScaleValue - scaleValue;
+            
+            bar = FillBar(blankArea,' ');
 
             Console.WriteLine(bar + "]");
         }
 
-        private static string FillBar(int startPosition, int endPositiob, char fillSymbol)
+        private static string FillBar(int symbolCount, char fillSymbol)
         {
             string bar = string.Empty;
 
-            for(int i = startPosition; i < endPositiob; i++)
+            for(int i = 0; i < symbolCount; i++)
             {
                 bar += fillSymbol;
             }
