@@ -8,29 +8,29 @@ namespace UiElement
         {
             ConsoleColor colorOfBar = ConsoleColor.Green;
 
-            int scalePercentage = GetScalePercentage();
+            int filledPercentage = GetScalePercentage();
 
             int positionX = 0;
             int positionY = Console.CursorTop;
 
-            DrawBar(scalePercentage, colorOfBar, positionX, positionY);
+            DrawBar(filledPercentage, colorOfBar, positionX, positionY);
         }
 
         private static int GetScalePercentage()
         {
-            bool isScalePercentageValid = false;
+            bool isfilledPercentageValueValid = false;
             bool isValueValid;
 
-            int minScalePercentageValue = 0;
-            int maxScalePercentageValue = 100;
+            int minFilledPercentageValue = 0;
+            int maxFilledPercentageValue = 100;
 
-            int scalePercentage = 0;
+            int filledPercentage = 0;
 
-            while (isScalePercentageValid == false)
+            while (isfilledPercentageValueValid == false)
             {
                 Console.Write("Введите закрашенный процент: ");
                 string userInput = Console.ReadLine();
-                isValueValid = int.TryParse(userInput, out scalePercentage);
+                isValueValid = int.TryParse(userInput, out filledPercentage);
 
                 if (isValueValid == false)
                 {
@@ -38,32 +38,32 @@ namespace UiElement
                 }
                 else
                 {
-                    if (scalePercentage < minScalePercentageValue || scalePercentage > maxScalePercentageValue)
+                    if (filledPercentage < minFilledPercentageValue || filledPercentage > maxFilledPercentageValue)
                     {
-                        Console.WriteLine($"Процент должен быть от {minScalePercentageValue} до {maxScalePercentageValue}");
+                        Console.WriteLine(
+                            $"Процент должен быть от {minFilledPercentageValue} до {maxFilledPercentageValue}");
                     }
                     else
                     {
-                        isScalePercentageValid = true;
+                        isfilledPercentageValueValid = true;
                     }
                 }
             }
 
-            return scalePercentage;
+            return filledPercentage;
         }
 
-        private static void DrawBar(int scalePercentage, ConsoleColor color, int positionX, int positionY)
+        private static void DrawBar(int filledPercentage, ConsoleColor color, int positionX, int positionY)
         {
             ConsoleColor defaultColor = Console.BackgroundColor;
             string bar;
 
             int maxUIScaleValue = 10;
             int maxPercentage = 100;
-            double shadedAreaFraction = (double)scalePercentage / maxPercentage;
-            int scaleValue = (int)(shadedAreaFraction * maxUIScaleValue);
-            
-            //Здесь передать количество повторений
-            bar = FillBar(scaleValue, ' ');
+            double shadedAreaFraction = (double)filledPercentage / maxPercentage;
+            int filledScaleValue = (int)(shadedAreaFraction * maxUIScaleValue);
+
+            bar = FillBar(filledScaleValue, ' ');
 
             if (positionX < 0 || positionY < 0)
             {
@@ -79,9 +79,9 @@ namespace UiElement
             Console.Write(bar);
             Console.BackgroundColor = defaultColor;
 
-            int blankArea= maxUIScaleValue - scaleValue;
-            
-            bar = FillBar(blankArea,' ');
+            int blankArea = maxUIScaleValue - filledScaleValue;
+
+            bar = FillBar(blankArea, ' ');
 
             Console.WriteLine(bar + "]");
         }
