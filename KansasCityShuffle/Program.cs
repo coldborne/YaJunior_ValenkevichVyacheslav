@@ -11,22 +11,18 @@ namespace KansasCityShuffle
 
             int[] estimates = new int[sizeOfEstimates];
 
-            Console.Write("Изначальный массив - ");
-
-            for (int i = 0; i < estimates.Length; i++)
+            for(int i = 0; i < estimates.Length; i++)
             {
                 estimates[i] = i + 1;
-                Console.Write(estimates[i] + " ");
             }
 
-            Console.Write("\nМассив после перемешивания - ");
+            Console.Write("Изначальный массив - ");
+            ShowEstimates(estimates);
 
             Shuffle(estimates);
 
-            for (int i = 0; i < estimates.Length; i++)
-            {
-                Console.Write(estimates[i] + " ");
-            }
+            Console.Write("\nМассив после перемешивания - ");
+            ShowEstimates(estimates);
 
             Console.WriteLine();
         }
@@ -49,6 +45,14 @@ namespace KansasCityShuffle
 
                     tempList.Remove(tempElement);
                 }
+            }
+        }
+
+        private static void ShowEstimates(int[] estimates)
+        {
+            for(int i = 0; i < estimates.Length; i++)
+            {
+                Console.Write(estimates[i] + " ");
             }
         }
     }
