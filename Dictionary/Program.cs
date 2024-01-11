@@ -7,25 +7,40 @@ namespace Dictionary
     {
         static void Main(string[] args)
         {
-            Dictionary<int, string> employees = new Dictionary<int, string>();
+            Dictionary<string, string> employees = new Dictionary<string, string>()
+            {
+                {"Валенкевич Вячеслав Леонидович", "Тестировщик"},
+                {"Греков грек Грекович", "Тестировщик"},
+                {"Алексей Полный Алексеевич", "Менеджер"},
+                {"Пирожок с маслом", "Аналитик"},
+                {"Вкусное пироженое", "Программист"},
+            };
 
-            employees.Add(1, "Программист");
-            employees.Add(2, "Тестировщик");
-            employees.Add(3, "Менеджер");
-            employees.Add(4, "Аналитик");
-            employees.Add(5, "Программист");
-
-            Console.Write("Введите сотрудника, которого хотите найти: ");
+            Console.Write("Введите ФИО сотрудника, профессию которого хотите определить: ");
             string word = Console.ReadLine();
 
-            if (employees.ContainsValue(word))
+            if (TryFindEmployee(employees, word, out string profession))
             {
-                Console.WriteLine(word);
+                Console.WriteLine(profession);
             }
             else
             {
                 Console.WriteLine("Такого сотрудника нет");
             }
+        }
+
+        private static bool TryFindEmployee(Dictionary<string, string> employees, string employee, out string profession)
+        {
+            profession = string.Empty;
+            
+            if (employees.ContainsKey(employee))
+            {
+                profession = employees[employee];
+                
+                return true;
+            }
+
+            return false;
         }
     }
 }
