@@ -14,7 +14,7 @@ namespace PersonnelAccountingPRO
 
             while (isProgramWork)
             {
-                Console.WriteLine("1 - Добавить досье, 2 - Вывести все досье, 3 - Удалить одно досье, 4 - Выход");
+                Console.WriteLine($"{Commands.AddDossier} - Добавить досье, {Commands.ShowAllDossiers} - Вывести все досье, {Commands.DeleteDossier} - Удалить одно досье, {Commands.Exit} - Выход");
 
                 Console.WriteLine("Чтобы перейти к нужному функционалу, введите нужную цифру");
                 int commandNumber = ReadIntValue();
@@ -44,7 +44,7 @@ namespace PersonnelAccountingPRO
             }
         }
 
-        private static bool TryAddDossier(Dictionary<string, string> dossiers)
+        private static void TryAddDossier(Dictionary<string, string> dossiers)
         {
             ReadData(out string fullName, out string position);
 
@@ -55,15 +55,13 @@ namespace PersonnelAccountingPRO
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Досье добавлено");
                 Console.ResetColor();
-
-                return true;
             }
-
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Досье уже существует");
-            Console.ResetColor();
-
-            return false;
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Досье уже существует");
+                Console.ResetColor();
+            }
         }
 
         private static void ReadData(out string fullName, out string position)
@@ -106,9 +104,10 @@ namespace PersonnelAccountingPRO
 
         private static bool IsContainsFullData(string fullName)
         {
-            string[] words = fullName.Split(' ');
             const int minimumAmountWords = 2;
             const int maximumAmountWords = 3;
+            
+            string[] words = fullName.Split(' ');
 
             return words.Length >= minimumAmountWords && words.Length <= maximumAmountWords;
         }
