@@ -21,19 +21,19 @@ namespace PersonnelAccountingPRO
 
                 switch (commandNumber)
                 {
-                    case (int)Commands.First:
+                    case (int)Commands.AddDossier:
                         TryAddDossier(dossiers);
                         break;
 
-                    case (int)Commands.Second:
+                    case (int)Commands.ShowAllDossiers:
                         ShowAllDossiers(dossiers);
                         break;
 
-                    case (int)Commands.Third:
+                    case (int)Commands.DeleteDossier:
                         DeleteDossier(dossiers);
                         break;
 
-                    case (int)Commands.Fourth:
+                    case (int)Commands.Exit:
                         isProgramWork = false;
                         break;
 
@@ -180,9 +180,9 @@ namespace PersonnelAccountingPRO
 
     public enum Commands : byte
     {
-        First = 1,
-        Second,
-        Third,
-        Fourth
+        AddDossier = 1,
+        ShowAllDossiers,
+        DeleteDossier,
+        Exit
     }
 }
