@@ -5,10 +5,9 @@ namespace PersonnelAccountingPRO
 {
     internal class Program
     {
-        private static List<Dossier> _dossiers = new List<Dossier>();
-
         static void Main(string[] args)
         {
+            Dictionary<string, string> dossiers = new Dictionary<string, string>();
             bool isProgramWork = true;
 
             Console.WriteLine("Добро пожаловать в нашу секретную библиотеку!\nУ нас можно:");
@@ -16,24 +15,28 @@ namespace PersonnelAccountingPRO
             while (isProgramWork)
             {
                 Console.WriteLine("1 - Добавить досье, 2 - Вывести все досье, 3 - Удалить одно досье, 4 - Выход");
-                
+
                 Console.WriteLine("Чтобы перейти к нужному функционалу, введите нужную цифру");
-                int commandNumber = UserUtils.ReadIntValue();
+                int commandNumber = ReadIntValue();
 
                 switch (commandNumber)
                 {
                     case (int)Commands.First:
-                        AddDossier();
+                        TryAddDossier(dossiers);
                         break;
+
                     case (int)Commands.Second:
-                        ShowAllDossiers();
+                        ShowAllDossiers(dossiers);
                         break;
+
                     case (int)Commands.Third:
-                        DeleteDossier();
+                        DeleteDossier(dossiers);
                         break;
+
                     case (int)Commands.Fourth:
                         isProgramWork = false;
                         break;
+
                     default:
                         Console.WriteLine("Недоступная команда");
                         break;
@@ -41,19 +44,33 @@ namespace PersonnelAccountingPRO
             }
         }
 
-        private static void AddDossier()
+        private static bool TryAddDossier(Dictionary<string, string> dossiers)
         {
-            Dossier dossier = CreateDossier();
+            ReadData(out string fullName, out string position);
 
-            _dossiers.Add(dossier);
+            if (dossiers.ContainsKey(fullName) == false)
+            {
+                dossiers.Add(fullName, position);
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Досье добавлено");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Досье добавлено");
+                Console.ResetColor();
+
+                return true;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Досье уже существует");
             Console.ResetColor();
+
+            return false;
         }
 
-        private static void ReadData(ref string fullName, ref string position)
+        private static void ReadData(out string fullName, out string position)
         {
+            fullName = null;
+            position = null;
+
             bool isFullNameCorrect = false;
 
             while (isFullNameCorrect == false)
@@ -96,54 +113,43 @@ namespace PersonnelAccountingPRO
             return words.Length >= minimumAmountWords && words.Length <= maximumAmountWords;
         }
 
-        private static Dossier CreateDossier()
+        private static void ShowAllDossiers(Dictionary<string, string> dossiers)
         {
-            string fullName = null;
-            string position = null;
-
-            ReadData(ref fullName, ref position);
-
-            return new Dossier(fullName, position);
-        }
-
-        private static void ShowAllDossiers()
-        {
-            if (_dossiers.Count == 0)
+            if (dossiers.Count == 0)
             {
                 Console.WriteLine("Ни одно досье пока не добавлено");
             }
             else
             {
-                foreach (var dossier in _dossiers)
+                foreach (var dossier in dossiers)
                 {
-                    Console.WriteLine($"ФИО: {dossier.Fullname}  позиция: {dossier.Position}");
+                    Console.WriteLine($"ФИО: {dossier.Key}  позиция: {dossier.Value}");
                 }
 
                 Console.WriteLine();
             }
         }
 
-        private static void DeleteDossier()
+        private static void DeleteDossier(Dictionary<string, string> dossiers)
         {
-            if (_dossiers.Count == 0)
+            if (dossiers.Count == 0)
             {
                 Console.WriteLine("Ни одно досье пока не добавлено");
             }
             else
             {
-                Console.WriteLine($"В системе зарегистрировано {_dossiers.Count} досье");
-                
+                Console.WriteLine($"В системе зарегистрировано {dossiers.Count} досье");
+
                 Console.WriteLine("Укажите ФИО из досье, которое желаете удалить");
                 string fullname = Console.ReadLine();
 
-                Console.WriteLine("Укажите должность из досье, которое желаете удалить");
-                string position = Console.ReadLine();
-
-                Dossier dossier = _dossiers.Find(searchedDossier  => searchedDossier.Fullname == fullname && searchedDossier.Position == position);
-
-                if (dossier != null)
+                if (dossiers.ContainsKey(fullname))
                 {
-                    _dossiers.Remove(dossier);
+                    dossiers.Remove(fullname);
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Досье удалено");
+                    Console.ResetColor();
                 }
                 else
                 {
@@ -151,5 +157,32 @@ namespace PersonnelAccountingPRO
                 }
             }
         }
+
+        private static int ReadIntValue()
+        {
+            int value = 0;
+            bool isIntValue = false;
+
+            while (isIntValue == false)
+            {
+                string userInput = Console.ReadLine();
+                isIntValue = int.TryParse(userInput, out value);
+
+                if (isIntValue == false)
+                {
+                    Console.WriteLine("Можно вводить только числа");
+                }
+            }
+
+            return value;
+        }
+    }
+
+    public enum Commands : byte
+    {
+        First = 1,
+        Second,
+        Third,
+        Fourth
     }
 }
