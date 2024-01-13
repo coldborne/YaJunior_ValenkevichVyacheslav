@@ -5,14 +5,12 @@ namespace DynamicArrayPRO
 {
     internal class Program
     {
-        public const string Sum = "sum";
-        public const string Exit = "exit";
-
-        private static ArrayList _numbers;
-
         static void Main(string[] args)
         {
-            _numbers = new ArrayList();
+            const string Sum = "sum";
+            const string Exit = "exit";
+            
+            ArrayList numbers = new ArrayList();
 
             bool isInputExit = false;
 
@@ -25,27 +23,30 @@ namespace DynamicArrayPRO
                 switch (userInput)
                 {
                     case Sum:
-                        CalculateSumOfnumbers();
+                        CalculateSumOfNumbers(numbers);
                         break;
+
                     case Exit:
                         isInputExit = true;
                         break;
+
                     default:
-                        TryReadNumber(userInput);
+                        TryReadNumber(numbers, userInput);
                         break;
                 }
-
-                Console.WriteLine();
             }
         }
 
-        private static void CalculateSumOfnumbers()
+        private static void CalculateSumOfNumbers(ArrayList numbers)
         {
-            if (_numbers != null & _numbers.Count != 0)
+            if (numbers != null & numbers.Count != 0)
             {
                 int sumOfNumbers = 0;
 
-                for (int i = 0; i < _numbers.Count; sumOfNumbers += (int)_numbers[i], i++) ;
+                for(int i = 0; i < numbers.Count; i++)
+                {
+                    sumOfNumbers += (int)numbers[i];
+                }
 
                 Console.WriteLine(sumOfNumbers);
             }
@@ -55,15 +56,17 @@ namespace DynamicArrayPRO
             }
         }
 
-        private static void TryReadNumber(string userInput)
+        private static void TryReadNumber(ArrayList numbers, string userInput)
         {
-            if (CheckVariableIsNumber(userInput))
+            if (IsVariableNumber(userInput))
             {
-                AddNumber(userInput);
+                int newNumber = int.Parse(userInput);
+
+                numbers.Add(newNumber);
             }
         }
 
-        private static bool CheckVariableIsNumber(string userInput)
+        private static bool IsVariableNumber(string userInput)
         {
             bool isIntValue = int.TryParse(userInput, out int value);
 
@@ -73,13 +76,6 @@ namespace DynamicArrayPRO
             }
 
             return isIntValue;
-        }
-
-        private static void AddNumber(string userInput)
-        {
-            int newNumber = int.Parse(userInput);
-
-            _numbers.Add(newNumber);
         }
     }
 }
