@@ -14,26 +14,26 @@ namespace PersonnelAccountingPRO
 
             while (isProgramWork)
             {
-                Console.WriteLine($"{Commands.AddDossier} - Добавить досье, {Commands.ShowAllDossiers} - Вывести все досье, {Commands.DeleteDossier} - Удалить одно досье, {Commands.Exit} - Выход");
+                Console.WriteLine($"{Command.AddDossier} - Добавить досье, {Command.ShowAllDossiers} - Вывести все досье, {Command.DeleteDossier} - Удалить одно досье, {Command.Exit} - Выход");
 
                 Console.WriteLine("Чтобы перейти к нужному функционалу, введите нужную цифру");
                 int commandNumber = ReadIntValue();
 
                 switch (commandNumber)
                 {
-                    case (int)Commands.AddDossier:
+                    case (int)Command.AddDossier:
                         TryAddDossier(dossiers);
                         break;
 
-                    case (int)Commands.ShowAllDossiers:
+                    case (int)Command.ShowAllDossiers:
                         ShowAllDossiers(dossiers);
                         break;
 
-                    case (int)Commands.DeleteDossier:
+                    case (int)Command.DeleteDossier:
                         DeleteDossier(dossiers);
                         break;
 
-                    case (int)Commands.Exit:
+                    case (int)Command.Exit:
                         isProgramWork = false;
                         break;
 
@@ -177,7 +177,7 @@ namespace PersonnelAccountingPRO
         }
     }
 
-    public enum Commands : byte
+    public enum Command : byte
     {
         AddDossier = 1,
         ShowAllDossiers,
