@@ -11,7 +11,7 @@ namespace WorkingWithProperties
 
             int xCoordinate = 10;
             int yCoordinate = 12;
-            (int, int) coordinates = (xCoordinate, yCoordinate);
+            Coordinate coordinates = new Coordinate(xCoordinate, yCoordinate);
 
             Player suffocater = new Player(coordinates);
             suffocater.ShowInfo();
@@ -29,10 +29,10 @@ namespace WorkingWithProperties
             _yCoordinate = 0;
         }
 
-        public Player((int, int) coordinates)
+        public Player(Coordinate coordinates)
         {
-            _xCoordinate = coordinates.Item1;
-            _yCoordinate = coordinates.Item2;
+            _xCoordinate = coordinates.X;
+            _yCoordinate = coordinates.Y;
         }
 
         public string Name { get; private set; } = " ";
