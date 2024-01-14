@@ -13,15 +13,8 @@ namespace MergingIntoOneCollection
 
             HashSet<string> uniqueGrades = new HashSet<string>();
 
-            foreach (string grade in classAGrades)
-            {
-                uniqueGrades.Add(grade);
-            }
-
-            foreach (string grade in classBGrades)
-            {
-                uniqueGrades.Add(grade);
-            }
+            AddElements(uniqueGrades, classAGrades);
+            AddElements(uniqueGrades, classBGrades);
 
             string[] unionOfGrades = new string[uniqueGrades.Count];
             int startPositionToCopy = 0;
@@ -35,6 +28,14 @@ namespace MergingIntoOneCollection
             foreach (string grade in unionOfGrades)
             {
                 Console.WriteLine(grade);
+            }
+        }
+
+        private static void AddElements(HashSet<string> receiver, string[] source)
+        {
+            foreach (string grade in source)
+            {
+                receiver.Add(grade);
             }
         }
     }
