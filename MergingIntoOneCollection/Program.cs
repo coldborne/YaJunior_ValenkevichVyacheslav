@@ -6,19 +6,33 @@ namespace MergingIntoOneCollection
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             string[] classAGrades = { "3", "2", "4", "2", "5", "1", "6", "1" };
-            string[] classBGrades = { "1", "4", "3", "2", "5", "1" };
+            string[] classBGrades = { "1", "4", "3", "2" };
 
-            string[] unionOfGrades = classAGrades.Concat(classBGrades).ToArray();
+            HashSet<string> uniqueGrades = new HashSet<string>();
 
-            HashSet<string> uniqueGrades = new HashSet<string>(unionOfGrades);
-            unionOfGrades = uniqueGrades.ToArray();
+            foreach (string grade in classAGrades)
+            {
+                uniqueGrades.Add(grade);
+            }
+
+            foreach (string grade in classBGrades)
+            {
+                uniqueGrades.Add(grade);
+            }
+
+            string[] unionOfGrades = new string[uniqueGrades.Count];
+            int startPositionToCopy = 0;
+
+            uniqueGrades.CopyTo(unionOfGrades, startPositionToCopy);
 
             Array.Sort(unionOfGrades);
-            
-            foreach(string grade in unionOfGrades)
+
+            Console.WriteLine("Уникальные строки: ");
+
+            foreach (string grade in unionOfGrades)
             {
                 Console.WriteLine(grade);
             }
