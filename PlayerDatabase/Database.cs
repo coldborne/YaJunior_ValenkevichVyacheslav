@@ -3,15 +3,6 @@ using System.Collections.Generic;
 
 namespace PlayerDatabase
 {
-    public enum Commands : byte
-    {
-        AddPlayer = 1,
-        DeletePlayer,
-        BanPlayer,
-        UnbanPlayer,
-        Exit
-    }
-
     public class Database
     {
         private List<Player> _players;
@@ -28,33 +19,33 @@ namespace PlayerDatabase
             while (isProgramWorking)
             {
                 Console.WriteLine("Выберите действие");
-                Console.WriteLine($"{(int)Commands.AddPlayer} - Добавить игрока");
-                Console.WriteLine($"{(int)Commands.DeletePlayer} - Удалить игрока");
-                Console.WriteLine($"{(int)Commands.BanPlayer} - Забанить игрока");
-                Console.WriteLine($"{(int)Commands.UnbanPlayer} - Разбанить игрока");
-                Console.WriteLine($"{(int)Commands.Exit} - Выйти");
+                Console.WriteLine($"{(int)Command.AddPlayer} - Добавить игрока");
+                Console.WriteLine($"{(int)Command.DeletePlayer} - Удалить игрока");
+                Console.WriteLine($"{(int)Command.BanPlayer} - Забанить игрока");
+                Console.WriteLine($"{(int)Command.UnbanPlayer} - Разбанить игрока");
+                Console.WriteLine($"{(int)Command.Exit} - Выйти");
 
                 int userChosenCommand = UserUtils.ReadCommand();
 
                 switch (userChosenCommand)
                 {
-                    case (int)Commands.AddPlayer:
+                    case (int)Command.AddPlayer:
                         AddPlayer();
                         break;
 
-                    case (int)Commands.DeletePlayer:
+                    case (int)Command.DeletePlayer:
                         DeletePlayer();
                         break;
 
-                    case (int)Commands.BanPlayer:
+                    case (int)Command.BanPlayer:
                         BanPlayer();
                         break;
 
-                    case (int)Commands.UnbanPlayer:
+                    case (int)Command.UnbanPlayer:
                         UnbanPlayer();
                         break;
 
-                    case (int)Commands.Exit:
+                    case (int)Command.Exit:
                         isProgramWorking = false;
                         break;
                 }
