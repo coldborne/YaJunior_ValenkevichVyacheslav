@@ -15,18 +15,16 @@ namespace CardDeck
             MaxCardsInHandAmount = 6;
         }
 
-        public void TryTakeCard((bool IsCardExist, Card Card) cardInfo)
+        public bool TryTakeCard(Card card)
         {
             if (_cardsInHand.Count == MaxCardsInHandAmount)
             {
-                Console.WriteLine("У пользователя максимальное количество карт в руке");
-                return;
+                return false;
             }
+            
+            _cardsInHand.Add(card);
 
-            if (cardInfo.IsCardExist)
-            {
-                _cardsInHand.Add(cardInfo.Card);
-            }
+            return true;
         }
 
         public void ShowCardsInHand()

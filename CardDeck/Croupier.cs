@@ -18,21 +18,24 @@ namespace CardDeck
             ShuffleCards();
         }
 
-        public (bool, Card) TryGiveCard()
+        public int CardAmount => _cards.Count;
+
+        public bool TryGiveCard(out Card card)
         {
             if (_cards.Count > 0)
             {
                 int cardNumber = 0;
                 
-                Card card = _cards[cardNumber];
+                card = _cards[cardNumber];
                 
                 _cards.Remove(card);
 
-                return (true, card);
+                return true;
             }
-
-            Console.WriteLine("Карт в колоде нет");
-            return (false, null);
+            
+            card = null;
+            
+            return false;
         }
 
         private void ShuffleCards()

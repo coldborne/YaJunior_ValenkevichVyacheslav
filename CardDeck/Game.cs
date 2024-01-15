@@ -5,7 +5,7 @@ namespace CardDeck
 {
     public class Game
     {
-        private enum Commands
+        private enum Command
         {
             TakeCard = 1,
             TakeRandomCards,
@@ -29,28 +29,28 @@ namespace CardDeck
             while (isWork)
             {
                 Console.WriteLine("Выберите нужное действие");
-                Console.WriteLine($"{(int)Commands.TakeCard} - Взять карту");
-                Console.WriteLine($"{(int)Commands.TakeRandomCards} - Взять сразу несколько рандомных карт");
-                Console.WriteLine($"{(int)Commands.ShowPlayerCards} - Показать карты в руке");
-                Console.WriteLine($"{(int)Commands.Exit} - Завершить игру");
+                Console.WriteLine($"{(int)Command.TakeCard} - Взять карту");
+                Console.WriteLine($"{(int)Command.TakeRandomCards} - Взять сразу несколько рандомных карт");
+                Console.WriteLine($"{(int)Command.ShowPlayerCards} - Показать карты в руке");
+                Console.WriteLine($"{(int)Command.Exit} - Завершить игру");
 
                 int chosenCommand = UserUtils.ReadInt();
 
                 switch (chosenCommand)
                 {
-                    case (int)Commands.TakeCard:
-                        _player.TryTakeCard(_croupier.TryGiveCard());
+                    case (int)Command.TakeCard:
+                        PassCards();
                         break;
 
-                    case (int)Commands.TakeRandomCards:
+                    case (int)Command.TakeRandomCards:
                         HandOverCards();
                         break;
 
-                    case (int)Commands.ShowPlayerCards:
+                    case (int)Command.ShowPlayerCards:
                         _player.ShowCardsInHand();
                         break;
 
-                    case (int)Commands.Exit:
+                    case (int)Command.Exit:
                         isWork = false;
                         break;
 
@@ -61,28 +61,55 @@ namespace CardDeck
             }
         }
 
+        private void PassCards()
+        {
+            if (_croupier.TryGiveCard(out Card card))
+            {
+                if (_player.TryTakeCard(card))
+                {
+                    Console.WriteLine("Карта успешно взята");
+                }
+                else
+                {
+                    Console.WriteLine("У пользователя максимальное количество карт в руке");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Карт в колоде нет");
+            }
+        }
+
         private void HandOverCards()
         {
-            int cardsAmount = UserUtils.GetRandomInt(1, _player.MaxCardsInHandAmount - _player.GetCardsInHandAmount() + 1);
-            
-            List<(bool,Card)> cardsInfo = new List<(bool,Card)>();
+            int playerCanTakeCardAmount = _player.MaxCardsInHandAmount - _player.GetCardsInHandAmount();
+            int croupierCanHandOverCardAmount = _croupier.CardAmount;
 
-            for (int i = 0; i < cardsAmount; i++)
+            int minCardAmount = 1;
+            int maxCardAmount = Math.Min(playerCanTakeCardAmount, croupierCanHandOverCardAmount);
+
+            int cardAmount = UserUtils.GetRandomInt(minCardAmount, maxCardAmount + 1);
+
+            List<Card> cards = new List<Card>();
+
+            for(int i = 0; i < cardAmount; i++)
             {
-                (bool IsExist, Card Card) cardInfo = _croupier.TryGiveCard();
+                bool hasCroupierCard = _croupier.TryGiveCard(out Card card);
 
-                if (cardInfo.IsExist)
+                if (hasCroupierCard)
                 {
-                    cardsInfo.Add(cardInfo);
+                    cards.Add(card);
                 }
             }
 
-            if (cardsInfo.Count > 0)
+            if (cards.Count > 0)
             {
-                foreach ((bool,Card) cardInfo in cardsInfo)
+                foreach (Card card in cards)
                 {
-                    _player.TryTakeCard(cardInfo);
+                    _player.TryTakeCard(card);
                 }
+
+                Console.WriteLine($"Вы забрали {cards.Count}");
             }
         }
     }
