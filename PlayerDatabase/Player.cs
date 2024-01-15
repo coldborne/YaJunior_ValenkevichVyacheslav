@@ -5,17 +5,17 @@
         private static int _numberForGenerateId = 1;
 
         private int _level;
-        private string _nickname;
-
-        public int Id { get; private set; }
-        public bool IsBanned { get; private set; }
 
         public Player(string nickname)
         {
             Id = _numberForGenerateId++;
             _level = 1;
-            _nickname = nickname;
+            Nickname = nickname;
         }
+        
+        public string Nickname { get; private set; }
+        public int Id { get; private set; }
+        public bool IsBanned { get; private set; }
 
         public void Ban()
         {

@@ -11,7 +11,7 @@ namespace PlayerDatabase
         UnbanPlayer,
         Exit
     }
-    
+
     public class Database
     {
         private List<Player> _players;
@@ -67,7 +67,7 @@ namespace PlayerDatabase
 
             _players.Add(player);
 
-            Console.WriteLine("Игрок успешно добавлен в БД");
+            Console.WriteLine($"Игрок - {player.Nickname} успешно добавлен в БД");
         }
 
         private Player CreatePlayer()
@@ -88,7 +88,7 @@ namespace PlayerDatabase
             {
                 _players.Remove(player);
 
-                Console.WriteLine("Игрок успешно удалён из БД");
+                Console.WriteLine($"Игрок - {player.Nickname} успешно удалён из БД");
             }
         }
 
@@ -98,15 +98,17 @@ namespace PlayerDatabase
 
             if (wasPlayerReceived)
             {
+                Console.Write($"Игрок - {player.Nickname} ");
+
                 if (player.IsBanned == false)
                 {
                     player.Ban();
 
-                    Console.WriteLine("Игрок забанен");
+                    Console.WriteLine($"забанен");
                 }
                 else
                 {
-                    Console.WriteLine("Игрок уже забанен");
+                    Console.WriteLine($"уже забанен");
                 }
             }
         }
@@ -117,15 +119,17 @@ namespace PlayerDatabase
 
             if (wasPlayerReceived)
             {
+                Console.Write($"Игрок - {player.Nickname} ");
+
                 if (player.IsBanned)
                 {
                     player.Unban();
 
-                    Console.WriteLine("Игрок разбанен");
+                    Console.WriteLine("разбанен");
                 }
                 else
                 {
-                    Console.WriteLine("Игрок не находится в забаненном состоянии");
+                    Console.WriteLine("не находится в забаненном состоянии");
                 }
             }
         }
@@ -162,7 +166,7 @@ namespace PlayerDatabase
             Console.WriteLine("Происходит добавление данных в БД");
             const int startPlayersCount = 10;
 
-            for (int i = 0; i < startPlayersCount; i++)
+            for(int i = 0; i < startPlayersCount; i++)
             {
                 _players.Add(GeneratePlayer());
             }
