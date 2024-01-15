@@ -1,6 +1,6 @@
 ﻿namespace PlayerDatabase
 {
-    public enum Command : byte
+    public enum Command : int
     {
         AddPlayer = 1,
         DeletePlayer,
