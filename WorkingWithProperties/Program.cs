@@ -64,13 +64,13 @@ namespace WorkingWithProperties
     
     public class Coordinate
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        
         public Coordinate(int x = 1, int y = 1)
         {
             X = x;
             Y = y;
         }
+        
+        public int X { get; private set; }
+        public int Y { get; private set; }
     }
 }
