@@ -20,8 +20,6 @@ namespace WorkingWithProperties
             
             drawer.TryDrawPlayer(player);
             drawer.TryDrawPlayer(suffocater);
-
-            Console.ReadKey();
         }
     }
 
