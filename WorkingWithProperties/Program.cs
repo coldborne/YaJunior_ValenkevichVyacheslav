@@ -9,43 +9,37 @@ namespace WorkingWithProperties
         {
             Drawer drawer = new Drawer();
             
-            int xCoordinate = -10000;
-            int yCoordinate = -10000;
+            int xCoordinate = 10;
+            int yCoordinate = 12;
             Coordinate coordinates = new Coordinate(xCoordinate, yCoordinate);
 
-            Player suffocater = new Player(coordinates, "Слава");
+            char suffocaterSkin = 'S';
+            
+            Player suffocater = new Player(coordinates, suffocaterSkin);
             Player player = new Player();
             
-            char playerSymbol = '@';
-            char suffocaterSymbol = 'S';
-            
-            drawer.TryDrawPlayer(player, playerSymbol);
-            drawer.TryDrawPlayer(suffocater, suffocaterSymbol);
-            
+            drawer.TryDrawPlayer(player);
+            drawer.TryDrawPlayer(suffocater);
+
             Console.ReadKey();
         }
     }
 
     public class Drawer
     {
-        public void TryDrawPlayer(Player player, char playerSymbol)
+        public void TryDrawPlayer(Player player)
         {
-            if (canDraw(player.X, player.Y))
+            if (CanDraw(player.XCoordinate, player.YCoordinate))
             {
-                Console.SetCursorPosition(player.X, player.Y);
+                Console.SetCursorPosition(player.XCoordinate, player.YCoordinate);
             
-                Console.WriteLine(playerSymbol);
+                Console.WriteLine(player.Skin);
             }
         }
 
-        private bool canDraw(int x, int y)
+        private bool CanDraw(int x, int y)
         {
-            if (x >= 0 && x < Console.BufferWidth && y >= 0 && y < Console.BufferHeight)
-            {
-                return true;
-            }
-
-            return false;
+            return x >= 0 && x < Console.BufferWidth && y >= 0 && y < Console.BufferHeight;
         }
     }
 
@@ -56,29 +50,26 @@ namespace WorkingWithProperties
         public Player()
         {
             _coordinates = new Coordinate();
+            Skin = 'G';
         }
 
-        public Player(Coordinate coordinates, string name)
+        public Player(Coordinate coordinates, char skin)
         {
             _coordinates = coordinates;
+            Skin = skin;
         }
 
-        public int X => _coordinates.X;
-        public int Y => _coordinates.Y;
+        public char Skin { get; private set; }
+        public int XCoordinate => _coordinates.X;
+        public int YCoordinate => _coordinates.Y;
     }
     
     public class Coordinate
     {
         public int X { get; private set; }
         public int Y { get; private set; }
-
-        public Coordinate()
-        {
-            X = 1;
-            Y = 1;
-        }
         
-        public Coordinate(int x, int y)
+        public Coordinate(int x = 1, int y = 1)
         {
             X = x;
             Y = y;
