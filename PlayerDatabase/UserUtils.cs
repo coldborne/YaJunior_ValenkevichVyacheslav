@@ -43,7 +43,7 @@ namespace PlayerDatabase
                 }
                 else
                 {
-                    int commandsLength = Enum.GetNames(typeof(Commands)).Length;
+                    int commandsLength = Enum.GetNames(typeof(Command)).Length;
 
                     if (userInputInt <= 0 || userInputInt > commandsLength)
                     {
