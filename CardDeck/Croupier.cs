@@ -10,8 +10,8 @@ namespace CardDeck
 
         public Croupier()
         {
-            const int cardsCount = 54;
-            _cards = new List<Card>(cardsCount);
+            const int CardsCount = 54;
+            _cards = new List<Card>(CardsCount);
 
             Init();
 

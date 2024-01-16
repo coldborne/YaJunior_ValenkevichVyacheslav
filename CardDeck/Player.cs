@@ -6,14 +6,14 @@ namespace CardDeck
     public class Player
     {
         private List<Card> _cardsInHand;
-        
-        public int MaxCardsInHandAmount { get; private set; }
 
         public Player()
         {
             _cardsInHand = new List<Card>();
             MaxCardsInHandAmount = 6;
         }
+        
+        public int MaxCardsInHandAmount { get; private set; }
 
         public bool TryTakeCard(Card card)
         {

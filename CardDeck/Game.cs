@@ -5,14 +5,6 @@ namespace CardDeck
 {
     public class Game
     {
-        private enum Command
-        {
-            TakeCard = 1,
-            TakeRandomCards,
-            ShowPlayerCards,
-            Exit
-        }
-
         private Player _player;
         private Croupier _croupier;
 
@@ -20,6 +12,14 @@ namespace CardDeck
         {
             _player = new Player();
             _croupier = new Croupier();
+        }
+        
+        private enum Command
+        {
+            TakeCard = 1,
+            TakeRandomCards,
+            ShowPlayerCards,
+            Exit
         }
 
         public void Work()
