@@ -17,14 +17,14 @@ namespace CardDeck
 
         public bool TryTakeCard(Card card)
         {
-            if (_cardsInHand.Count == MaxCardsInHandAmount)
+            if (CanTakeCard())
             {
-                return false;
+                _cardsInHand.Add(card);
+                
+                return true;
             }
-            
-            _cardsInHand.Add(card);
 
-            return true;
+            return false;
         }
 
         public void ShowCardsInHand()
@@ -38,6 +38,11 @@ namespace CardDeck
         public int GetCardsInHandAmount()
         {
             return _cardsInHand.Count;
+        }
+
+        private bool CanTakeCard()
+        {
+            return _cardsInHand.Count <= MaxCardsInHandAmount;
         }
     }
 }

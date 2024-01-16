@@ -4,7 +4,9 @@
     {
         static void Main(string[] args)
         {
-            Game game = new Game();
+            const int CardsCount = 54;
+            
+            Game game = new Game(CardsCount);
 
             game.Work();
         }

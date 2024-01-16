@@ -8,10 +8,10 @@ namespace CardDeck
         private Player _player;
         private Croupier _croupier;
 
-        public Game()
+        public Game(int cardsCount)
         {
             _player = new Player();
-            _croupier = new Croupier();
+            _croupier = new Croupier(cardsCount);
         }
         
         private enum Command

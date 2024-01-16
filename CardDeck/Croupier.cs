@@ -8,10 +8,9 @@ namespace CardDeck
     {
         private List<Card> _cards;
 
-        public Croupier()
+        public Croupier(int cardsCount)
         {
-            const int CardsCount = 54;
-            _cards = new List<Card>(CardsCount);
+            _cards = new List<Card>(cardsCount);
 
             Init();
 
