@@ -4,11 +4,11 @@ namespace CardDeck
 {
     public static class UserUtils
     {
-        private static Random _random = new Random();
+        private static Random s_random = new Random();
 
         public static int GetRandomInt(int minNumber, int maxNumber)
         {
-            return _random.Next(minNumber, maxNumber);
+            return s_random.Next(minNumber, maxNumber);
         }
 
         public static int ReadInt()
