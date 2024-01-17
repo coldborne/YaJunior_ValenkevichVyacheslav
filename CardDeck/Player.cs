@@ -14,6 +14,7 @@ namespace CardDeck
         }
         
         public int MaxCardsInHandAmount { get; private set; }
+        public int CardsInHandAmount => _cardsInHand.Count;
 
         public bool TryTakeCard(Card card)
         {
@@ -33,11 +34,6 @@ namespace CardDeck
             {
                 Console.WriteLine(card.ToString());
             }
-        }
-
-        public int GetCardsInHandAmount()
-        {
-            return _cardsInHand.Count;
         }
 
         private bool CanTakeCard()

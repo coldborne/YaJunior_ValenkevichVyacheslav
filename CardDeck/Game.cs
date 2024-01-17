@@ -8,10 +8,10 @@ namespace CardDeck
         private Player _player;
         private Croupier _croupier;
 
-        public Game(int cardsCount)
+        public Game()
         {
             _player = new Player();
-            _croupier = new Croupier(cardsCount);
+            _croupier = new Croupier();
         }
         
         private enum Command
@@ -82,7 +82,7 @@ namespace CardDeck
 
         private void HandOverCards()
         {
-            int playerCanTakeCardAmount = _player.MaxCardsInHandAmount - _player.GetCardsInHandAmount();
+            int playerCanTakeCardAmount = _player.MaxCardsInHandAmount - _player.CardsInHandAmount;
             int croupierCanHandOverCardAmount = _croupier.CardAmount;
 
             int minCardAmount = 1;
