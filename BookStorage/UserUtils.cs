@@ -2,19 +2,19 @@
 
 namespace BookStorage
 {
-    public enum Commands: byte
+    public enum LibraryOperation : byte
     {
-        First = 1,
-        Second,
-        Third,
-        Fourth,
-        Fifth
+        AddBook = 1,
+        DeleteBook,
+        ShowAllBooks,
+        ShowBooksByParameter,
+        Exit
     }
-    
+
     public static class UserUtils
     {
-        private static int _currentYear = DateTime.Now.Year;
-        
+        private static readonly int CurrentYear = DateTime.Now.Year;
+
         public static string ReadString()
         {
             string userInput = null;
@@ -23,10 +23,10 @@ namespace BookStorage
             while (isInputRight == false)
             {
                 userInput = Console.ReadLine();
-                
+
                 if (userInput == null || userInput.Trim() == "")
                 {
-                    Console.WriteLine("Строка должна содержать хотя бы один символ неравный пробелу");
+                    Console.WriteLine("Строка должна содержать хотя бы один символ, отличный от пробела");
                 }
                 else
                 {
@@ -36,17 +36,37 @@ namespace BookStorage
 
             return userInput.Trim();
         }
-        
-        public static int ReadInt()
+
+        public static int ReadIntNumber()
         {
-            int userInputInt = 0;
+            int userNumber = 0;
             bool isInputRight = false;
 
             while (isInputRight == false)
             {
                 string userInput = Console.ReadLine();
 
-                isInputRight = int.TryParse(userInput, out userInputInt);
+                isInputRight = int.TryParse(userInput, out userNumber);
+
+                if (isInputRight == false)
+                {
+                    Console.WriteLine("Можно вводить только целые числа");
+                }
+            }
+
+            return userNumber;
+        }
+
+        public static int ReadReleaseYear()
+        {
+            int releaseYear = 0;
+            bool isInputRight = false;
+
+            while (isInputRight == false)
+            {
+                string userInput = Console.ReadLine();
+
+                isInputRight = int.TryParse(userInput, out releaseYear);
 
                 if (isInputRight == false)
                 {
@@ -54,10 +74,10 @@ namespace BookStorage
                 }
                 else
                 {
-                    if (userInputInt > _currentYear)
+                    if (releaseYear > CurrentYear)
                     {
                         Console.WriteLine(
-                            $"Текущий год - {_currentYear}, год выпуска не может быть больше текущего года");
+                            $"Текущий год - {CurrentYear}, год выпуска не может быть больше текущего года");
                         Console.WriteLine("Попробуйте ещё раз");
 
                         isInputRight = false;
@@ -65,7 +85,7 @@ namespace BookStorage
                 }
             }
 
-            return userInputInt;
+            return releaseYear;
         }
     }
 }

@@ -1,169 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace BookStorage
 {
     public class StorageBook
     {
-        private List<Book> _books;
+        private HashSet<Book> _books;
 
         public StorageBook()
         {
-            _books = new List<Book>();
+            _books = new HashSet<Book>();
         }
 
-        public void AddBook()
+        public StorageBook(HashSet<Book> books)
         {
-            Book book = CreateBook();
-
-            _books.Add(book);
+            _books = books;
         }
 
-        public void TryRemoveBook()
+        public int BookCount => _books.Count;
+
+        public bool TryAddBook(Book book)
         {
-            if (_books.Count > 0)
-            {
-                Book book = TryToFindBook();
-
-                if (book != null)
-                {
-                    _books.Remove(book);
-
-                    Console.WriteLine("Была успешно удалена одна книга");
-                }
-                else
-                {
-                    Console.WriteLine("Книга не была найдена");
-                }
-            }
-            else
-            {
-                Console.WriteLine("В хранилище нет книг");
-            }
+            return _books.Add(book);
         }
 
-        public void ShowAllBooks()
+        public bool TryRemoveBook(Book book)
         {
-            if (_books.Count > 0)
-            {
-                foreach (Book book in _books)
-                {
-                    book.ShowInfo();
-                }
-            }
-            else
-            {
-                Console.WriteLine("В хранилище нет книг");
-            }
+            return _books.Remove(book);
         }
 
-        public void ShowBooksByOption()
+        public List<Book> GetAllBooks()
         {
-            if (_books.Count > 0)
-            {
-                ChooseOption();
-            }
-            else
-            {
-                Console.WriteLine("В хранилище нет книг");
-            }
+            return _books.ToList().Clone();
         }
 
-        private Book CreateBook()
+        public bool TryGetBook(string name, string author, int releaseYear, out Book book)
         {
-            Console.WriteLine("Введите название книги");
-            string name = UserUtils.ReadString();
+            book = _books.FirstOrDefault(wantedBook =>
+                wantedBook.Name == name &&
+                wantedBook.Author == author &&
+                wantedBook.ReleaseYear == releaseYear)?.Clone();
 
-            Console.WriteLine("Введите автора книги");
-            string author = UserUtils.ReadString();
-
-            Console.WriteLine("Введите год выпуска книги");
-            int releaseYear = UserUtils.ReadInt();
-
-            return new Book(name, author, releaseYear);
+            return book != null;
         }
 
-        private Book TryToFindBook()
+        public bool TryGetBooksByName(string name, out List<Book> books)
         {
-            Console.WriteLine("Введите название книги");
-            string name = UserUtils.ReadString();
+            books = _books.Where(book => book.Name == name).ToList().Clone();
 
-            Console.WriteLine("Введите автора книги");
-            string author = UserUtils.ReadString();
-
-            Console.WriteLine("Введите год выпуска книги");
-            int releaseYear = UserUtils.ReadInt();
-
-            return _books.Find(book => 
-                book.Name == name && book.Author == author && book.ReleaseYear == releaseYear);
+            return books != null;
         }
 
-        private void ChooseOption()
+        public bool TryGetBooksByAuthor(string author, out List<Book> books)
         {
-            bool isCommandRight = false;
+            books = _books.Where(book => book.Author == author).ToList().Clone();
 
-            Console.WriteLine("Выберите один из возможных параметров:");
-            Console.WriteLine("1 - Название, 2 - Автор, 3 - Год издания");
-
-            while (isCommandRight == false)
-            {
-                int selectedCommand = UserUtils.ReadInt();
-
-                switch (selectedCommand)
-                {
-                    case (int)Commands.First:
-                        ShowBookByName();
-                        break;
-                    case (int)Commands.Second:
-                        ShowBookByAuthor();
-                        break;
-                    case (int)Commands.Third:
-                        ShowBookByReleaseYear();
-                        break;
-                    default:
-                        Console.WriteLine("Недопустимая команда");
-                        break;
-                }
-
-                if (selectedCommand >= (int)Commands.First && selectedCommand <= (int)Commands.Third)
-                {
-                    isCommandRight = true;
-                }
-            }
+            return books != null;
         }
 
-        private void ShowBookByName()
+        public bool TryGetBooksByReleaseYear(int releaseYear, out List<Book> books)
         {
-            Console.WriteLine("Введите название книги");
-            string name = UserUtils.ReadString();
+            books = _books.Where(book => book.ReleaseYear == releaseYear).ToList().Clone();
 
-            foreach (var book in _books.Where(book => book.Name == name))
-            {
-                book.ShowInfo();
-            }
-        }
-
-        private void ShowBookByAuthor()
-        {
-            Console.WriteLine("Введите автора книги");
-            string author = UserUtils.ReadString();
-
-            foreach (var book in _books.Where(book => book.Author == author))
-            {
-                book.ShowInfo();
-            }
-        }
-
-        private void ShowBookByReleaseYear()
-        {
-            Console.WriteLine("Введите год издания книги");
-            int releaseYear = UserUtils.ReadInt();
-
-            foreach (var book in _books.Where(book => book.ReleaseYear == releaseYear))
-            {
-                book.ShowInfo();
-            }
+            return books.Any();
         }
     }
 }
