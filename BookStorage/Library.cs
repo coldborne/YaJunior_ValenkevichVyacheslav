@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookStorage
 {
@@ -44,6 +45,7 @@ namespace BookStorage
                         break;
 
                     case (int)LibraryOperation.ShowBooksByParameter:
+                        ShowBooksByOption();
                         break;
 
                     case (int)LibraryOperation.Exit:
@@ -120,7 +122,7 @@ namespace BookStorage
             }
         }
 
-        private void ChooseOption()
+        private void ShowBooksByOption()
         {
             bool isCommandRight = false;
 
@@ -135,31 +137,68 @@ namespace BookStorage
 
                 switch (selectedCommand)
                 {
-                    case (int)LibraryOperation.AddBook:
-                        Console.WriteLine("Введите название книги");
-                        _storageBook.TryGetBooksByName(UserUtils.ReadString(), out books);
+                    case (int)BookSearchOption.FindBookByName:
+                        books = FindBookByName();
                         break;
 
-                    case (int)LibraryOperation.DeleteBook:
-                        Console.WriteLine("Введите автора книги");
-                        _storageBook.TryGetBooksByAuthor(UserUtils.ReadString(), out books);
+                    case (int)BookSearchOption.FindBookByAuthor:
+                        books = FindBookByAuthor();
                         break;
 
-                    case (int)LibraryOperation.ShowAllBooks:
-                        Console.WriteLine("Введите год издания книги");
-                        _storageBook.TryGetBooksByReleaseYear(UserUtils.ReadIntNumber(), out books);
+                    case (int)BookSearchOption.FindBookByReleaseYear:
+                        books = FindBookByReleaseYear();
                         break;
 
                     default:
-                        Console.WriteLine("Недопустимая команда");
+                        ConsoleColorizer.WriteLineColored("Введена недопустимая команда", ConsoleColor.Red);
                         break;
                 }
 
-                if (selectedCommand >= (int)LibraryOperation.AddBook && selectedCommand <= (int)LibraryOperation.ShowAllBooks)
+                if (selectedCommand >= (int)BookSearchOption.FindBookByName &&
+                    selectedCommand <= (int)BookSearchOption.FindBookByReleaseYear)
                 {
                     isCommandRight = true;
                 }
             }
+
+            if (books.Any())
+            {
+                foreach (Book book in books)
+                {
+                    book.ShowInfo();
+                }
+            }
+            else
+            {
+                ConsoleColorizer.WriteLineColored("В хранилище нет таких книг", ConsoleColor.Red);
+            }
+        }
+
+        private List<Book> FindBookByName()
+        {
+            Console.WriteLine("Введите название книги");
+
+            return _storageBook.TryGetBooksByName(UserUtils.ReadString(), out List<Book> books)
+                ? books
+                : new List<Book>();
+        }
+
+        private List<Book> FindBookByAuthor()
+        {
+            Console.WriteLine("Введите автора книги");
+
+            return _storageBook.TryGetBooksByAuthor(UserUtils.ReadString(), out List<Book> books)
+                ? books
+                : new List<Book>();
+        }
+
+        private List<Book> FindBookByReleaseYear()
+        {
+            Console.WriteLine("Введите год издания книги");
+
+            return _storageBook.TryGetBooksByReleaseYear(UserUtils.ReadReleaseYear(), out List<Book> books)
+                ? books
+                : new List<Book>();
         }
     }
 }

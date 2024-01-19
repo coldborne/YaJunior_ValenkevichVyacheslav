@@ -2,13 +2,20 @@
 
 namespace BookStorage
 {
-    public enum LibraryOperation : byte
+    public enum LibraryOperation
     {
         AddBook = 1,
         DeleteBook,
         ShowAllBooks,
         ShowBooksByParameter,
         Exit
+    }
+
+    public enum BookSearchOption
+    {
+        FindBookByName = 1,
+        FindBookByAuthor,
+        FindBookByReleaseYear
     }
 
     public static class UserUtils
