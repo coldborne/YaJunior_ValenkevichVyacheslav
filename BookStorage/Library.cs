@@ -7,12 +7,14 @@ namespace BookStorage
     public class Library
     {
         private StorageBook _storageBook;
-        private BookFactory _bookFactory;
+        private BookCreator _bookCreator;
+        private UserUtils _userUtils;
 
         public Library()
         {
             _storageBook = new StorageBook();
-            _bookFactory = new BookFactory();
+            _bookCreator = new BookCreator();
+            _userUtils = new UserUtils();
         }
 
         public void Start()
@@ -28,7 +30,7 @@ namespace BookStorage
                     "1 - добавить книгу, 2 - убрать книгу, 3 - показать все книги, " +
                     "4 - показать книги по конкретному параметру, 5 - Выход");
 
-                int selectedCommand = UserUtils.ReadIntNumber();
+                int selectedCommand = _userUtils.ReadIntNumber();
 
                 switch (selectedCommand)
                 {
@@ -61,7 +63,7 @@ namespace BookStorage
 
         private void AddBook()
         {
-            Book book = _bookFactory.CreateBook();
+            Book book = _bookCreator.CreateBook();
 
             if (_storageBook.TryAddBook(book))
             {
@@ -83,7 +85,7 @@ namespace BookStorage
         {
             if (_storageBook.HasAnyBook)
             {
-                Book book = _bookFactory.CreateBook();
+                Book book = _bookCreator.CreateBook();
 
                 if (_storageBook.TryRemoveBook(book))
                 {
@@ -132,7 +134,7 @@ namespace BookStorage
 
                 while (isCommandRight == false)
                 {
-                    int selectedCommand = UserUtils.ReadIntNumber();
+                    int selectedCommand = _userUtils.ReadIntNumber();
 
                     switch (selectedCommand)
                     {
@@ -187,7 +189,7 @@ namespace BookStorage
         {
             Console.WriteLine("Введите название книги");
 
-            return _storageBook.TryGetBooksByName(UserUtils.ReadString(), out List<Book> books)
+            return _storageBook.TryGetBooksByName(_userUtils.ReadString(), out List<Book> books)
                 ? books
                 : new List<Book>();
         }
@@ -196,7 +198,7 @@ namespace BookStorage
         {
             Console.WriteLine("Введите автора книги");
 
-            return _storageBook.TryGetBooksByAuthor(UserUtils.ReadString(), out List<Book> books)
+            return _storageBook.TryGetBooksByAuthor(_userUtils.ReadString(), out List<Book> books)
                 ? books
                 : new List<Book>();
         }
@@ -205,7 +207,7 @@ namespace BookStorage
         {
             Console.WriteLine("Введите год издания книги");
 
-            return _storageBook.TryGetBooksByReleaseYear(UserUtils.ReadReleaseYear(), out List<Book> books)
+            return _storageBook.TryGetBooksByReleaseYear(_userUtils.ReadReleaseYear(), out List<Book> books)
                 ? books
                 : new List<Book>();
         }

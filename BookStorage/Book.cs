@@ -2,16 +2,16 @@
 {
     public class Book
     {
-        public string Name { get; }
-        public string Author { get; }
-        public int ReleaseYear { get; }
-
         public Book(string name, string author, int releaseYear)
         {
             Name = name;
             Author = author;
             ReleaseYear = releaseYear;
         }
+
+        public string Name { get; }
+        public string Author { get; }
+        public int ReleaseYear { get; }
 
         public string GetInfo()
         {

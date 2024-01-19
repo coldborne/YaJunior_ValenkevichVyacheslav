@@ -2,18 +2,25 @@
 
 namespace BookStorage
 {
-    public class BookFactory
+    public class BookCreator
     {
+        private UserUtils _userUtils;
+
+        public BookCreator()
+        {
+            _userUtils = new UserUtils();
+        }
+
         public Book CreateBook()
         {
             Console.WriteLine("Введите название книги");
-            string name = UserUtils.ReadString();
+            string name = _userUtils.ReadString();
 
             Console.WriteLine("Введите автора книги");
-            string author = UserUtils.ReadString();
+            string author = _userUtils.ReadString();
 
             Console.WriteLine("Введите год выпуска книги");
-            int releaseYear = UserUtils.ReadReleaseYear();
+            int releaseYear = _userUtils.ReadReleaseYear();
 
             return new Book(name, author, releaseYear);
         }

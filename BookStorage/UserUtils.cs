@@ -18,11 +18,11 @@ namespace BookStorage
         FindBookByReleaseYear
     }
 
-    public static class UserUtils
+    public class UserUtils
     {
-        private static readonly int CurrentYear = DateTime.Now.Year;
+        private static readonly int _currentYear = DateTime.Now.Year;
 
-        public static string ReadString()
+        public string ReadString()
         {
             string userInput = null;
             bool isInputRight = false;
@@ -44,7 +44,7 @@ namespace BookStorage
             return userInput.Trim();
         }
 
-        public static int ReadIntNumber()
+        public int ReadIntNumber()
         {
             int userNumber = 0;
             bool isInputRight = false;
@@ -64,31 +64,24 @@ namespace BookStorage
             return userNumber;
         }
 
-        public static int ReadReleaseYear()
+        public int ReadReleaseYear()
         {
             int releaseYear = 0;
             bool isInputRight = false;
 
             while (isInputRight == false)
             {
-                string userInput = Console.ReadLine();
+                releaseYear = ReadIntNumber();
 
-                isInputRight = int.TryParse(userInput, out releaseYear);
-
-                if (isInputRight == false)
+                if (releaseYear > _currentYear)
                 {
-                    Console.WriteLine("Можно вводить только целые числа");
+                    Console.WriteLine(
+                        $"Текущий год - {_currentYear}, год выпуска не может быть больше текущего года");
+                    Console.WriteLine("Попробуйте ещё раз");
                 }
                 else
                 {
-                    if (releaseYear > CurrentYear)
-                    {
-                        Console.WriteLine(
-                            $"Текущий год - {CurrentYear}, год выпуска не может быть больше текущего года");
-                        Console.WriteLine("Попробуйте ещё раз");
-
-                        isInputRight = false;
-                    }
+                    isInputRight = true;
                 }
             }
 
