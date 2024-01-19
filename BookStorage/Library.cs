@@ -19,7 +19,7 @@ namespace BookStorage
 
         public void Start()
         {
-            Console.WriteLine("Добро пожаловать в наше хранилище игр");
+            Console.WriteLine("Добро пожаловать в наше хранилище уникальных книг");
             Console.WriteLine("Выберите одно из возможных действий:");
 
             bool isStorageOpen = true;
