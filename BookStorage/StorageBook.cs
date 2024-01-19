@@ -17,7 +17,7 @@ namespace BookStorage
             _books = books;
         }
 
-        public int BookCount => _books.Count;
+        public bool HasAnyBook => _books.Count != 0;
 
         public bool TryAddBook(Book book)
         {
@@ -32,16 +32,6 @@ namespace BookStorage
         public List<Book> GetAllBooks()
         {
             return _books.ToList().Clone();
-        }
-
-        public bool TryGetBook(string name, string author, int releaseYear, out Book book)
-        {
-            book = _books.FirstOrDefault(wantedBook =>
-                wantedBook.Name == name &&
-                wantedBook.Author == author &&
-                wantedBook.ReleaseYear == releaseYear)?.Clone();
-
-            return book != null;
         }
 
         public bool TryGetBooksByName(string name, out List<Book> books)

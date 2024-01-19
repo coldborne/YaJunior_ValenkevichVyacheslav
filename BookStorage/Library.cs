@@ -81,7 +81,7 @@ namespace BookStorage
 
         private void DeleteBook()
         {
-            if (_storageBook.BookCount > 0)
+            if (_storageBook.HasAnyBook)
             {
                 Book book = _bookFactory.CreateBook();
 
@@ -107,14 +107,11 @@ namespace BookStorage
 
         private void ShowAllBooks()
         {
-            if (_storageBook.BookCount > 0)
+            if (_storageBook.HasAnyBook)
             {
                 List<Book> books = _storageBook.GetAllBooks();
 
-                foreach (Book book in books)
-                {
-                    book.ShowInfo();
-                }
+                WriteLine(books);
             }
             else
             {
@@ -124,53 +121,65 @@ namespace BookStorage
 
         private void ShowBooksByOption()
         {
-            bool isCommandRight = false;
-
-            Console.WriteLine("Выберите один из возможных параметров:");
-            Console.WriteLine("1 - Название, 2 - Автор, 3 - Год издания");
-
-            List<Book> books = new List<Book>();
-
-            while (isCommandRight == false)
+            if (_storageBook.HasAnyBook)
             {
-                int selectedCommand = UserUtils.ReadIntNumber();
+                bool isCommandRight = false;
 
-                switch (selectedCommand)
+                Console.WriteLine("Выберите один из возможных параметров:");
+                Console.WriteLine("1 - Название, 2 - Автор, 3 - Год издания");
+
+                List<Book> books = new List<Book>();
+
+                while (isCommandRight == false)
                 {
-                    case (int)BookSearchOption.FindBookByName:
-                        books = FindBookByName();
-                        break;
+                    int selectedCommand = UserUtils.ReadIntNumber();
 
-                    case (int)BookSearchOption.FindBookByAuthor:
-                        books = FindBookByAuthor();
-                        break;
+                    switch (selectedCommand)
+                    {
+                        case (int)BookSearchOption.FindBookByName:
+                            books = FindBookByName();
+                            break;
 
-                    case (int)BookSearchOption.FindBookByReleaseYear:
-                        books = FindBookByReleaseYear();
-                        break;
+                        case (int)BookSearchOption.FindBookByAuthor:
+                            books = FindBookByAuthor();
+                            break;
 
-                    default:
-                        ConsoleColorizer.WriteLineColored("Введена недопустимая команда", ConsoleColor.Red);
-                        break;
+                        case (int)BookSearchOption.FindBookByReleaseYear:
+                            books = FindBookByReleaseYear();
+                            break;
+
+                        default:
+                            ConsoleColorizer.WriteLineColored("Введена недопустимая команда", ConsoleColor.Red);
+                            break;
+                    }
+
+                    if (selectedCommand >= (int)BookSearchOption.FindBookByName &&
+                        selectedCommand <= (int)BookSearchOption.FindBookByReleaseYear)
+                    {
+                        isCommandRight = true;
+                    }
                 }
 
-                if (selectedCommand >= (int)BookSearchOption.FindBookByName &&
-                    selectedCommand <= (int)BookSearchOption.FindBookByReleaseYear)
+                if (books.Any())
                 {
-                    isCommandRight = true;
+                    WriteLine(books);
                 }
-            }
-
-            if (books.Any())
-            {
-                foreach (Book book in books)
+                else
                 {
-                    book.ShowInfo();
+                    ConsoleColorizer.WriteLineColored("В хранилище нет таких книг", ConsoleColor.Red);
                 }
             }
             else
             {
-                ConsoleColorizer.WriteLineColored("В хранилище нет таких книг", ConsoleColor.Red);
+                ConsoleColorizer.WriteLineColored("В хранилище нет книг", ConsoleColor.DarkRed);
+            }
+        }
+
+        private void WriteLine(List<Book> books)
+        {
+            foreach (Book book in books)
+            {
+                ConsoleColorizer.WriteLineColored(book.GetInfo(), ConsoleColor.Yellow);
             }
         }
 

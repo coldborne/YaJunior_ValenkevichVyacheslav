@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BookStorage
+﻿namespace BookStorage
 {
     public class Book
     {
@@ -15,10 +13,9 @@ namespace BookStorage
             ReleaseYear = releaseYear;
         }
 
-        public void ShowInfo()
+        public string GetInfo()
         {
-            ConsoleColorizer.WriteLineColored($"Название - {Name}, Автор - {Author}, Год выпуска - {ReleaseYear}",
-                ConsoleColor.Yellow);
+            return $"Название - {Name}, Автор - {Author}, Год выпуска - {ReleaseYear}";
         }
 
         public Book Clone()
