@@ -1,15 +1,19 @@
-﻿namespace Shop
+﻿using System;
+
+namespace Shop
 {
     public abstract class Product
     {
-        public float Weight { get; private set; }
-        public int Price { get; private set; }
-
         public Product(float weight, int price)
         {
+            Id = Guid.NewGuid();
             Weight = weight;
             Price = price;
         }
+
+        public Guid Id { get; private set; }
+        public float Weight { get; private set; }
+        public int Price { get; private set; }
     }
 
     public class Apple : Product

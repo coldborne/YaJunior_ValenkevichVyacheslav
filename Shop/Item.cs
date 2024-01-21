@@ -1,16 +1,20 @@
-﻿using System.Collections;
+﻿using System;
 
 namespace Shop
 {
     public class Item
     {
-        public Product Product { get; private set; }
-        public int ProductQuantity { get; private set; }
-        
-        public Item(Product product, int productQuantity)
+        private Product _product;
+
+        public Item(Product product, int quantity)
         {
-            Product = product;
-            ProductQuantity = productQuantity;
+            _product = product;
+            Quantity = quantity;
         }
+
+        public Type ProductType => _product.GetType();
+        public int ProductPrice => _product.Price;
+        public Guid ProductId => _product.Id;
+        public int Quantity { get; private set; }
     }
 }
