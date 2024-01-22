@@ -1,13 +1,7 @@
-﻿using System;
-
-namespace BookStorage
+﻿namespace BookStorage
 {
     public class Book
     {
-        public string Name { get; private set; }
-        public string Author { get; private set; }
-        public int ReleaseYear { get; private set; }
-
         public Book(string name, string author, int releaseYear)
         {
             Name = name;
@@ -15,9 +9,42 @@ namespace BookStorage
             ReleaseYear = releaseYear;
         }
 
-        public void ShowInfo()
+        public string Name { get; }
+        public string Author { get; }
+        public int ReleaseYear { get; }
+
+        public string GetInfo()
         {
-            Console.WriteLine($"Название - {Name}, Автор - {Author}, Год выпуска - {ReleaseYear}");
+            return $"Название - {Name}, Автор - {Author}, Год выпуска - {ReleaseYear}";
+        }
+
+        public Book Clone()
+        {
+            return new Book(Name, Author, ReleaseYear);
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is Book different)
+            {
+                return Name == different.Name && Author == different.Author && ReleaseYear == different.ReleaseYear;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+
+                hash = hash * 23 + (Name != null ? Name.GetHashCode() : 0);
+                hash = hash * 23 + (Author != null ? Author.GetHashCode() : 0);
+                hash = hash * 23 + ReleaseYear.GetHashCode();
+
+                return hash;
+            }
         }
     }
 }

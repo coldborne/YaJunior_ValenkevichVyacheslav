@@ -2,20 +2,27 @@
 
 namespace BookStorage
 {
-    public enum Commands: byte
+    public enum LibraryOperation
     {
-        First = 1,
-        Second,
-        Third,
-        Fourth,
-        Fifth
+        AddBook = 1,
+        DeleteBook,
+        ShowAllBooks,
+        ShowBooksByParameter,
+        Exit
     }
-    
-    public static class UserUtils
+
+    public enum BookSearchOption
     {
-        private static int _currentYear = DateTime.Now.Year;
-        
-        public static string ReadString()
+        FindBookByName = 1,
+        FindBookByAuthor,
+        FindBookByReleaseYear
+    }
+
+    public class UserUtils
+    {
+        private static readonly int s_currentYear = DateTime.Now.Year;
+
+        public string ReadString()
         {
             string userInput = null;
             bool isInputRight = false;
@@ -23,10 +30,10 @@ namespace BookStorage
             while (isInputRight == false)
             {
                 userInput = Console.ReadLine();
-                
+
                 if (userInput == null || userInput.Trim() == "")
                 {
-                    Console.WriteLine("Строка должна содержать хотя бы один символ неравный пробелу");
+                    Console.WriteLine("Строка должна содержать хотя бы один символ, отличный от пробела");
                 }
                 else
                 {
@@ -36,36 +43,49 @@ namespace BookStorage
 
             return userInput.Trim();
         }
-        
-        public static int ReadInt()
+
+        public int ReadIntNumber()
         {
-            int userInputInt = 0;
+            int userNumber = 0;
             bool isInputRight = false;
 
             while (isInputRight == false)
             {
                 string userInput = Console.ReadLine();
 
-                isInputRight = int.TryParse(userInput, out userInputInt);
+                isInputRight = int.TryParse(userInput, out userNumber);
 
                 if (isInputRight == false)
                 {
                     Console.WriteLine("Можно вводить только целые числа");
                 }
+            }
+
+            return userNumber;
+        }
+
+        public int ReadReleaseYear()
+        {
+            int releaseYear = 0;
+            bool isInputRight = false;
+
+            while (isInputRight == false)
+            {
+                releaseYear = ReadIntNumber();
+
+                if (releaseYear > s_currentYear)
+                {
+                    Console.WriteLine(
+                        $"Текущий год - {s_currentYear}, год выпуска не может быть больше текущего года");
+                    Console.WriteLine("Попробуйте ещё раз");
+                }
                 else
                 {
-                    if (userInputInt > _currentYear)
-                    {
-                        Console.WriteLine(
-                            $"Текущий год - {_currentYear}, год выпуска не может быть больше текущего года");
-                        Console.WriteLine("Попробуйте ещё раз");
-
-                        isInputRight = false;
-                    }
+                    isInputRight = true;
                 }
             }
 
-            return userInputInt;
+            return releaseYear;
         }
     }
 }
