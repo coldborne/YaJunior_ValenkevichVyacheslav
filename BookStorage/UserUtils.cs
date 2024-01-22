@@ -20,7 +20,7 @@ namespace BookStorage
 
     public class UserUtils
     {
-        private static readonly int _currentYear = DateTime.Now.Year;
+        private static readonly int s_currentYear = DateTime.Now.Year;
 
         public string ReadString()
         {
@@ -73,10 +73,10 @@ namespace BookStorage
             {
                 releaseYear = ReadIntNumber();
 
-                if (releaseYear > _currentYear)
+                if (releaseYear > s_currentYear)
                 {
                     Console.WriteLine(
-                        $"Текущий год - {_currentYear}, год выпуска не может быть больше текущего года");
+                        $"Текущий год - {s_currentYear}, год выпуска не может быть больше текущего года");
                     Console.WriteLine("Попробуйте ещё раз");
                 }
                 else
