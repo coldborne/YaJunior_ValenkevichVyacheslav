@@ -1,48 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using Shop.Enums;
 
 namespace Shop
 {
     public class Storage
     {
-        private List<Item> _items;
-        
+        private Dictionary<Guid, Item> _items;
+
         public Storage()
         {
-            _items = new List<Item>();
-            
-            Item apples = CreateItem(new Apple(0.176f, 14), 100);
-            Item peaches = CreateItem(new Peach(0.15f, 30), 120);
-            Item candies = CreateItem(new Candy(0.015f, 5), 50);
-            Item backpacks = CreateItem(new Backpack(0.4f, 1200), 4);
-            
-            AddItem(apples);
-            AddItem(peaches);
-            AddItem(candies);
-            AddItem(backpacks);
+            _items = new Dictionary<Guid, Item>();
+
+            Item item1 = new Item(new Apple(1, "", Variety.Gala, Taste.Sour), 10, 50);
+            Item item2 = new Item(new Candy(1, "", 0.5f), 10, 50);
+
+            _items.Add(item1.ProductId, item1);
+            _items.Add(item2.ProductId, item2);
         }
 
-        private void AddItem(Item item)
+        public Storage(Dictionary<Guid, Item> items)
         {
-            _items.Add(item);
+            _items = items;
         }
 
-        private Item CreateItem(Product product, int productQuantity)
+        public void AddItem(Item item)
         {
-            return new Item(product, productQuantity);
-        }
-        
-        public void ShowItems()
-        {
-            foreach (Item goods in _items)
+            if (item == null)
             {
-                Console.WriteLine($"Продукт - {ProductName.ProductNames[goods.Product.GetType()]}, Количество - {goods.ProductQuantity}");
+                throw new ArgumentException("Попытка добавления пустого item");
             }
+
+            _items.Add(item.ProductId, item);
         }
 
-        public Item TakeItem(int quantity)
+        public Dictionary<Guid, Item> GetAllItems()
         {
-            return _items[0];
+            Dictionary<Guid, Item> items = _items.Copy();
+
+            return items;
+        }
+
+        public List<string> GetItemsInfo()
+        {
+            List<string> itemsInfo = new List<string>();
+
+            foreach (var itemEntry in _items)
+            {
+                itemsInfo.Add(itemEntry.Value.ProductInfo);
+            }
+
+            return itemsInfo;
+        }
+
+        public bool TryTakeItem(Guid productId, int quantity, out Item item)
+        {
+            item = null;
+
+            if (_items.ContainsKey(productId))
+            {
+                Item foundItem = _items[productId];
+
+                if (foundItem.Quantity > quantity)
+                {
+                    foundItem.DecreaseQuantity(quantity);
+                    item = foundItem.Copy(quantity);
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
