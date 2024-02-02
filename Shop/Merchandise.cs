@@ -2,23 +2,18 @@
 
 namespace Shop
 {
-    public class Item
+    public class Merchandise
     {
-        private Product _product;
-
-        public Item(Product product, int price, int quantity)
+        public Merchandise(Product product, int price, int quantity)
         {
-            _product = product;
+            Product = product;
             Price = price;
             Quantity = quantity;
         }
 
+        public Product Product { get; }
         public int Price { get; private set; }
         public int Quantity { get; private set; }
-        public Guid ProductId => _product.Id;
-        public float ProductWeight => _product.Weight;
-        public Type ProductType => _product.GetType();
-        public string ProductInfo => _product.Info;
 
         public void DecreaseQuantity(int quantity)
         {
@@ -30,14 +25,14 @@ namespace Shop
             Quantity -= quantity;
         }
 
-        public Item Copy()
+        public Merchandise Copy()
         {
-            return new Item(_product, Price, Quantity);
+            return new Merchandise(Product, Price, Quantity);
         }
 
-        public Item Copy(int quantity)
+        public Merchandise Copy(int quantity)
         {
-            return new Item(_product, Price, quantity);
+            return new Merchandise(Product, Price, quantity);
         }
     }
 }
