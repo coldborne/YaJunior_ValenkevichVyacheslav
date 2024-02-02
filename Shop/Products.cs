@@ -18,7 +18,7 @@ namespace Shop
 
     public class Apple : Product
     {
-        public Apple(DateTime expirationDate, string info, Variety variety, Taste taste) : base(expirationDate)
+        public Apple(DateTime expirationDate, Variety variety, Taste taste) : base(expirationDate)
         {
             Variety = variety;
             Taste = taste;
@@ -30,7 +30,7 @@ namespace Shop
 
     public class Peach : Product
     {
-        public Peach(DateTime expirationDate, string info, float fuzziness) : base(expirationDate)
+        public Peach(DateTime expirationDate, float fuzziness) : base(expirationDate)
         {
             int minFuzziness = 0;
             int maxFuzziness = 1;
@@ -48,7 +48,7 @@ namespace Shop
 
     public class Candy : Product
     {
-        public Candy(DateTime expirationDate, string info, float sugarContent) : base(expirationDate)
+        public Candy(DateTime expirationDate, float sugarContent) : base(expirationDate)
         {
             int minSugarContent = 0;
             int maxSugarContent = 1;
@@ -69,8 +69,7 @@ namespace Shop
 
     public class Backpack : Product
     {
-        public Backpack(DateTime expirationDate, string info, int pocketsAmount, Material material) : base(
-            expirationDate)
+        public Backpack(DateTime expirationDate, int pocketsAmount, Material material) : base(expirationDate)
         {
             PocketAmount = pocketsAmount;
             Material = material;

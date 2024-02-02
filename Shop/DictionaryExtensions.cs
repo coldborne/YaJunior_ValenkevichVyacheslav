@@ -5,16 +5,16 @@ namespace Shop
 {
     public static class DictionaryExtensions
     {
-        public static Dictionary<Guid, Item> Copy(this Dictionary<Guid, Item> items)
+        public static Dictionary<Guid, Merchandise> Copy(this Dictionary<Guid, Merchandise> merchandises)
         {
-            Dictionary<Guid, Item> copyItems = new Dictionary<Guid, Item>();
+            Dictionary<Guid, Merchandise> copyMerchandises = new Dictionary<Guid, Merchandise>();
 
-            foreach (var itemEntry in items)
+            foreach (var merchandiseEntry in merchandises)
             {
-                copyItems.Add(itemEntry.Key, itemEntry.Value.Copy());
+                copyMerchandises.Add(merchandiseEntry.Key, merchandiseEntry.Value.Copy());
             }
 
-            return copyItems;
+            return copyMerchandises;
         }
     }
 }

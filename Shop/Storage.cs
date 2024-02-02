@@ -1,70 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Shop.Enums;
 
 namespace Shop
 {
     public class Storage
     {
-        private Dictionary<Guid, Item> _items;
+        private Dictionary<Guid, Merchandise> _inventory;
 
         public Storage()
         {
-            _items = new Dictionary<Guid, Item>();
-
-            Item item1 = new Item(new Apple(1, "", Variety.Gala, Taste.Sour), 10, 50);
-            Item item2 = new Item(new Candy(1, "", 0.5f), 10, 50);
-
-            _items.Add(item1.ProductId, item1);
-            _items.Add(item2.ProductId, item2);
+            _inventory = new Dictionary<Guid, Merchandise>();
         }
 
-        public Storage(Dictionary<Guid, Item> items)
+        public Storage(Dictionary<Guid, Merchandise> inventory)
         {
-            _items = items;
+            _inventory = inventory;
         }
 
-        public void AddItem(Item item)
+        public void Add(Merchandise merchandise)
         {
-            if (item == null)
+            if (merchandise == null)
             {
-                throw new ArgumentException("Попытка добавления пустого item");
+                throw new ArgumentException("Попытка добавления пустого товара");
             }
 
-            _items.Add(item.ProductId, item);
+            _inventory.Add(merchandise.Product.Id, merchandise);
         }
 
-        public Dictionary<Guid, Item> GetAllItems()
+        public Dictionary<Guid, Merchandise> GetAllMerchandises()
         {
-            Dictionary<Guid, Item> items = _items.Copy();
+            Dictionary<Guid, Merchandise> merchandises = _inventory.Copy();
 
-            return items;
+            return merchandises;
         }
 
-        public List<string> GetItemsInfo()
+        public List<Merchandise> GetMerchandisesExpiredBefore(DateTime date)
         {
-            List<string> itemsInfo = new List<string>();
+            return _inventory.Values
+                .Where(merchandise => merchandise.Product.ExpirationDate < date)
+                .ToList().Copy();
+        }
 
-            foreach (var itemEntry in _items)
+        public List<Merchandise> GetMerchandisesBy(Category category)
+        {
+            return _inventory.Values.Where(merchandise => merchandise.Category == category).ToList().Copy();
+        }
+
+        public void RemoveExpiredMerchandise(DateTime currentDate)
+        {
+            List<Guid> expiredMerchandisesGuids = _inventory
+                .Where(pair => pair.Value.Product.ExpirationDate < currentDate)
+                .Select(pair => pair.Key)
+                .ToList();
+
+            foreach (Guid expiredMerchandiseGuid in expiredMerchandisesGuids)
             {
-                itemsInfo.Add(itemEntry.Value.ProductInfo);
+                _inventory.Remove(expiredMerchandiseGuid);
             }
-
-            return itemsInfo;
         }
 
-        public bool TryTakeItem(Guid productId, int quantity, out Item item)
+        public bool TryTakeProduct(Guid productId, int quantity, out Product product)
         {
-            item = null;
+            product = null;
 
-            if (_items.ContainsKey(productId))
+            if (_inventory.TryGetValue(productId, out Merchandise merchandise))
             {
-                Item foundItem = _items[productId];
-
-                if (foundItem.Quantity > quantity)
+                if (merchandise.Quantity >= quantity)
                 {
-                    foundItem.DecreaseQuantity(quantity);
-                    item = foundItem.Copy(quantity);
+                    merchandise.DecreaseQuantity(quantity);
+                    product = merchandise.Product;
+
+                    if (merchandise.Quantity == 0)
+                    {
+                        _inventory.Remove(productId);
+                    }
 
                     return true;
                 }

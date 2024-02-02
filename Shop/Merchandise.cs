@@ -4,9 +4,10 @@ namespace Shop
 {
     public class Merchandise
     {
-        public Merchandise(Product product, int price, int quantity)
+        public Merchandise(Product product, Category category, int price, int quantity)
         {
             Product = product;
+            Category = category;
             Price = price;
             Quantity = quantity;
         }
@@ -14,6 +15,7 @@ namespace Shop
         public Product Product { get; }
         public int Price { get; private set; }
         public int Quantity { get; private set; }
+        public Category Category { get; }
 
         public void DecreaseQuantity(int quantity)
         {
@@ -27,12 +29,14 @@ namespace Shop
 
         public Merchandise Copy()
         {
-            return new Merchandise(Product, Price, Quantity);
+            return new Merchandise(Product, Category, Price, Quantity);
         }
+    }
 
-        public Merchandise Copy(int quantity)
-        {
-            return new Merchandise(Product, Price, quantity);
-        }
+    public enum Category
+    {
+        Food,
+        Electronics,
+        Clothing
     }
 }
