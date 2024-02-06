@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Shop.Enums;
 
 namespace Shop
 {
@@ -16,22 +15,23 @@ namespace Shop
 
         public Storage(Dictionary<Guid, Merchandise> inventory)
         {
-            _inventory = inventory;
+            _inventory = inventory ??
+                         throw new ArgumentNullException("Попытка добавления пустого списка товаров на склад");
         }
 
         public void Add(Merchandise merchandise)
         {
             if (merchandise == null)
             {
-                throw new ArgumentException("Попытка добавления пустого товара");
+                throw new ArgumentNullException("Попытка добавления пустого товара на склад");
             }
 
             _inventory.Add(merchandise.Product.Id, merchandise);
         }
 
-        public Dictionary<Guid, Merchandise> GetAllMerchandises()
+        public List<Merchandise> GetAllMerchandises()
         {
-            Dictionary<Guid, Merchandise> merchandises = _inventory.Copy();
+            List<Merchandise> merchandises = _inventory.Copy().Values.ToList();
 
             return merchandises;
         }
@@ -40,12 +40,13 @@ namespace Shop
         {
             return _inventory.Values
                 .Where(merchandise => merchandise.Product.ExpirationDate < date)
-                .ToList().Copy();
+                .ToList().DeepCopy();
         }
 
         public List<Merchandise> GetMerchandisesBy(Category category)
         {
-            return _inventory.Values.Where(merchandise => merchandise.Category == category).ToList().Copy();
+            return _inventory.Values.Where(merchandise => merchandise.Categories.Contains(category)).ToList()
+                .DeepCopy();
         }
 
         public void RemoveExpiredMerchandise(DateTime currentDate)
@@ -61,16 +62,13 @@ namespace Shop
             }
         }
 
-        public bool TryTakeProduct(Guid productId, int quantity, out Product product)
+        public bool TryTakeMerchandise(Guid productId, int quantity, out Merchandise merchandise)
         {
-            product = null;
-
-            if (_inventory.TryGetValue(productId, out Merchandise merchandise))
+            if (_inventory.TryGetValue(productId, out merchandise))
             {
                 if (merchandise.Quantity >= quantity)
                 {
                     merchandise.DecreaseQuantity(quantity);
-                    product = merchandise.Product;
 
                     if (merchandise.Quantity == 0)
                     {

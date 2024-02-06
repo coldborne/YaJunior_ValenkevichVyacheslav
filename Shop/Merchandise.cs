@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Shop
 {
-    public class Merchandise
+    public class Merchandise : ICopyable<Merchandise>, IComparable<Merchandise>
     {
-        public Merchandise(Product product, Category category, int price, int quantity)
+        public Merchandise(Product product, List<Category> categories, int price, int quantity)
         {
             Product = product;
-            Category = category;
+            Categories = categories;
             Price = price;
             Quantity = quantity;
         }
@@ -15,7 +17,8 @@ namespace Shop
         public Product Product { get; }
         public int Price { get; private set; }
         public int Quantity { get; private set; }
-        public Category Category { get; }
+        public List<Category> Categories { get; }
+        public string Info => $"Продукт - {Product}, цена - {Price}, категории - [{string.Join(", ", Categories)}], количество - {Quantity}";
 
         public void DecreaseQuantity(int quantity)
         {
@@ -29,7 +32,45 @@ namespace Shop
 
         public Merchandise Copy()
         {
-            return new Merchandise(Product, Category, Price, Quantity);
+            return new Merchandise(Product, Categories.ShallowCopy(), Price, Quantity);
+        }
+
+        public int CompareTo(Merchandise other)
+        {
+            if (other == null)
+                return 1;
+
+            int categoryCountComparison = Categories.Count.CompareTo(other.Categories.Count);
+
+            if (categoryCountComparison != 0)
+                return categoryCountComparison;
+
+            string categoriesStringThis = String.Join(",",
+                Categories.OrderBy(category => category).Select(category => category.ToString()));
+
+            string categoriesStringOther = String.Join(",",
+                other.Categories.OrderBy(category => category).Select(category => category.ToString()));
+
+            int categoriesComparison =
+                string.Compare(categoriesStringThis, categoriesStringOther, StringComparison.Ordinal);
+
+            if (categoriesComparison != 0)
+                return categoriesComparison;
+
+            int nameComparison = string.Compare(this.Product.Name, other.Product.Name, StringComparison.Ordinal);
+
+            if (nameComparison != 0)
+                return nameComparison;
+
+            if (Quantity != other.Quantity)
+                return other.Quantity.CompareTo(Quantity);
+
+            int expirationComparison = Product.ExpirationDate.CompareTo(other.Product.ExpirationDate);
+
+            if (expirationComparison != 0)
+                return expirationComparison;
+
+            return Price.CompareTo(other.Price);
         }
     }
 

@@ -1,20 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Shop
 {
     public static class ListExtensions
     {
-        public static List<Merchandise> Copy(this List<Merchandise> merchandises)
+        public static List<T> DeepCopy<T>(this List<T> items) where T : ICopyable<T>
         {
-            List<Merchandise> copyMerchandises = new List<Merchandise>();
+            List<T> copiedItems = new List<T>();
 
-            foreach (var merchandise in merchandises)
+            foreach (T item in items)
             {
-                copyMerchandises.Add(merchandise.Copy());
+                copiedItems.Add(item.Copy());
             }
 
-            return copyMerchandises;
+            return copiedItems;
+        }
+
+        public static List<T> ShallowCopy<T>(this List<T> listToCopy) where T : struct
+        {
+            return new List<T>(listToCopy);
+        }
+
+        public static List<Merchandise> SortByMultipleCriteria(this List<Merchandise> merchandises)
+        {
+            List<Merchandise> sortedMerchandises = merchandises.DeepCopy();
+            sortedMerchandises.Sort();
+            
+            return sortedMerchandises;
         }
     }
 }

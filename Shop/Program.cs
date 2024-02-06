@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Shop
 {
@@ -6,44 +7,20 @@ namespace Shop
     {
         public static void Main(string[] args)
         {
-            Shop shop = new Shop();
+            int merchandiseQuantity = 10;
 
-            bool isShopOpen = true;
+            List<Merchandise> merchandises = MerchandiseCreator.CreateUniqueMerchandiseList(merchandiseQuantity);
+            Dictionary<Guid, Merchandise> inventory = new Dictionary<Guid, Merchandise>();
 
-            Console.WriteLine("Добро пожаловать в наш магазин");
-
-            while (isShopOpen)
+            foreach (Merchandise merchandise in merchandises)
             {
-                Console.WriteLine("Вы можете:");
-                Console.WriteLine("1 - Выбрать продукты для покупки");
-                Console.WriteLine("2 - Пойти на кассу для оплаты");
-                Console.WriteLine("3 - Попытаться что-то украсть");
-                Console.WriteLine("4 - Уйти из Магазина");
-
-                int command = UserUtils.ReadInt();
-
-                switch (command)
-                {
-                    case (int)Commands.First:
-                        SelectProducts(shop);
-                        break;
-                    case (int)Commands.Second:
-                        break;
-                    case (int)Commands.Third:
-                        break;
-                    case (int)Commands.Fourth:
-                        isShopOpen = false;
-                        break;
-                    default:
-                        Console.WriteLine("Такого Вы не умеете");
-                        break;
-                }
+                inventory.Add(merchandise.Product.Id, merchandise);
             }
-        }
 
-        private static void SelectProducts(Shop shop)
-        {
-            shop.ShowItemsInStorage();
+            Storage storage = new Storage(inventory);
+            Shop shop = new Shop(storage);
+
+            shop.Open();
         }
     }
 }

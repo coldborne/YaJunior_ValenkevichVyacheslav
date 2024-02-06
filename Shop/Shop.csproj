@@ -46,8 +46,10 @@
         <Compile Include="Enums\Taste.cs" />
         <Compile Include="Enums\Type.cs" />
         <Compile Include="Enums\Variety.cs" />
+        <Compile Include="ICopyable.cs" />
         <Compile Include="ListExtensions.cs" />
         <Compile Include="Merchandise.cs" />
+        <Compile Include="MerchandiseCreator.cs" />
         <Compile Include="ProductName.cs" />
         <Compile Include="Products.cs" />
         <Compile Include="Program.cs" />

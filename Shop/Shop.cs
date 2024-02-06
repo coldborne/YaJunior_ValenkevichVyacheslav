@@ -6,39 +6,103 @@ namespace Shop
     public class Shop
     {
         private Storage _storage;
-        private List<Employee> _employees;
+        private UserUtils _userUtils;
 
         public Shop()
         {
             _storage = new Storage();
-            _employees = new List<Employee>();
-
-            AddEmployeesToShift();
+            _userUtils = new UserUtils();
         }
 
-        private void AddEmployeesToShift()
+        public Shop(Storage storage)
         {
-            Console.WriteLine("Сколько сотрудников Вы хотите добавить?");
-            int employeesAmount = UserUtils.ReadNumberOfEmployees();
+            _userUtils = new UserUtils();
+            _storage = storage ?? throw new ArgumentException("Попытка добавления пустого склада в магазин");
+        }
 
-            for (int i = 0; i < employeesAmount; i++)
+        public void Open()
+        {
+            bool isShopOpen = true;
+
+            Console.WriteLine("Добро пожаловать в наш магазин");
+
+            while (isShopOpen)
             {
-                _employees.Add(new Employee());
+                Console.WriteLine("Вы можете:");
+                Console.WriteLine("1 - Посмотреть все товары");
+                Console.WriteLine("2 - Посмотреть продукты определенной категории");
+                Console.WriteLine("3 - Выбрать товар и положить в корзину");
+                Console.WriteLine("3 - Выложить часть продуктов");
+                Console.WriteLine("4 - Попытаться что-то украсть");
+                Console.WriteLine("5 - Пойти на кассу для оплаты");
+
+                int command = _userUtils.ReadInt();
+
+                switch (command)
+                {
+                    case (int)Commands.First:
+                        Show(_storage.GetAllMerchandises().SortByMultipleCriteria());
+                        break;
+
+                    case (int)Commands.Second:
+                        ApproachMerchandisesByCategory();
+                        break;
+
+                    case (int)Commands.Third:
+                        break;
+
+                    case (int)Commands.Fourth:
+                        isShopOpen = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Такого Вы не умеете");
+                        break;
+                }
             }
         }
 
-        public void ShowItemsInStorage()
+        private void ApproachMerchandisesByCategory()
         {
-            _storage.ShowItems();
-        }
-        
-        public Item TakeItemFromStorage()
-        {
-            var item = _storage.TakeItem();
-            
-            item = new Item(new Apple(10, 15), 10);
+            string[] categories = Enum.GetNames(typeof(Category));
+            Console.WriteLine("Выберите категорию товара:");
 
-            return item;
+            foreach (string currentCategory in categories)
+            {
+                Console.WriteLine(currentCategory);
+            }
+
+            bool canGetCategory = Enum.TryParse(Console.ReadLine(), out Category category);
+
+            if (canGetCategory)
+            {
+                Show(_storage.GetMerchandisesBy(category));
+            }
+            else
+            {
+                Console.WriteLine("Данной категории нет в магазине");
+            }
+        }
+
+        private void Show(List<Merchandise> merchandises)
+        {
+            foreach (Merchandise merchandise in merchandises)
+            {
+                Console.WriteLine(merchandise.Info);
+            }
+        }
+
+        public void FillStorage(List<Merchandise> merchandises)
+        {
+            if (merchandises == null)
+            {
+                throw new ArgumentNullException("Попытка добавления пустого списка товаров в магазин");
+            }
+
+            foreach (Merchandise merchandise in merchandises)
+            {
+                _storage.Add(merchandise);
+            }
         }
     }
 }
