@@ -1,33 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Shop
 {
     public class Customer
     {
-        private const int _maxBagWeight = 20;
-
         private int _money;
-        private int _bagWeight;
-        private List<Item> _productsInBag;
+        private List<Merchandise> _merchandisesInBasket;
 
-        public void PutGoodsInBag(Item item)
+        public Customer(int money)
         {
-            _productsInBag.Add(item);
+            _money = money > 0
+                ? money
+                : throw new ArgumentException("Попытка добавления отрицательного количества денег покупателю");
+
+            _merchandisesInBasket = new List<Merchandise>();
         }
-        
-        public bool CanBuy(Product product, int productQuantity)
+
+        public int TotalBasketPrice => _merchandisesInBasket.Sum(merchandise => merchandise.Price);
+
+        public void PutMerchandiseInBasket(Merchandise merchandise)
         {
-            float capacity = product.Weight * productQuantity;
-            float price = product.Price * productQuantity;
+            _merchandisesInBasket.Add(merchandise);
+        }
 
-            float sumOfGoods = 0;
+        public bool CanBuyMerchandiseInBasket()
+        {
+            return TotalBasketPrice <= _money;
+        }
 
-            foreach (var goods in _productsInBag)
-            {
-                sumOfGoods += goods.Product.Price + goods.ProductQuantity;
-            }
-
-            return capacity + _bagWeight <= _maxBagWeight && price <= _money - sumOfGoods;
+        public void TakeMoney(int money)
+        {
+            _money -= money;
         }
     }
 }

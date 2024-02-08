@@ -49,6 +49,12 @@ namespace Shop
                 .DeepCopy();
         }
 
+        public List<Merchandise> GetMerchandisesBy(string name)
+        {
+            return _inventory.Values.Where(merchandise => merchandise.Product.Name == name).ToList()
+                .DeepCopy();
+        }
+
         public void RemoveExpiredMerchandise(DateTime currentDate)
         {
             List<Guid> expiredMerchandisesGuids = _inventory
@@ -62,24 +68,28 @@ namespace Shop
             }
         }
 
-        public bool TryTakeMerchandise(Guid productId, int quantity, out Merchandise merchandise)
+        public bool TryTakeMerchandise(Guid productId, int quantity)
         {
-            if (_inventory.TryGetValue(productId, out merchandise))
+            if (_inventory.TryGetValue(productId, out Merchandise merchandise) == false)
             {
-                if (merchandise.Quantity >= quantity)
-                {
-                    merchandise.DecreaseQuantity(quantity);
-
-                    if (merchandise.Quantity == 0)
-                    {
-                        _inventory.Remove(productId);
-                    }
-
-                    return true;
-                }
+                return false;
             }
 
-            return false;
+            if (merchandise.Quantity < quantity)
+            {
+                return false;
+            }
+
+            if (merchandise.Quantity == quantity)
+            {
+                _inventory.Remove(merchandise.Product.Id);
+            }
+            else
+            {
+                merchandise.DecreaseQuantity(quantity);
+            }
+
+            return true;
         }
     }
 }

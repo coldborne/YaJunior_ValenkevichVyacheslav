@@ -18,7 +18,9 @@ namespace Shop
         public int Price { get; private set; }
         public int Quantity { get; private set; }
         public List<Category> Categories { get; }
-        public string Info => $"Продукт - {Product}, цена - {Price}, категории - [{string.Join(", ", Categories)}], количество - {Quantity}";
+
+        public string Info =>
+            $"Продукт - {Product}, цена - {Price}, категории - [{string.Join(", ", Categories)}], количество - {Quantity}";
 
         public void DecreaseQuantity(int quantity)
         {
@@ -33,6 +35,11 @@ namespace Shop
         public Merchandise Copy()
         {
             return new Merchandise(Product, Categories.ShallowCopy(), Price, Quantity);
+        }
+
+        public Merchandise Copy(int quantity)
+        {
+            return new Merchandise(Product, Categories.ShallowCopy(), Price, quantity);
         }
 
         public int CompareTo(Merchandise other)

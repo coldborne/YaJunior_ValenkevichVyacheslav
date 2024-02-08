@@ -7,7 +7,10 @@ namespace Shop
         First = 1,
         Second,
         Third,
-        Fourth
+        Fourth,
+        Five,
+        Six,
+        Seven
     }
 
     public class UserUtils
@@ -31,7 +34,7 @@ namespace Shop
 
             return userInputInt;
         }
-        
+
         public float ReadFloat()
         {
             float userInputFloat = 0;
