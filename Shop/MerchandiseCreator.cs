@@ -13,7 +13,7 @@ namespace Shop
         {
             List<Merchandise> merchandises = new List<Merchandise>();
 
-            for(int i = 0; i < merchandiseQuantity; i++)
+            for(int i = 1; i <= merchandiseQuantity; i++)
             {
                 var categories = GenerateCategories();
                 var primaryCategory = categories.First();

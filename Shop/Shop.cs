@@ -6,8 +6,8 @@ namespace Shop
     public class Shop
     {
         private Storage _storage;
-        private UserUtils _userUtils;
         private Customer _customer;
+        private UserUtils _userUtils;
 
         public Shop(Customer customer)
         {
@@ -57,7 +57,7 @@ namespace Shop
                         break;
 
                     case (int)Commands.Fourth:
-
+                        PlaceMerchandise();
                         break;
 
                     case (int)Commands.Five:
@@ -124,8 +124,7 @@ namespace Shop
 
         private void TakeMerchandise()
         {
-            Console.WriteLine("Введите название товара, который вы хотите купить");
-            string nameProduct = Console.ReadLine();
+            string nameProduct = GetNameProduct();
 
             List<Merchandise> merchandises = _storage.GetMerchandisesBy(nameProduct);
             Merchandise merchandise = null;
@@ -147,7 +146,7 @@ namespace Shop
 
                     int serialNumber = _userUtils.ReadInt() - 1;
 
-                    if (serialNumber > 0 && serialNumber < merchandises.Count)
+                    if (serialNumber >= 0 && serialNumber < merchandises.Count)
                     {
                         merchandise = merchandises[serialNumber];
                     }
@@ -179,12 +178,92 @@ namespace Shop
             }
         }
 
+        private void PlaceMerchandise()
+        {
+            if (_customer.MerchandiseCountInBasket > 0)
+            {
+                List<Merchandise> merchandisesOfCustomer = _customer.GetAllMerchandises();
+
+                Console.WriteLine("Товары в вашей корзине:");
+
+                foreach (Merchandise merchandiseByCustomer in merchandisesOfCustomer)
+                {
+                    Console.WriteLine(merchandiseByCustomer.Info);
+                }
+
+                string nameProduct = GetNameProduct();
+
+                List<Merchandise> merchandises = _customer.GetMerchandisesBy(nameProduct);
+                Merchandise merchandise = null;
+
+                if (merchandises.Count < 1)
+                {
+                    Console.WriteLine("Такого товара нет в вашей корзине");
+                }
+                else
+                {
+                    if (merchandises.Count > 1)
+                    {
+                        Console.WriteLine("Найдено несколько товаров с таким названием, выберите один:");
+
+                        for(int i = 0; i < merchandises.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1} - {merchandises[i].Info}");
+                        }
+
+                        int serialNumber = _userUtils.ReadInt() - 1;
+
+                        if (serialNumber > 0 && serialNumber < merchandises.Count)
+                        {
+                            merchandise = merchandises[serialNumber];
+                        }
+                    }
+                    else
+                    {
+                        merchandise = merchandises[0];
+                    }
+
+                    Console.WriteLine($"Вы выбрали {merchandise.Info}");
+                    Console.WriteLine("Какое количество товара вы хотите положить?");
+
+                    int merchandiseCount = _userUtils.ReadInt();
+
+                    bool canTakeMerchandise = _customer.TryTakeMerchandise(merchandise.Product.Id,
+                        merchandiseCount);
+
+                    if (canTakeMerchandise)
+                    {
+                        Merchandise merchandiseToStorage = merchandise.Copy(merchandiseCount);
+
+                        _storage.Add(merchandiseToStorage);
+                        Console.WriteLine("Вы успешно положили товар обратно в магазин");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Такого количества товара нет у вас в корзине");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("В вашей корзине нет продуктов");
+            }
+        }
+
         private void GoToCashier()
         {
             if (_customer.CanBuyMerchandiseInBasket())
             {
                 _customer.TakeMoney(_customer.TotalBasketPrice);
             }
+        }
+
+        private string GetNameProduct()
+        {
+            Console.WriteLine("Введите название товара, который вы хотите положить");
+            string nameProduct = Console.ReadLine();
+
+            return nameProduct;
         }
     }
 }

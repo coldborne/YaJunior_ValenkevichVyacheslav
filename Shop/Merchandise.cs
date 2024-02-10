@@ -26,10 +26,21 @@ namespace Shop
         {
             if (quantity >= Quantity)
             {
-                throw new ArgumentException("Количество продукта в товаре должно быть больше 0");
+                throw new ArgumentException(
+                    "Количество забираемого продукта должно быть меньше, чем у товара есть сейчас");
             }
 
             Quantity -= quantity;
+        }
+
+        public void IncreaseQuantity(int quantity)
+        {
+            if (quantity <= 0)
+            {
+                throw new ArgumentException("Количество добавляемого продукта в товаре должно быть больше 0");
+            }
+
+            Quantity += quantity;
         }
 
         public Merchandise Copy()

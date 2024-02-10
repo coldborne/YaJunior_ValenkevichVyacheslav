@@ -19,10 +19,44 @@ namespace Shop
         }
 
         public int TotalBasketPrice => _merchandisesInBasket.Sum(merchandise => merchandise.Price);
+        public int MerchandiseCountInBasket => _merchandisesInBasket.Count;
 
         public void PutMerchandiseInBasket(Merchandise merchandise)
         {
             _merchandisesInBasket.Add(merchandise);
+        }
+
+        public List<Merchandise> GetMerchandisesBy(string name)
+        {
+            return _merchandisesInBasket.Where(merchandise => merchandise.Product.Name == name).ToList()
+                .DeepCopy();
+        }
+
+        public bool TryTakeMerchandise(Guid productId, int quantity)
+        {
+            if (_merchandisesInBasket.Any(merchandise => merchandise.Product.Id == productId) == false)
+            {
+                return false;
+            }
+
+            Merchandise foundMerchandise =
+                _merchandisesInBasket.Find(requiredMerchandise => requiredMerchandise.Product.Id == productId);
+
+            if (foundMerchandise.Quantity < quantity)
+            {
+                return false;
+            }
+
+            if (foundMerchandise.Quantity == quantity)
+            {
+                _merchandisesInBasket.Remove(foundMerchandise);
+            }
+            else
+            {
+                foundMerchandise.DecreaseQuantity(quantity);
+            }
+
+            return true;
         }
 
         public bool CanBuyMerchandiseInBasket()
@@ -33,6 +67,11 @@ namespace Shop
         public void TakeMoney(int money)
         {
             _money -= money;
+        }
+
+        public List<Merchandise> GetAllMerchandises()
+        {
+            return _merchandisesInBasket.DeepCopy();
         }
     }
 }

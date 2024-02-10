@@ -26,7 +26,14 @@ namespace Shop
                 throw new ArgumentNullException("Попытка добавления пустого товара на склад");
             }
 
-            _inventory.Add(merchandise.Product.Id, merchandise);
+            if (_inventory.TryGetValue(merchandise.Product.Id, out Merchandise foundMerchandise))
+            {
+                foundMerchandise.IncreaseQuantity(merchandise.Quantity);
+            }
+            else
+            {
+                _inventory.Add(merchandise.Product.Id, merchandise);
+            }
         }
 
         public List<Merchandise> GetAllMerchandises()
