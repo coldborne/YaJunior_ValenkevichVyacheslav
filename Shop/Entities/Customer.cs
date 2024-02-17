@@ -1,29 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Shop.Providers;
 
 namespace Shop
 {
     public class Customer
     {
-        private int _money;
         private List<Merchandise> _merchandisesInBasket;
+        private List<Merchandise> _stolenMerchandises;
+        private List<Merchandise> _backpack;
+        private StealChance _stealChance;
 
         public Customer(int money)
         {
-            _money = money > 0
+            Money = money > 0
                 ? money
                 : throw new ArgumentException("Попытка добавления отрицательного количества денег покупателю");
 
             _merchandisesInBasket = new List<Merchandise>();
+            _stolenMerchandises = new List<Merchandise>();
+            _backpack = new List<Merchandise>();
+            _stealChance = new StealChance();
         }
 
+        public int Money { get; private set; }
         public int TotalBasketPrice => _merchandisesInBasket.Sum(merchandise => merchandise.Price);
         public int MerchandiseCountInBasket => _merchandisesInBasket.Count;
 
         public void PutMerchandiseInBasket(Merchandise merchandise)
         {
             _merchandisesInBasket.Add(merchandise);
+        }
+
+        public void PutMerchandiseInPocket(Merchandise merchandise)
+        {
+            _stolenMerchandises.Add(merchandise);
+        }
+
+        public void PutMerchandisesInBackpack()
+        {
+            _backpack = _merchandisesInBasket.DeepCopy();
+            _merchandisesInBasket.Clear();
         }
 
         public List<Merchandise> GetMerchandisesBy(string name)
@@ -59,19 +77,46 @@ namespace Shop
             return true;
         }
 
+        public bool TryStealMerchandise(Merchandise merchandise)
+        {
+            int stealSuccessThreshold = StealChance.MaxStealChance - _stealChance.Value;
+
+            int stealAttempt =
+                RandomValueProvider.GetRandomValue(StealChance.MinStealChance, StealChance.MaxStealChance);
+
+            if (stealAttempt >= stealSuccessThreshold)
+            {
+                PutMerchandiseInPocket(merchandise);
+
+                return true;
+            }
+
+            return false;
+        }
+
         public bool CanBuyMerchandiseInBasket()
         {
-            return TotalBasketPrice <= _money;
+            return TotalBasketPrice <= Money;
         }
 
         public void TakeMoney(int money)
         {
-            _money -= money;
+            Money -= money;
         }
 
         public List<Merchandise> GetAllMerchandises()
         {
             return _merchandisesInBasket.DeepCopy();
+        }
+
+        public List<Merchandise> GetMerchandisesFromBackpack()
+        {
+            return _backpack.DeepCopy();
+        }
+
+        public List<Merchandise> GetStolenMerchandises()
+        {
+            return _stolenMerchandises.DeepCopy();
         }
     }
 }
