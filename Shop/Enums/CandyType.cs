@@ -1,6 +1,6 @@
 ﻿namespace Shop.Enums
 {
-    public enum Type
+    public enum CandyType
     {
         Licker,
         Chewable,

@@ -1,6 +1,5 @@
 ﻿using System;
 using Shop.Enums;
-using Type = Shop.Enums.Type;
 
 namespace Shop
 {
@@ -72,7 +71,7 @@ namespace Shop
 
     public class Candy : Product
     {
-        public Candy(string name, DateTime expirationDate, float sugarContent, Flavor flavor, Type type) : base(name,
+        public Candy(string name, DateTime expirationDate, float sugarContent, Flavor flavor, CandyType candyType) : base(name,
             expirationDate)
         {
             int minSugarContent = 0;
@@ -86,17 +85,17 @@ namespace Shop
 
             SugarContent = sugarContent;
             Flavor = flavor;
-            Type = type;
+            CandyType = candyType;
         }
 
         public float SugarContent { get; }
         public Flavor Flavor { get; }
-        public Type Type { get; }
+        public CandyType CandyType { get; }
 
         protected override string GenerateDescription()
         {
             return
-                $"Конфеты с {Flavor} вкусом и типом '{Type}'. Каждая конфета обеспечивает яркий вкусовой опыт и " +
+                $"Конфеты с {Flavor} вкусом и типом '{CandyType}'. Каждая конфета обеспечивает яркий вкусовой опыт и " +
                 $"станет отличным дополнением к чаепитию.";
         }
     }

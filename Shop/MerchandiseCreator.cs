@@ -2,44 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using Shop.Enums;
+using Shop.Providers;
 
 namespace Shop
 {
     public class MerchandiseCreator
     {
-        private static Random _random = new Random();
+        private static RandomValueProvider _randomProvider = new RandomValueProvider();
 
-        public static List<Merchandise> CreateUniqueMerchandiseList(int merchandiseQuantity)
+        public List<Merchandise> CreateUniqueMerchandiseList(int merchandiseQuantity)
         {
             List<Merchandise> merchandises = new List<Merchandise>();
 
             for(int i = 1; i <= merchandiseQuantity; i++)
             {
-                var categories = GenerateCategories();
-                var primaryCategory = categories.First();
-                var name = GenerateName(primaryCategory);
-                var expirationDate = DateTime.Today.AddDays(_random.Next(-30, 90));
+                List<MerchandiseCategory> categories = GenerateCategories();
+                MerchandiseCategory primaryCategory = categories.First();
+                string name = GenerateName(primaryCategory);
+
+                int minimumAllowanceExpirationDays = -30;
+                int maximumAllowanceExpirationDays = 90;
+                DateTime expirationDate = DateTime.Today.AddDays(
+                    _randomProvider.GetRandomValue(minimumAllowanceExpirationDays, maximumAllowanceExpirationDays));
 
                 int minPrice = 1;
                 int maxPrice = 100;
-                var price = _random.Next(minPrice, maxPrice);
+                int price = _randomProvider.GetRandomValue(minPrice, maxPrice);
 
                 int minQuantity = 1;
                 int maxQuantity = 50;
-                var quantity = _random.Next(minQuantity, maxQuantity);
+                int quantity = _randomProvider.GetRandomValue(minQuantity, maxQuantity);
 
                 Product product = null;
 
                 switch (primaryCategory)
                 {
-                    case Category.Food:
+                    case MerchandiseCategory.Food:
                         product = new Apple(name,
                             expirationDate,
-                            (Variety)_random.Next(Enum.GetValues(typeof(Variety)).Length),
+                            (Variety)_randomProvider.GetRandomValue(Enum.GetValues(typeof(Variety)).Length),
                             Taste.Sugary);
                         break;
 
-                    case Category.Clothing:
+                    case MerchandiseCategory.Clothing:
                         product = new Backpack(name, expirationDate, 5, Material.Leather);
                         break;
                 }
@@ -53,36 +58,44 @@ namespace Shop
             return merchandises;
         }
 
-        private static string GenerateName(Category category)
+        private string GenerateName(MerchandiseCategory merchandiseCategory)
         {
-            var foodNames = new List<string> { "Яблоко", "Персик", "Чокопай" };
-            var clothingNames = new List<string> { "Рюкзак", "Куртка", "Шапка" };
-            var electronicsNames = new List<string> { "Наушники", "Смартфон", "Планшет" };
+            List<string> foodNames = new List<string> { "Яблоко", "Персик", "Чокопай" };
+            List<string> clothingNames = new List<string> { "Рюкзак", "Куртка", "Шапка" };
+            List<string> electronicsNames = new List<string> { "Наушники", "Смартфон", "Планшет" };
 
-            switch (category)
+            switch (merchandiseCategory)
             {
-                case Category.Food:
-                    return foodNames[_random.Next(foodNames.Count)];
-                case Category.Clothing:
-                    return clothingNames[_random.Next(clothingNames.Count)];
-                case Category.Electronics:
-                    return electronicsNames[_random.Next(electronicsNames.Count)];
+                case MerchandiseCategory.Food:
+                    return foodNames[_randomProvider.GetRandomValue(foodNames.Count)];
+
+                case MerchandiseCategory.Clothing:
+                    return clothingNames[_randomProvider.GetRandomValue(clothingNames.Count)];
+
+                case MerchandiseCategory.Electronics:
+                    return electronicsNames[_randomProvider.GetRandomValue(electronicsNames.Count)];
+
                 default:
                     return "Неизвестный товар";
             }
         }
 
-        private static List<Category> GenerateCategories()
+        private List<MerchandiseCategory> GenerateCategories()
         {
-            var allCategories = Enum.GetValues(typeof(Category)).Cast<Category>().ToList();
-            var categories = new List<Category>();
-            var numberOfCategories = _random.Next(1, 4); // От 1 до 3 категорий для товара
+            List<MerchandiseCategory> allCategories =
+                Enum.GetValues(typeof(MerchandiseCategory)).Cast<MerchandiseCategory>().ToList();
 
-            for(int i = 0; i < numberOfCategories; i++)
+            List<MerchandiseCategory> categories = new List<MerchandiseCategory>();
+
+            int minimumCategoriesAmount = 1;
+            int maximumCategoriesAmount = 4;
+            int categoriesAmount = _randomProvider.GetRandomValue(minimumCategoriesAmount, maximumCategoriesAmount + 1);
+
+            for(int i = 0; i < categoriesAmount; i++)
             {
-                var categoryToAdd = allCategories[_random.Next(allCategories.Count)];
+                MerchandiseCategory categoryToAdd = allCategories[_randomProvider.GetRandomValue(allCategories.Count)];
 
-                if (!categories.Contains(categoryToAdd))
+                if (categories.Contains(categoryToAdd) == false)
                 {
                     categories.Add(categoryToAdd);
                 }

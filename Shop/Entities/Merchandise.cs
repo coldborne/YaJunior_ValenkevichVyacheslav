@@ -6,7 +6,7 @@ namespace Shop
 {
     public class Merchandise : ICopyable<Merchandise>, IComparable<Merchandise>
     {
-        public Merchandise(Product product, List<Category> categories, int price, int quantity)
+        public Merchandise(Product product, List<MerchandiseCategory> categories, int price, int quantity)
         {
             Product = product;
             Categories = categories;
@@ -17,7 +17,7 @@ namespace Shop
         public Product Product { get; }
         public int Price { get; private set; }
         public int Quantity { get; private set; }
-        public List<Category> Categories { get; }
+        public List<MerchandiseCategory> Categories { get; }
 
         public string Info =>
             $"Продукт - {Product}, цена - {Price}, категории - [{string.Join(", ", Categories)}], количество - {Quantity}";
@@ -63,14 +63,14 @@ namespace Shop
             if (categoryCountComparison != 0)
                 return categoryCountComparison;
 
-            string categoriesStringThis = String.Join(",",
+            string categories = String.Join(",",
                 Categories.OrderBy(category => category).Select(category => category.ToString()));
 
-            string categoriesStringOther = String.Join(",",
+            string otherCategories = String.Join(",",
                 other.Categories.OrderBy(category => category).Select(category => category.ToString()));
 
             int categoriesComparison =
-                string.Compare(categoriesStringThis, categoriesStringOther, StringComparison.Ordinal);
+                string.Compare(categories, otherCategories, StringComparison.Ordinal);
 
             if (categoriesComparison != 0)
                 return categoriesComparison;
@@ -92,7 +92,7 @@ namespace Shop
         }
     }
 
-    public enum Category
+    public enum MerchandiseCategory
     {
         Food,
         Electronics,
