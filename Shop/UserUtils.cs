@@ -34,25 +34,5 @@ namespace Shop
 
             return userInputInt;
         }
-
-        public float ReadFloat()
-        {
-            float userInputFloat = 0;
-            bool isInputRight = false;
-
-            while (isInputRight == false)
-            {
-                string userInput = Console.ReadLine();
-
-                isInputRight = float.TryParse(userInput, out userInputFloat);
-
-                if (isInputRight == false)
-                {
-                    Console.WriteLine("Можно вводить только целые числа");
-                }
-            }
-
-            return userInputFloat;
-        }
     }
 }

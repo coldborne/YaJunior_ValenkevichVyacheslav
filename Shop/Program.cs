@@ -21,7 +21,8 @@ namespace Shop
 
             Storage storage = new Storage(inventory);
 
-            Customer customer = new Customer(150);
+            int customerMoney = 150;
+            Customer customer = new Customer(customerMoney);
             Shop shop = new Shop(customer, storage);
 
             shop.Open();
