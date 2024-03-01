@@ -22,6 +22,7 @@ namespace Shop
 
                 int minimumAllowanceExpirationDays = -30;
                 int maximumAllowanceExpirationDays = 90;
+
                 DateTime expirationDate = DateTime.Today.AddDays(
                     _randomProvider.GetRandomValue(minimumAllowanceExpirationDays, maximumAllowanceExpirationDays));
 
@@ -67,13 +68,13 @@ namespace Shop
             switch (merchandiseCategory)
             {
                 case MerchandiseCategory.Food:
-                    return foodNames[_randomProvider.GetRandomValue(foodNames.Count)];
+                    return foodNames[_randomProvider.GetRandomValue(foodNames.Count - 1)];
 
                 case MerchandiseCategory.Clothing:
-                    return clothingNames[_randomProvider.GetRandomValue(clothingNames.Count)];
+                    return clothingNames[_randomProvider.GetRandomValue(clothingNames.Count - 1)];
 
                 case MerchandiseCategory.Electronics:
-                    return electronicsNames[_randomProvider.GetRandomValue(electronicsNames.Count)];
+                    return electronicsNames[_randomProvider.GetRandomValue(electronicsNames.Count - 1)];
 
                 default:
                     return "Неизвестный товар";
@@ -93,7 +94,8 @@ namespace Shop
 
             for(int i = 0; i < categoriesAmount; i++)
             {
-                MerchandiseCategory categoryToAdd = allCategories[_randomProvider.GetRandomValue(allCategories.Count)];
+                MerchandiseCategory categoryToAdd =
+                    allCategories[_randomProvider.GetRandomValue(allCategories.Count - 1)];
 
                 if (categories.Contains(categoryToAdd) == false)
                 {

@@ -25,7 +25,7 @@ namespace Shop
         {
             List<Merchandise> sortedMerchandises = merchandises.DeepCopy();
             sortedMerchandises.Sort();
-            
+
             return sortedMerchandises;
         }
     }
