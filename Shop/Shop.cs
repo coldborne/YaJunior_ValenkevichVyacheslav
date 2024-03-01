@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Shop
 {
@@ -33,13 +34,13 @@ namespace Shop
             while (isShopOpen)
             {
                 Console.WriteLine("Вы можете:");
-                Console.WriteLine("1 - Посмотреть все товары");
-                Console.WriteLine("2 - Посмотреть продукты определенной категории");
-                Console.WriteLine("3 - Выбрать товар и положить в корзину");
-                Console.WriteLine("4 - Выложить часть продуктов");
-                Console.WriteLine("5 - Попытаться что-то украсть");
-                Console.WriteLine("6 - Пойти на кассу для оплаты");
-                Console.WriteLine("7 - Выйти из магазина");
+                Console.WriteLine($"{(int)Commands.First} - Посмотреть все товары");
+                Console.WriteLine($"{(int)Commands.Second} - Посмотреть продукты определенной категории");
+                Console.WriteLine($"{(int)Commands.Third} - Выбрать товар и положить в корзину");
+                Console.WriteLine($"{(int)Commands.Fourth} - Выложить часть продуктов");
+                Console.WriteLine($"{(int)Commands.Five} - Попытаться что-то украсть");
+                Console.WriteLine($"{(int)Commands.Six} - Пойти на кассу для оплаты");
+                Console.WriteLine($"{(int)Commands.Seven} - Упасть без сознания");
 
                 int command = _userUtils.ReadInt();
 
@@ -103,19 +104,29 @@ namespace Shop
 
         private void ApproachMerchandisesByCategory()
         {
-            string[] categories = Enum.GetNames(typeof(Category));
+            string[] categories = Enum.GetNames(typeof(MerchandiseCategory));
             Console.WriteLine("Выберите категорию товара:");
 
-            foreach (string currentCategory in categories)
+            foreach (string category in categories)
             {
-                Console.WriteLine(currentCategory);
+                Console.WriteLine(category);
             }
 
-            bool canGetCategory = Enum.TryParse(Console.ReadLine(), true, out Category category);
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+            string userInput = Console.ReadLine()?.Trim().ToLower();
+            string userSelectedCategory = string.Empty;
+
+            if (userInput != null)
+            {
+                userSelectedCategory = textInfo.ToTitleCase(userInput);
+            }
+
+            bool canGetCategory = Enum.TryParse(userSelectedCategory, true, out MerchandiseCategory selectedCategory);
 
             if (canGetCategory)
             {
-                Show(_storage.GetMerchandisesBy(category));
+                Show(_storage.GetMerchandisesBy(selectedCategory));
             }
             else
             {
@@ -128,15 +139,15 @@ namespace Shop
             string nameProduct = GetNameProduct();
 
             List<Merchandise> merchandises = _storage.GetMerchandisesBy(nameProduct);
-            Merchandise merchandise;
+            int minimumMerchandiseCount = 1;
 
-            if (merchandises.Count < 1)
+            if (merchandises.Count < minimumMerchandiseCount)
             {
                 Console.WriteLine("Товар не найден");
             }
             else
             {
-                merchandise = SelectMerchandiseFromList(merchandises);
+                Merchandise merchandise = SelectMerchandiseFromList(merchandises);
 
                 Console.WriteLine($"Вы выбрали {merchandise.Info}");
                 Console.WriteLine("Какое количество товара вы хотите купить?");
@@ -164,7 +175,7 @@ namespace Shop
         {
             if (_customer.MerchandiseCountInBasket > 0)
             {
-                List<Merchandise> merchandisesOfCustomer = _customer.GetAllMerchandises();
+                List<Merchandise> merchandisesOfCustomer = _customer.GetAllMerchandisesFromBasket();
 
                 Console.WriteLine("Товары в вашей корзине:");
                 Show(merchandisesOfCustomer);
@@ -172,15 +183,15 @@ namespace Shop
                 string nameProduct = GetNameProduct();
 
                 List<Merchandise> merchandises = _customer.GetMerchandisesBy(nameProduct);
-                Merchandise merchandise;
+                int minimumMerchandiseCount = 1;
 
-                if (merchandises.Count < 1)
+                if (merchandises.Count < minimumMerchandiseCount)
                 {
                     Console.WriteLine("Такого товара нет в вашей корзине");
                 }
                 else
                 {
-                    merchandise = SelectMerchandiseFromList(merchandises);
+                    Merchandise merchandise = SelectMerchandiseFromList(merchandises);
 
                     Console.WriteLine($"Вы выбрали {merchandise.Info}");
                     Console.WriteLine("Какое количество товара вы хотите положить?");
@@ -233,6 +244,10 @@ namespace Shop
                         merchandise = merchandises[serialNumber];
                         isSerialNumberValid = true;
                     }
+                    else
+                    {
+                        Console.WriteLine("Товара с таким номером не найдено, попробуйте ещё раз!");
+                    }
                 }
             }
             else
@@ -248,7 +263,6 @@ namespace Shop
             string nameProduct = GetNameProduct();
 
             List<Merchandise> merchandises = _storage.GetMerchandisesBy(nameProduct);
-            Merchandise merchandise;
 
             if (merchandises.Count < 1)
             {
@@ -256,7 +270,7 @@ namespace Shop
             }
             else
             {
-                merchandise = SelectMerchandiseFromList(merchandises);
+                Merchandise merchandise = SelectMerchandiseFromList(merchandises);
 
                 Console.WriteLine($"Вы выбрали {merchandise.Info}");
                 Console.WriteLine("Какое количество товара вы хотите украсть?");
@@ -280,7 +294,7 @@ namespace Shop
                     {
                         Console.WriteLine("Вам конец...");
 
-                        _customer.TakeMoney(_customer.Money);
+                        _customer.TryTakeMoney(_customer.Money);
                         _money = _customer.Money;
 
                         Console.WriteLine($"У вас осталось {_customer.Money} деняк");
@@ -294,7 +308,7 @@ namespace Shop
 
             List<Merchandise> stolenMerchandises = _customer.GetStolenMerchandises();
             Console.WriteLine("Ваши краденные вещи: ");
-            
+
             foreach (Merchandise stolenMerchandise in stolenMerchandises)
             {
                 Console.WriteLine(stolenMerchandise.Info);
@@ -304,18 +318,21 @@ namespace Shop
         private void GoToCashier()
         {
             Console.WriteLine("Товары в вашей корзине:");
-            Show(_customer.GetAllMerchandises());
+            Show(_customer.GetAllMerchandisesFromBasket());
 
             if (_customer.MerchandiseCountInBasket == 0)
             {
                 Console.WriteLine("У вас нет товаров, можно ничего не оплачивать");
             }
-            else if (_customer.CanBuyMerchandiseInBasket())
+            else if (_customer.CanBuyMerchandiseInBasket)
             {
-                _customer.TakeMoney(_customer.TotalBasketPrice);
-                _customer.PutMerchandisesInBackpack();
+                int basketPrice = _customer.TotalBasketPrice;
+                _customer.TryTakeMoney(basketPrice);
+                _customer.PutMerchandisesInBackpackFromBasket();
+                _money += basketPrice;
 
-                Console.WriteLine("Вы успешно купили товар, он добавлен вам в рюкзак");
+                Console.WriteLine("Вы успешно купили товары, они добавлены вам в рюкзак");
+                Console.WriteLine($"Магазин заработал на вас всего - {_money}");
             }
             else
             {
@@ -325,7 +342,7 @@ namespace Shop
 
             List<Merchandise> backpack = _customer.GetMerchandisesFromBackpack();
             Console.WriteLine("Ваш рюкзак: ");
-            
+
             foreach (Merchandise merchandise in backpack)
             {
                 Console.WriteLine(merchandise.Info);

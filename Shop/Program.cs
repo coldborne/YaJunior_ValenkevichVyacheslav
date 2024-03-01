@@ -9,7 +9,9 @@ namespace Shop
         {
             int merchandiseQuantity = 10;
 
-            List<Merchandise> merchandises = MerchandiseCreator.CreateUniqueMerchandiseList(merchandiseQuantity);
+            MerchandiseCreator merchandiseCreator = new MerchandiseCreator();
+
+            List<Merchandise> merchandises = merchandiseCreator.CreateUniqueMerchandiseList(merchandiseQuantity);
             Dictionary<Guid, Merchandise> inventory = new Dictionary<Guid, Merchandise>();
 
             foreach (Merchandise merchandise in merchandises)
