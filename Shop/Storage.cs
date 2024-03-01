@@ -26,14 +26,7 @@ namespace Shop
                 throw new ArgumentNullException("Попытка добавления пустого товара на склад");
             }
 
-            if (_inventory.TryGetValue(merchandise.Product.Id, out Merchandise foundMerchandise))
-            {
-                foundMerchandise.IncreaseQuantity(merchandise.Quantity);
-            }
-            else
-            {
-                _inventory.Add(merchandise.Product.Id, merchandise);
-            }
+            _inventory.Add(merchandise);
         }
 
         public List<Merchandise> GetAllMerchandises()
@@ -45,29 +38,68 @@ namespace Shop
 
         public List<Merchandise> GetMerchandisesExpiredBefore(DateTime date)
         {
-            return _inventory.Values
-                .Where(merchandise => merchandise.Product.ExpirationDate < date)
-                .ToList().DeepCopy();
+            List<Merchandise> merchandises = new List<Merchandise>();
+
+            foreach (var idMerchandisePair in _inventory)
+            {
+                Merchandise merchandise = idMerchandisePair.Value;
+
+                if (merchandise.Product.ExpirationDate < date)
+                {
+                    merchandises.Add(merchandise.Copy());
+                }
+            }
+
+            return merchandises;
         }
 
-        public List<Merchandise> GetMerchandisesBy(Category category)
+        public List<Merchandise> GetMerchandisesBy(MerchandiseCategory merchandiseCategory)
         {
-            return _inventory.Values.Where(merchandise => merchandise.Categories.Contains(category)).ToList()
-                .DeepCopy();
+            List<Merchandise> merchandises = new List<Merchandise>();
+
+            foreach (var idMerchandisePair in _inventory)
+            {
+                Merchandise merchandise = idMerchandisePair.Value;
+
+                if (merchandise.Categories.Contains(merchandiseCategory))
+                {
+                    merchandises.Add(merchandise.Copy());
+                }
+            }
+
+            return merchandises;
         }
 
         public List<Merchandise> GetMerchandisesBy(string name)
         {
-            return _inventory.Values.Where(merchandise => merchandise.Product.Name == name).ToList()
-                .DeepCopy();
+            List<Merchandise> merchandises = new List<Merchandise>();
+
+            foreach (var idMerchandisePair in _inventory)
+            {
+                Merchandise merchandise = idMerchandisePair.Value;
+
+                if (merchandise.Product.Name == name)
+                {
+                    merchandises.Add(merchandise.Copy());
+                }
+            }
+
+            return merchandises;
         }
 
         public void RemoveExpiredMerchandise(DateTime currentDate)
         {
-            List<Guid> expiredMerchandisesGuids = _inventory
-                .Where(pair => pair.Value.Product.ExpirationDate < currentDate)
-                .Select(pair => pair.Key)
-                .ToList();
+            List<Guid> expiredMerchandisesGuids = new List<Guid>();
+
+            foreach (var idMerchandisePair in _inventory)
+            {
+                Merchandise merchandise = idMerchandisePair.Value;
+
+                if (merchandise.Product.ExpirationDate < currentDate)
+                {
+                    expiredMerchandisesGuids.Add(merchandise.Product.Id);
+                }
+            }
 
             foreach (Guid expiredMerchandiseGuid in expiredMerchandisesGuids)
             {
@@ -87,14 +119,7 @@ namespace Shop
                 return false;
             }
 
-            if (merchandise.Quantity == quantity)
-            {
-                _inventory.Remove(merchandise.Product.Id);
-            }
-            else
-            {
-                merchandise.DecreaseQuantity(quantity);
-            }
+            _inventory.Remove(productId, quantity);
 
             return true;
         }

@@ -82,14 +82,7 @@ namespace Shop
                 return false;
             }
 
-            if (foundMerchandise.Quantity == quantity)
-            {
-                _merchandisesInBasket.Remove(productId);
-            }
-            else
-            {
-                foundMerchandise.DecreaseQuantity(quantity);
-            }
+            _merchandisesInBasket.Remove(productId, quantity);
 
             return true;
         }
