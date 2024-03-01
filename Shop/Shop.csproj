@@ -39,30 +39,25 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="DictionaryExtensions.cs" />
         <Compile Include="Entities\Customer.cs" />
         <Compile Include="Entities\Merchandise.cs" />
         <Compile Include="Entities\Products.cs" />
+        <Compile Include="Entities\Shop.cs" />
         <Compile Include="Entities\StealChance.cs" />
+        <Compile Include="Entities\Storage.cs" />
         <Compile Include="Enums\Flavor.cs" />
         <Compile Include="Enums\Material.cs" />
         <Compile Include="Enums\Taste.cs" />
         <Compile Include="Enums\CandyType.cs" />
         <Compile Include="Enums\Variety.cs" />
-        <Compile Include="Extentions\DictionaryExtension.cs" />
+        <Compile Include="Extentions\DictionaryExtensions.cs" />
         <Compile Include="Extentions\ListExtensions.cs" />
-        <Compile Include="ICopyable.cs" />
-        <Compile Include="MerchandiseCreator.cs" />
-        <Compile Include="ProductName.cs" />
+        <Compile Include="Interfaces\ICopyable.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Providers\MerchandiseCreator.cs" />
         <Compile Include="Providers\RandomValueProvider.cs" />
-        <Compile Include="Shop.cs" />
-        <Compile Include="Storage.cs" />
         <Compile Include="UserUtils.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="Structure.txt" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
