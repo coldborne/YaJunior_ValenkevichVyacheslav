@@ -72,6 +72,7 @@ namespace Shop
 
         public List<Merchandise> GetMerchandisesBy(string name)
         {
+            name = name.ToTitleCase();
             List<Merchandise> merchandises = new List<Merchandise>();
 
             foreach (var idMerchandisePair in _inventory)

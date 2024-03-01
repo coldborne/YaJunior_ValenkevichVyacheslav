@@ -25,7 +25,7 @@ namespace Shop
             {
                 Merchandise merchandise = merchandises[productId];
 
-                if (merchandise.Quantity > quantity)
+                if (merchandise.Quantity < quantity)
                 {
                     throw new ArgumentException(
                         $"Попытка удаления бОльшего количества товара с id - {productId}, " +

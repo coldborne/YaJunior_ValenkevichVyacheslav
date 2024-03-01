@@ -112,15 +112,8 @@ namespace Shop
                 Console.WriteLine(category);
             }
 
-            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-
             string userInput = Console.ReadLine()?.Trim().ToLower();
-            string userSelectedCategory = string.Empty;
-
-            if (userInput != null)
-            {
-                userSelectedCategory = textInfo.ToTitleCase(userInput);
-            }
+            string userSelectedCategory = userInput.ToTitleCase();
 
             bool canGetCategory = Enum.TryParse(userSelectedCategory, true, out MerchandiseCategory selectedCategory);
 

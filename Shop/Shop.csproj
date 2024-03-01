@@ -52,6 +52,7 @@
         <Compile Include="Enums\Variety.cs" />
         <Compile Include="Extentions\DictionaryExtensions.cs" />
         <Compile Include="Extentions\ListExtensions.cs" />
+        <Compile Include="Extentions\StringExtensions.cs" />
         <Compile Include="Interfaces\ICopyable.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
