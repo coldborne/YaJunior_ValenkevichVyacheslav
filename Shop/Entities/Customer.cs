@@ -5,50 +5,39 @@ using Shop.Providers;
 
 namespace Shop
 {
-    public class Customer
+    public class Customer : Person
     {
         private StealChance _stealChance;
         private RandomValueProvider _randomValueProvider;
 
-        private Dictionary<Guid, Merchandise> _merchandisesInBasket;
         private Dictionary<Guid, Merchandise> _stolenMerchandises;
-        private Dictionary<Guid, Merchandise> _backpack;
 
-        public Customer(int money)
+        public Customer(int money) : base(money)
         {
-            int minimumMoneyAmount = 0;
-
-            Money = money >= minimumMoneyAmount
-                ? money
-                : throw new ArgumentException("Попытка добавления отрицательного количества денег покупателю");
-
             _stealChance = new StealChance();
             _randomValueProvider = new RandomValueProvider();
 
-            _merchandisesInBasket = new Dictionary<Guid, Merchandise>();
             _stolenMerchandises = new Dictionary<Guid, Merchandise>();
-            _backpack = new Dictionary<Guid, Merchandise>();
         }
 
-        public int Money { get; private set; }
-        public int TotalBasketPrice => _merchandisesInBasket.Values.Sum(merchandise => merchandise.Price);
-        public int MerchandiseCountInBasket => _merchandisesInBasket.Count;
-        public bool CanBuyMerchandiseInBasket => TotalBasketPrice <= Money;
-
-        public void PutMerchandiseInBasket(Merchandise merchandise)
+        public Customer(int money, Dictionary<Guid, Merchandise> merchandises) : base(money, merchandises)
         {
-            _merchandisesInBasket.Add(merchandise);
+            _stealChance = new StealChance();
+            _randomValueProvider = new RandomValueProvider();
+
+            _stolenMerchandises = new Dictionary<Guid, Merchandise>();
         }
 
-        public void PutMerchandisesInBackpackFromBasket()
+        public bool TryBuyMerchandise(Merchandise merchandise, int quantity)
         {
-            foreach (var idMerchandisePair in _merchandisesInBasket)
+            if (CanBuy(merchandise, quantity) == false)
             {
-                Merchandise merchandise = idMerchandisePair.Value;
-                _backpack.Add(merchandise);
+                return false;
             }
 
-            _merchandisesInBasket.Clear();
+            Add(merchandise);
+
+            return true;
         }
 
         public bool TryStealMerchandise(Merchandise merchandise)
@@ -60,7 +49,7 @@ namespace Shop
 
             if (stealAttempt >= stealSuccessThreshold)
             {
-                _stolenMerchandises.Add(merchandise);
+                _stolenMerchandises.Increase(merchandise);
 
                 return true;
             }
@@ -68,73 +57,17 @@ namespace Shop
             return false;
         }
 
-        public bool TryTakeMerchandise(Guid productId, int quantity)
-        {
-            if (_merchandisesInBasket.ContainsKey(productId) == false)
-            {
-                return false;
-            }
-
-            Merchandise foundMerchandise = _merchandisesInBasket[productId];
-
-            if (foundMerchandise.Quantity < quantity)
-            {
-                return false;
-            }
-
-            _merchandisesInBasket.Remove(productId, quantity);
-
-            return true;
-        }
-
-        public bool TryTakeMoney(int money)
-        {
-            if (money <= 0)
-            {
-                return false;
-            }
-
-            if (Money < money)
-            {
-                return false;
-            }
-
-            Money -= money;
-            return true;
-        }
-
-        public List<Merchandise> GetAllMerchandisesFromBasket()
-        {
-            return _merchandisesInBasket.Values.ToList().DeepCopy();
-        }
-
-        public List<Merchandise> GetMerchandisesFromBackpack()
-        {
-            return _backpack.Values.ToList().DeepCopy();
-        }
-
         public List<Merchandise> GetStolenMerchandises()
         {
             return _stolenMerchandises.Values.ToList().DeepCopy();
         }
 
-        public List<Merchandise> GetMerchandisesBy(string name)
+        private bool CanBuy(Merchandise merchandise, int quantity)
         {
-            List<Merchandise> merchandises = new List<Merchandise>();
+            int merchandisePrice = merchandise.Price;
+            int totalPrice = merchandisePrice * quantity;
 
-            Merchandise merchandise;
-
-            foreach (var idMerchandisePair in _merchandisesInBasket)
-            {
-                merchandise = idMerchandisePair.Value;
-
-                if (merchandise.Product.Name == name)
-                {
-                    merchandises.Add(merchandise.Copy());
-                }
-            }
-
-            return merchandises;
+            return totalPrice <= Money;
         }
     }
 }
