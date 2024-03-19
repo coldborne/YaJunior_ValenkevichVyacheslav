@@ -5,7 +5,7 @@ namespace Shop
 {
     public static class DictionaryExtensions
     {
-        public static void Add(this Dictionary<Guid, Merchandise> merchandises, Merchandise merchandise)
+        public static void Increase(this Dictionary<Guid, Merchandise> merchandises, Merchandise merchandise)
         {
             Guid id = merchandise.Product.Id;
 
@@ -19,32 +19,30 @@ namespace Shop
             }
         }
 
-        public static void Remove(this Dictionary<Guid, Merchandise> merchandises, Guid productId, int quantity)
+        public static bool TryDecrease(this Dictionary<Guid, Merchandise> merchandises, Guid productId, int quantity)
         {
-            if (merchandises.ContainsKey(productId))
+            if (merchandises.ContainsKey(productId) == false)
             {
-                Merchandise merchandise = merchandises[productId];
+                throw new ArgumentException($"Попытка продажи несуществующего в списке товара с id - {productId}");
+            }
 
-                if (merchandise.Quantity < quantity)
-                {
-                    throw new ArgumentException(
-                        $"Попытка удаления бОльшего количества товара с id - {productId}, " +
-                        $"количество товара {merchandise.Quantity}, попытались удалить {quantity}");
-                }
+            Merchandise merchandise = merchandises[productId];
 
-                if (merchandise.Quantity == quantity)
-                {
-                    merchandises.Remove(productId);
-                }
-                else
-                {
-                    merchandise.DecreaseQuantity(quantity);
-                }
+            if (merchandise.Quantity < quantity)
+            {
+                return false;
+            }
+
+            if (merchandise.Quantity == quantity)
+            {
+                merchandises.Remove(productId);
             }
             else
             {
-                throw new ArgumentException($"Попытка удаления несуществующего в списке товара с id - {productId}");
+                merchandise.DecreaseQuantity(quantity);
             }
+
+            return true;
         }
 
         public static Dictionary<Guid, Merchandise> Copy(this Dictionary<Guid, Merchandise> merchandises)
