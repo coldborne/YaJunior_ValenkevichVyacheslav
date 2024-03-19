@@ -19,11 +19,13 @@ namespace Shop
                 inventory.Add(merchandise.Product.Id, merchandise);
             }
 
-            Storage storage = new Storage(inventory);
-
             int customerMoney = 150;
             Customer customer = new Customer(customerMoney);
-            Shop shop = new Shop(customer, storage);
+
+            int sellerMoney = 150;
+            Seller seller = new Seller(sellerMoney, inventory);
+
+            Shop shop = new Shop(customer, seller);
 
             shop.Open();
         }
