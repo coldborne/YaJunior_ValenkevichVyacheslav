@@ -144,7 +144,7 @@ namespace Shop
 
                 if (canTakeMerchandise)
                 {
-                    Merchandise merchandiseToSell = merchandise.Copy(merchandiseCount);
+                    Merchandise merchandiseToSell = merchandise.DeepCopy(merchandiseCount);
 
                     bool canBuy = _customer.TryBuyMerchandise(merchandiseToSell, merchandiseToSell.Quantity);
                     int totalPrice = merchandiseToSell.Price * merchandiseToSell.Quantity;
@@ -167,7 +167,7 @@ namespace Shop
                 else
                 {
                     Console.WriteLine(
-                        $"Продавец не может продать товар - \"{merchandise.Product.Name} {merchandise.Product.Description}\", " +
+                        $"Продавец не может продать товар - \"{merchandise.Product.Name} {merchandise.Product.GetDescription()}\", " +
                         $"количество товара {merchandise.Quantity}, попытались купить {merchandiseCount}");
                 }
             }
@@ -197,7 +197,7 @@ namespace Shop
 
                 if (canTakeMerchandise)
                 {
-                    Merchandise stolenMerchandise = merchandise.Copy(merchandiseCount);
+                    Merchandise stolenMerchandise = merchandise.DeepCopy(merchandiseCount);
 
                     bool isSuccess = _customer.TryStealMerchandise(stolenMerchandise);
 

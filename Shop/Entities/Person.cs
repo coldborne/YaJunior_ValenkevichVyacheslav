@@ -103,7 +103,7 @@ namespace Shop
 
                 if (merchandise.Categories.Contains(merchandiseCategory))
                 {
-                    merchandises.Add(merchandise.Copy());
+                    merchandises.Add(merchandise.DeepCopy());
                 }
             }
 
@@ -121,7 +121,7 @@ namespace Shop
 
                 if (merchandise.Product.Name == name)
                 {
-                    merchandises.Add(merchandise.Copy());
+                    merchandises.Add(merchandise.DeepCopy());
                 }
             }
 

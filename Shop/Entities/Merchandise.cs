@@ -43,14 +43,14 @@ namespace Shop
             Quantity += quantity;
         }
 
-        public Merchandise Copy()
+        public Merchandise DeepCopy()
         {
-            return new Merchandise(Product, Categories.ShallowCopy(), Price, Quantity);
+            return new Merchandise(Product.DeepCopy(), Categories.ShallowCopy(), Price, Quantity);
         }
 
-        public Merchandise Copy(int quantity)
+        public Merchandise DeepCopy(int quantity)
         {
-            return new Merchandise(Product, Categories.ShallowCopy(), Price, quantity);
+            return new Merchandise(Product.DeepCopy(), Categories.ShallowCopy(), Price, quantity);
         }
 
         public int CompareTo(Merchandise other)
