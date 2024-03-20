@@ -51,7 +51,7 @@ namespace Shop
 
             foreach (var merchandiseEntry in merchandises)
             {
-                copyMerchandises.Add(merchandiseEntry.Key, merchandiseEntry.Value.Copy());
+                copyMerchandises.Add(merchandiseEntry.Key, merchandiseEntry.Value.DeepCopy());
             }
 
             return copyMerchandises;
