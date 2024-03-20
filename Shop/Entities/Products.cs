@@ -3,26 +3,27 @@ using Shop.Enums;
 
 namespace Shop
 {
-    public abstract class Product
+    public abstract class Product : ICopyable<Product>
     {
         public Product(string name, DateTime expirationDate)
         {
             Id = Guid.NewGuid();
             Name = name;
             ExpirationDate = expirationDate;
-            Description = GenerateDescription();
         }
 
         public Guid Id { get; }
         public string Name { get; }
         public DateTime ExpirationDate { get; }
-        public string Description { get; }
 
-        protected abstract string GenerateDescription();
+        public abstract string GetDescription();
+
+        public abstract Product DeepCopy();
 
         public override string ToString()
         {
-            return $"Название - {Name}, Срок годности - {ExpirationDate.ToShortDateString()}, Описание - {Description}";
+            return
+                $"Название - {Name}, Срок годности - {ExpirationDate.ToShortDateString()}, Описание - {GetDescription()}";
         }
     }
 
@@ -37,9 +38,14 @@ namespace Shop
         public Variety Variety { get; }
         public Taste Taste { get; }
 
-        protected override string GenerateDescription()
+        public override string GetDescription()
         {
             return $"Сорт: {Variety}, вкус: {Taste}. Очень сочные и ароматные, идеальны для свежего потребления.";
+        }
+
+        public override Product DeepCopy()
+        {
+            return new Apple(Name, ExpirationDate, Variety, Taste);
         }
     }
 
@@ -61,17 +67,23 @@ namespace Shop
 
         public float Fuzziness { get; }
 
-        protected override string GenerateDescription()
+        public override string GetDescription()
         {
             return
                 $"Спелый персик с {Fuzziness * 100}% пушистостью кожицы. Отличается невероятной сочностью и " +
                 $"сладостью, подходит для летних десертов.";
         }
+
+        public override Product DeepCopy()
+        {
+            return new Peach(Name, ExpirationDate, Fuzziness);
+        }
     }
 
     public class Candy : Product
     {
-        public Candy(string name, DateTime expirationDate, float sugarContent, Flavor flavor, CandyType candyType) : base(name,
+        public Candy(string name, DateTime expirationDate, float sugarContent, Flavor flavor,
+            CandyType candyType) : base(name,
             expirationDate)
         {
             int minSugarContent = 0;
@@ -92,31 +104,41 @@ namespace Shop
         public Flavor Flavor { get; }
         public CandyType CandyType { get; }
 
-        protected override string GenerateDescription()
+        public override string GetDescription()
         {
             return
                 $"Конфеты с {Flavor} вкусом и типом '{CandyType}'. Каждая конфета обеспечивает яркий вкусовой опыт и " +
                 $"станет отличным дополнением к чаепитию.";
         }
+
+        public override Product DeepCopy()
+        {
+            return new Candy(Name, ExpirationDate, SugarContent, Flavor, CandyType);
+        }
     }
 
     public class Backpack : Product
     {
-        public Backpack(string name, DateTime expirationDate, int pocketsAmount, Material material) : base(name,
+        public Backpack(string name, DateTime expirationDate, int pocketAmount, Material material) : base(name,
             expirationDate)
         {
-            PocketAmount = pocketsAmount;
+            PocketAmount = pocketAmount;
             Material = material;
         }
 
         public int PocketAmount { get; }
         public Material Material { get; }
 
-        protected override string GenerateDescription()
+        public override string GetDescription()
         {
             return
                 $"Рюкзак изготовлен из {Material}, имеет {PocketAmount} карманов. Прочный и вместительный, " +
                 $"идеален для путешествий и повседневного использования.";
+        }
+
+        public override Product DeepCopy()
+        {
+            return new Backpack(Name, ExpirationDate, PocketAmount, Material);
         }
     }
 }

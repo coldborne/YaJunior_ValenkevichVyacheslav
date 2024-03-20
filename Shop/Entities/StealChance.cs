@@ -13,7 +13,7 @@ namespace Shop
             Value = randomValueProvider.GetRandomValue(minStealChanceValue, maxStealChanceValue);
         }
 
-        public static int MinStealChance => 0;
+        public static int MinStealChance => 1;
         public static int MaxStealChance => 100;
         public int Value { get; }
     }

@@ -2,6 +2,6 @@
 {
     public interface ICopyable<T>
     {
-        T Copy();
+        T DeepCopy();
     }
 }

@@ -10,7 +10,7 @@ namespace Shop
 
             foreach (T item in items)
             {
-                copiedItems.Add(item.Copy());
+                copiedItems.Add(item.DeepCopy());
             }
 
             return copiedItems;

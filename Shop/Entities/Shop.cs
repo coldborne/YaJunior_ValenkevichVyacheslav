@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Shop
 {
     public class Shop
     {
-        private Storage _storage;
+        private Seller _seller;
         private Customer _customer;
         private UserUtils _userUtils;
-        private int _money;
+        private bool _isCustomerThief;
 
-        public Shop(Customer customer)
+        public Shop(Customer customer, Seller seller)
         {
-            _storage = new Storage();
-            _userUtils = new UserUtils();
+            _seller = seller ?? throw new ArgumentException("Попытка добавления пустого продавца в магазин");
             _customer = customer ?? throw new ArgumentException("Попытка добавления пустого покупателя в магазин");
-        }
-
-        public Shop(Customer customer, Storage storage)
-        {
             _userUtils = new UserUtils();
-            _storage = storage ?? throw new ArgumentException("Попытка добавления пустого склада в магазин");
-            _customer = customer ?? throw new ArgumentException("Попытка добавления пустого покупателя в магазин");
+            _isCustomerThief = false;
         }
 
         public void Open()
@@ -33,72 +26,71 @@ namespace Shop
 
             while (isShopOpen)
             {
-                Console.WriteLine("Вы можете:");
-                Console.WriteLine($"{(int)Commands.First} - Посмотреть все товары");
-                Console.WriteLine($"{(int)Commands.Second} - Посмотреть продукты определенной категории");
-                Console.WriteLine($"{(int)Commands.Third} - Выбрать товар и положить в корзину");
-                Console.WriteLine($"{(int)Commands.Fourth} - Выложить часть продуктов");
-                Console.WriteLine($"{(int)Commands.Five} - Попытаться что-то украсть");
-                Console.WriteLine($"{(int)Commands.Six} - Пойти на кассу для оплаты");
-                Console.WriteLine($"{(int)Commands.Seven} - Упасть без сознания");
-
-                int command = _userUtils.ReadInt();
-
-                switch (command)
+                if (_isCustomerThief == false)
                 {
-                    case (int)Commands.First:
-                        Show(_storage.GetAllMerchandises().SortByMultipleCriteria());
-                        break;
+                    Console.WriteLine("Вы можете:");
+                    Console.WriteLine($"{(int)Commands.First} - Посмотреть все товары продавца");
+                    Console.WriteLine($"{(int)Commands.Second} - Посмотреть товары продавца определенной категории");
+                    Console.WriteLine($"{(int)Commands.Third} - Посмотреть все свои товары");
+                    Console.WriteLine($"{(int)Commands.Fourth} - Купить товар");
+                    Console.WriteLine($"{(int)Commands.Five} - Попытаться что-то украсть");
+                    Console.WriteLine($"{(int)Commands.Six} - Пойти домой");
 
-                    case (int)Commands.Second:
-                        ApproachMerchandisesByCategory();
-                        break;
+                    int command = _userUtils.ReadInt();
 
-                    case (int)Commands.Third:
-                        TakeMerchandise();
-                        break;
+                    switch (command)
+                    {
+                        case (int)Commands.First:
+                            Show(_seller.GetAllMerchandises().SortByMultipleCriteria());
+                            break;
 
-                    case (int)Commands.Fourth:
-                        PlaceMerchandise();
-                        break;
+                        case (int)Commands.Second:
+                            ApproachMerchandisesByCategory();
+                            break;
 
-                    case (int)Commands.Five:
-                        TryStealMerchandise();
-                        break;
+                        case (int)Commands.Third:
+                            Show(_customer.GetAllMerchandises().SortByMultipleCriteria());
+                            break;
 
-                    case (int)Commands.Six:
-                        GoToCashier();
-                        break;
+                        case (int)Commands.Fourth:
+                            Trade();
+                            break;
 
-                    case (int)Commands.Seven:
-                        isShopOpen = false;
-                        break;
+                        case (int)Commands.Five:
+                            TryStealMerchandise();
+                            break;
 
-                    default:
-                        Console.WriteLine("Такого Вы не умеете");
-                        break;
+                        case (int)Commands.Six:
+                            isShopOpen = false;
+                            break;
+
+                        default:
+                            Console.WriteLine("Такого Вы не умеете");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Зря вы полезли своими грязными ручонками к нашему товару...");
+                    isShopOpen = false;
                 }
             }
-        }
 
-        public void FillStorage(List<Merchandise> merchandises)
-        {
-            if (merchandises == null)
-            {
-                throw new ArgumentNullException("Попытка добавления пустого списка товаров в магазин");
-            }
-
-            foreach (Merchandise merchandise in merchandises)
-            {
-                _storage.Add(merchandise);
-            }
+            GoToCashier();
         }
 
         private void Show(List<Merchandise> merchandises)
         {
-            foreach (Merchandise merchandise in merchandises)
+            if (merchandises.Count == 0)
             {
-                Console.WriteLine(merchandise.Info);
+                Console.WriteLine("Показывать нечего");
+            }
+            else
+            {
+                foreach (Merchandise merchandise in merchandises)
+                {
+                    Console.WriteLine(merchandise.Info);
+                }
             }
         }
 
@@ -119,7 +111,7 @@ namespace Shop
 
             if (canGetCategory)
             {
-                Show(_storage.GetMerchandisesBy(selectedCategory));
+                Show(_seller.GetMerchandisesBy(selectedCategory));
             }
             else
             {
@@ -127,11 +119,11 @@ namespace Shop
             }
         }
 
-        private void TakeMerchandise()
+        private void Trade()
         {
             string nameProduct = GetNameProduct();
 
-            List<Merchandise> merchandises = _storage.GetMerchandisesBy(nameProduct);
+            List<Merchandise> merchandises = _seller.GetMerchandisesBy(nameProduct);
             int minimumMerchandiseCount = 1;
 
             if (merchandises.Count < minimumMerchandiseCount)
@@ -147,69 +139,94 @@ namespace Shop
 
                 int merchandiseCount = _userUtils.ReadInt();
 
-                bool canTakeMerchandise = _storage.TryTakeMerchandise(merchandise.Product.Id,
+                bool canTakeMerchandise = _seller.CanTakeMerchandise(merchandise.Product.Id,
                     merchandiseCount);
 
                 if (canTakeMerchandise)
                 {
-                    Merchandise merchandiseToCustomer = merchandise.Copy(merchandiseCount);
+                    Merchandise merchandiseToSell = merchandise.DeepCopy(merchandiseCount);
 
-                    _customer.PutMerchandiseInBasket(merchandiseToCustomer);
-                    Console.WriteLine("Вы успешно положили товар себе в корзину");
+                    bool canBuy = _customer.TryBuyMerchandise(merchandiseToSell, merchandiseToSell.Quantity);
+                    int totalPrice = merchandiseToSell.Price * merchandiseToSell.Quantity;
+
+                    if (canBuy)
+                    {
+                        _seller.TrySellMerchandise(merchandiseToSell.Product.Id, merchandiseToSell.Quantity);
+
+                        _customer.TryDecreaseMoney(totalPrice);
+                        _seller.TryIncreaseMoney(totalPrice);
+
+                        Console.WriteLine($"Вы успешно купили товар на сумму {totalPrice}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Вы не можете купить товар");
+                        Console.WriteLine($"Итоговая цена товара {totalPrice}, у вас деняк {_customer.Money}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Такого количества товара нет на складе");
+                    Console.WriteLine(
+                        $"Продавец не может продать товар - \"{merchandise.Product.Name} {merchandise.Product.GetDescription()}\", " +
+                        $"количество товара {merchandise.Quantity}, попытались купить {merchandiseCount}");
                 }
             }
         }
 
-        private void PlaceMerchandise()
+        private void TryStealMerchandise()
         {
-            if (_customer.MerchandiseCountInBasket > 0)
+            string nameProduct = GetNameProduct();
+
+            List<Merchandise> merchandises = _seller.GetMerchandisesBy(nameProduct);
+
+            if (merchandises.Count < 1)
             {
-                List<Merchandise> merchandisesOfCustomer = _customer.GetAllMerchandisesFromBasket();
-
-                Console.WriteLine("Товары в вашей корзине:");
-                Show(merchandisesOfCustomer);
-
-                string nameProduct = GetNameProduct();
-
-                List<Merchandise> merchandises = _customer.GetMerchandisesBy(nameProduct);
-                int minimumMerchandiseCount = 1;
-
-                if (merchandises.Count < minimumMerchandiseCount)
-                {
-                    Console.WriteLine("Такого товара нет в вашей корзине");
-                }
-                else
-                {
-                    Merchandise merchandise = SelectMerchandiseFromList(merchandises);
-
-                    Console.WriteLine($"Вы выбрали {merchandise.Info}");
-                    Console.WriteLine("Какое количество товара вы хотите положить?");
-
-                    int merchandiseCount = _userUtils.ReadInt();
-
-                    bool canTakeMerchandise = _customer.TryTakeMerchandise(merchandise.Product.Id,
-                        merchandiseCount);
-
-                    if (canTakeMerchandise)
-                    {
-                        Merchandise merchandiseToStorage = merchandise.Copy(merchandiseCount);
-
-                        _storage.Add(merchandiseToStorage);
-                        Console.WriteLine("Вы успешно положили товар обратно в магазин");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Такого количества товара нет у вас в корзине");
-                    }
-                }
+                Console.WriteLine("Товар не найден");
             }
             else
             {
-                Console.WriteLine("В вашей корзине нет продуктов");
+                Merchandise merchandise = SelectMerchandiseFromList(merchandises);
+
+                Console.WriteLine($"Вы выбрали {merchandise.Info}");
+                Console.WriteLine("Какое количество товара вы хотите украсть?");
+
+                int merchandiseCount = _userUtils.ReadInt();
+
+                bool canTakeMerchandise = _seller.CanTakeMerchandise(merchandise.Product.Id,
+                    merchandiseCount);
+
+                if (canTakeMerchandise)
+                {
+                    Merchandise stolenMerchandise = merchandise.DeepCopy(merchandiseCount);
+
+                    bool isSuccess = _customer.TryStealMerchandise(stolenMerchandise);
+
+                    if (isSuccess)
+                    {
+                        _seller.TrySellMerchandise(merchandise.Product.Id,
+                            stolenMerchandise.Quantity);
+
+                        int totalPrice = stolenMerchandise.Price * stolenMerchandise.Quantity;
+                        Console.WriteLine($"Вы успешно украли товар на сумму {totalPrice}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Вам конец...");
+                        int money = _customer.Money;
+
+                        _customer.TryDecreaseMoney(money);
+                        _seller.TryIncreaseMoney(money);
+
+                        Console.WriteLine($"У вас осталось {_customer.Money} деняк");
+                        _isCustomerThief = true;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(
+                        $"Вы не можете украсть товар - {merchandise.Info}, " +
+                        $"количество товара {merchandise.Quantity}, попытались украсть {merchandise.Quantity}");
+                }
             }
         }
 
@@ -251,103 +268,23 @@ namespace Shop
             return merchandise;
         }
 
-        private void TryStealMerchandise()
-        {
-            string nameProduct = GetNameProduct();
-
-            List<Merchandise> merchandises = _storage.GetMerchandisesBy(nameProduct);
-
-            if (merchandises.Count < 1)
-            {
-                Console.WriteLine("Товар не найден");
-            }
-            else
-            {
-                Merchandise merchandise = SelectMerchandiseFromList(merchandises);
-
-                Console.WriteLine($"Вы выбрали {merchandise.Info}");
-                Console.WriteLine("Какое количество товара вы хотите украсть?");
-
-                int merchandiseCount = _userUtils.ReadInt();
-
-                bool canTakeMerchandise = _storage.TryTakeMerchandise(merchandise.Product.Id,
-                    merchandiseCount);
-
-                if (canTakeMerchandise)
-                {
-                    Merchandise stolenMerchandise = merchandise.Copy(merchandiseCount);
-
-                    bool isSuccess = _customer.TryStealMerchandise(stolenMerchandise);
-
-                    if (isSuccess)
-                    {
-                        Console.WriteLine("Вы успешно украли товар");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Вам конец...");
-
-                        _customer.TryTakeMoney(_customer.Money);
-                        _money = _customer.Money;
-
-                        Console.WriteLine($"У вас осталось {_customer.Money} деняк");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Такого количества товара нет на складе");
-                }
-            }
-
-            List<Merchandise> stolenMerchandises = _customer.GetStolenMerchandises();
-            Console.WriteLine("Ваши краденные вещи: ");
-
-            foreach (Merchandise stolenMerchandise in stolenMerchandises)
-            {
-                Console.WriteLine(stolenMerchandise.Info);
-            }
-        }
-
-        private void GoToCashier()
-        {
-            Console.WriteLine("Товары в вашей корзине:");
-            Show(_customer.GetAllMerchandisesFromBasket());
-
-            if (_customer.MerchandiseCountInBasket == 0)
-            {
-                Console.WriteLine("У вас нет товаров, можно ничего не оплачивать");
-            }
-            else if (_customer.CanBuyMerchandiseInBasket)
-            {
-                int basketPrice = _customer.TotalBasketPrice;
-                _customer.TryTakeMoney(basketPrice);
-                _customer.PutMerchandisesInBackpackFromBasket();
-                _money += basketPrice;
-
-                Console.WriteLine("Вы успешно купили товары, они добавлены вам в рюкзак");
-                Console.WriteLine($"Магазин заработал на вас всего - {_money}");
-            }
-            else
-            {
-                Console.WriteLine($"Вы набрали товаров на {_customer.TotalBasketPrice}, у вас денег {_customer.Money}");
-                Console.WriteLine("Цена ваших товаров больше, чем у вас есть денег. Выложите часть товаров");
-            }
-
-            List<Merchandise> backpack = _customer.GetMerchandisesFromBackpack();
-            Console.WriteLine("Ваш рюкзак: ");
-
-            foreach (Merchandise merchandise in backpack)
-            {
-                Console.WriteLine(merchandise.Info);
-            }
-        }
-
         private string GetNameProduct()
         {
             Console.WriteLine("Введите название товара, который вы хотите положить");
             string nameProduct = Console.ReadLine();
 
             return nameProduct;
+        }
+
+        private void GoToCashier()
+        {
+            Console.WriteLine("Товары в вашем рюкзаке:");
+            Show(_customer.GetAllMerchandises());
+
+            Console.WriteLine($"У вас денег - {_customer.Money}");
+
+            Console.WriteLine("Украденные товар:");
+            Show(_customer.GetStolenMerchandises());
         }
     }
 }
