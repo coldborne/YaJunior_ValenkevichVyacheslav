@@ -5,10 +5,12 @@ namespace PassengerTrainConfigurator
     public class Seat
     {
         private SeatTypes _seatType;
+        private string _number;
 
-        public Seat(SeatTypes seatType)
+        public Seat(SeatTypes seatType, string number)
         {
             _seatType = seatType;
+            _number = number;
             IsBooked = false;
         }
 
@@ -40,7 +42,7 @@ namespace PassengerTrainConfigurator
 
         public override string ToString()
         {
-            return $"Тип - {_seatType}. Забронировано - {IsBooked}";
+            return $"Номер - {_number}, Тип - {_seatType}, Забронировано - {IsBooked}";
         }
     }
 

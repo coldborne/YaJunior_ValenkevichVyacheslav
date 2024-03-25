@@ -22,7 +22,7 @@ namespace PassengerTrainConfigurator
 
         public override string ToString()
         {
-            return $"{Surname} {Name} {Patronymic}";
+            return Patronymic != string.Empty ? $"{Surname} {Name} {Patronymic}" : $"{Surname} {Name}";
         }
     }
 }
