@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using PassengerTrainConfigurator;
 
@@ -8,19 +7,35 @@ namespace Passenger_Train_Configurator
 {
     public class Train
     {
-        private string _number;
         private List<Wagon> _wagons;
 
         public Train(string number)
         {
-            _number = number;
+            Number = number;
             _wagons = new List<Wagon>();
         }
 
         public Train(string number, List<Wagon> wagons)
         {
-            _number = number;
+            Number = number;
             _wagons = wagons;
+        }
+
+        public string Number { get; }
+
+        public int FreeSeatsCount
+        {
+            get
+            {
+                int count = 0;
+
+                foreach (Wagon wagon in _wagons)
+                {
+                    count += wagon.FreeSeatsCount;
+                }
+
+                return count;
+            }
         }
 
         public int Capacity
@@ -38,52 +53,49 @@ namespace Passenger_Train_Configurator
             }
         }
 
-        /*public void SetPassenger(Wagon wagon, Seat seat, Passenger passenger)
+        public void Add(Wagon wagon)
         {
-            int indexOfWagon = _wagons.IndexOf(wagon);
-
-            if (indexOfWagon == -1)
+            if (wagon == null)
             {
-                throw new ArgumentException();
+                throw new ArgumentNullException("Передан пустой вагон");
             }
 
-            _wagons[indexOfWagon].SetPassenger(seat, passenger);
+            if (_wagons.Contains(wagon))
+            {
+                throw new ArgumentException("Передан вагон, который уже существует в поезде");
+            }
+
+            _wagons.Add(wagon);
         }
 
-        public List<Seat> GetSeatsWithoutPassanger()
+        public List<Seat> GetFreeSeats()
         {
             List<Seat> seats = new List<Seat>();
 
             foreach (Wagon wagon in _wagons)
             {
-                seats.InsertRange(seats.Count, wagon.GetSeatsWithoutPassanger());
+                seats.InsertRange(seats.Count, wagon.GetFreeSeats());
             }
 
             return seats;
         }
 
-        public Seat GetSeat(int wagonNumber, int seatNumber)
-        {
-            if (wagonNumber <= 0 || wagonNumber > _wagons.Count)
-            {
-                throw new ArgumentException("Переданы некорректные данные номера вагона");
-            }
-
-            return _wagons[wagonNumber].GetSeat(seatNumber);
-        }*/
-
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"Поезд {_number}:");
+            stringBuilder.AppendLine($"Поезд {Number}:");
 
             if (_wagons.Count != 0)
             {
-                for(int i = 0; i < _wagons.Count; i++)
+                int lasTrainPosition = _wagons.Count - 1;
+                
+                for(int i = 0; i < lasTrainPosition; i++)
                 {
                     stringBuilder.AppendLine($"\t{_wagons[i]}");
                 }
+                
+                stringBuilder.Append($"\t{_wagons[lasTrainPosition]}");
             }
             else
             {

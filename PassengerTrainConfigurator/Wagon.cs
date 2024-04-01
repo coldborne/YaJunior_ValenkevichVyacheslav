@@ -21,20 +21,40 @@ namespace Passenger_Train_Configurator
             _seats = seats;
         }
 
+        public int FreeSeatsCount
+        {
+            get
+            {
+                int count = 0;
+
+                foreach (Seat seat in _seats)
+                {
+                    if (seat.IsBooked == false)
+                    {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+        }
+
         public int Capacity => _seats.Count;
 
-        /*public Seat GetSeat(int seatNumber)
+        public List<Seat> GetFreeSeats()
         {
-            bool isFound = false;
-            int seatPosition = 0;
+            List<Seat> seats = new List<Seat>();
 
-            while (isFound == false && seatPosition < _seats.Count)
+            foreach (Seat seat in _seats)
             {
-                if ()
+                if (seat.IsBooked == false)
+                {
+                    seats.Add(seat);
+                }
             }
 
-            return _seats[seatNumber].Clone();
-        }*/
+            return seats;
+        }
 
         public override string ToString()
         {
@@ -44,10 +64,14 @@ namespace Passenger_Train_Configurator
 
             if (_seats.Count != 0)
             {
-                for(int i = 0; i < _seats.Count; i++)
+                int lasWagonPosition = _seats.Count - 1;
+                
+                for(int i = 0; i < lasWagonPosition; i++)
                 {
                     stringBuilder.AppendLine($"\t\tМесто {i + 1}. {_seats[i]}");
                 }
+                
+                stringBuilder.Append($"\t\tМесто {lasWagonPosition + 1}. {_seats[lasWagonPosition]}");
             }
             else
             {

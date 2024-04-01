@@ -16,6 +16,8 @@ namespace PassengerTrainConfigurator
                     throw new ArgumentNullException($"В билет - {_id} попытались поместить пустое сидение");
         }
 
+        public bool IsBooked => _passenger != null;
+
         public void Book(Passenger passenger)
         {
             _passenger = passenger ??
