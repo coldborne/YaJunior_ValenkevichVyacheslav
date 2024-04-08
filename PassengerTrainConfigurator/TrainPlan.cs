@@ -36,7 +36,7 @@ namespace Passenger_Train_Configurator
 
             foreach (Passenger passenger in passengers)
             {
-                int seatPosition = RandomProvider.Next(freeSeats.Count);
+                int seatPosition = RandomProvider.Next(freeSeats.Count - 1);
                 Seat seat = freeSeats[seatPosition];
 
                 Ticket ticket = new Ticket(seat);

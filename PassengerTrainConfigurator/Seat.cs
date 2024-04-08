@@ -4,10 +4,10 @@ namespace PassengerTrainConfigurator
 {
     public class Seat
     {
-        private SeatTypes _seatType;
+        private SeatType _seatType;
         private string _number;
 
-        public Seat(SeatTypes seatType, string number)
+        public Seat(SeatType seatType, string number)
         {
             _seatType = seatType;
             _number = number;
@@ -46,7 +46,7 @@ namespace PassengerTrainConfigurator
         }
     }
 
-    public enum SeatTypes
+    public enum SeatType
     {
         First,
         Basic,
