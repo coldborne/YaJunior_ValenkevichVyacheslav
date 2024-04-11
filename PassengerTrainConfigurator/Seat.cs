@@ -18,7 +18,7 @@ namespace PassengerTrainConfigurator
 
         public void Book()
         {
-            if (!IsBooked)
+            if (IsBooked == false)
             {
                 IsBooked = true;
             }

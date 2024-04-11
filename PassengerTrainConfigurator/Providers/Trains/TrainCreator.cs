@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Passenger_Train_Configurator.Providers;
+using PassengerTrainConfigurator;
 
 namespace Passenger_Train_Configurator
 {
@@ -10,20 +11,17 @@ namespace Passenger_Train_Configurator
         private char _startNumberSymbol = 'a';
         private char _endNumberSymbol = 'z';
 
-        public Train Create(string trainNumber, int wagonAmount)
+        public Train Create(string trainNumber, Direction direction, int wagonAmount)
         {
-            int minimumWagonAmount = 5;
-            int maximumWagonAmount = 20;
-
             List<Wagon> wagons = new List<Wagon>();
 
-            for(int i = 1; i <= wagonAmount; i++)
+            for (int i = 1; i <= wagonAmount; i++)
             {
                 Wagon wagon = _wagonCreator.Create(i, 10);
                 wagons.Add(wagon);
             }
 
-            return new Train(trainNumber, wagons);
+            return new Train(trainNumber, direction, wagons);
         }
 
         public string GenerateTrainNumber()

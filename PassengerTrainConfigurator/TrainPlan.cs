@@ -7,13 +7,11 @@ namespace Passenger_Train_Configurator
 {
     public class TrainPlan
     {
-        private Direction _direction;
         private Train _train;
         private List<Ticket> _tickets;
 
-        public TrainPlan(Direction direction, Train train)
+        public TrainPlan(Train train)
         {
-            _direction = direction;
             _train = train;
             _tickets = new List<Ticket>();
             IsCompleted = false;
@@ -53,7 +51,7 @@ namespace Passenger_Train_Configurator
 
             if (_tickets.Count != 0)
             {
-                for(int i = 0; i < _tickets.Count; i++)
+                for (int i = 0; i < _tickets.Count; i++)
                 {
                     Ticket ticket = _tickets[i];
 
@@ -65,7 +63,7 @@ namespace Passenger_Train_Configurator
             }
             else
             {
-                stringBuilder.AppendLine($"\t\tБилетов на направление {_direction} нет");
+                stringBuilder.AppendLine($"\t\tБилетов на направление {_train.Direction} нет");
             }
 
             return stringBuilder.ToString();
@@ -80,12 +78,10 @@ namespace Passenger_Train_Configurator
         {
             string trainPlanInfo = string.Empty;
 
-            string directionInfo = $"Направление - {_direction}.\n";
             string trainInfo = $"{_train}\n";
             string soldTicketsCountInfo = $"Продано билетов - {_tickets.Count}, ";
             string completingInfo = $"поезд уехал - {IsCompleted}";
 
-            trainPlanInfo += directionInfo;
             trainPlanInfo += trainInfo;
             trainPlanInfo += soldTicketsCountInfo;
             trainPlanInfo += completingInfo;

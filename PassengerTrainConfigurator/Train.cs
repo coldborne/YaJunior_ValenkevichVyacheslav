@@ -9,19 +9,19 @@ namespace Passenger_Train_Configurator
     {
         private List<Wagon> _wagons;
 
-        public Train(string number)
+        public Train(string number, Direction direction) : this(number, direction, new List<Wagon>())
         {
-            Number = number;
-            _wagons = new List<Wagon>();
         }
 
-        public Train(string number, List<Wagon> wagons)
+        public Train(string number, Direction direction, List<Wagon> wagons)
         {
             Number = number;
+            Direction = direction;
             _wagons = wagons;
         }
 
         public string Number { get; }
+        public Direction Direction { get; private set; }
 
         public int FreeSeatsCount
         {
@@ -68,6 +68,11 @@ namespace Passenger_Train_Configurator
             _wagons.Add(wagon);
         }
 
+        public void ChangeDirection(Direction direction)
+        {
+            Direction = direction;
+        }
+
         public List<Seat> GetFreeSeats()
         {
             List<Seat> seats = new List<Seat>();
@@ -84,17 +89,18 @@ namespace Passenger_Train_Configurator
         {
             StringBuilder stringBuilder = new StringBuilder();
 
+            stringBuilder.AppendLine($"Направление - {Direction}");
             stringBuilder.AppendLine($"Поезд {Number}:");
 
             if (_wagons.Count != 0)
             {
                 int lasTrainPosition = _wagons.Count - 1;
-                
-                for(int i = 0; i < lasTrainPosition; i++)
+
+                for (int i = 0; i < lasTrainPosition; i++)
                 {
                     stringBuilder.AppendLine($"\t{_wagons[i]}");
                 }
-                
+
                 stringBuilder.Append($"\t{_wagons[lasTrainPosition]}");
             }
             else

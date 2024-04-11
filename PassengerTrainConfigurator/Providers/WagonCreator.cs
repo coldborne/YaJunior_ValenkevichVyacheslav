@@ -6,7 +6,7 @@ namespace Passenger_Train_Configurator.Providers
 {
     public class WagonCreator
     {
-        private static int _availableseatsAmountInPerWagon = 10;
+        private static int s_availableSeatsAmountInPerWagon = 10;
 
         private const char BasicSeatSymbol = 'B';
         private const char FirstSeatSymbol = 'F';
@@ -18,10 +18,10 @@ namespace Passenger_Train_Configurator.Providers
 
         public Wagon Create(int number, int seatsAmount)
         {
-            if (seatsAmount % _availableseatsAmountInPerWagon != 0)
+            if (seatsAmount % s_availableSeatsAmountInPerWagon != 0)
             {
                 throw new ArgumentException(
-                    $"Количество сидений должно быть кратным {_availableseatsAmountInPerWagon}");
+                    $"Количество сидений должно быть кратным {s_availableSeatsAmountInPerWagon}");
             }
 
             List<Seat> seats = CreateSeats(seatsAmount);

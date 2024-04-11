@@ -6,7 +6,7 @@ namespace Passenger_Train_Configurator
         {
             RailwayStation railwayStation = new RailwayStation();
             
-            railwayStation.Start();
+            railwayStation.Work();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Passenger_Train_Configurator
             _passengerCreator = new PassengerCreator();
         }
 
-        public void Start()
+        public void Work()
         {
             Console.WriteLine("Добро пожаловать в наш конфигуратор пассажирских поездов!");
             Console.WriteLine("Мы поможем вам сформировать и отправить поезд по нужному направлению");
@@ -48,11 +48,16 @@ namespace Passenger_Train_Configurator
                 }
             }
 
-            for(int i = 1; i <= trainAmount; i++)
+            for (int i = 1; i <= trainAmount; i++)
             {
                 ShowColoredText($"Поезд - {i}: ", ConsoleColor.Cyan);
                 SendTrain();
+                Console.WriteLine("Чтобы продолжить, нажмите любую клавишу клавиатуры");
+                Console.ReadKey();
+                Console.Clear();
             }
+
+            Console.WriteLine("Вы отправили все поезда");
         }
 
         private void SendTrain()
@@ -63,11 +68,11 @@ namespace Passenger_Train_Configurator
 
             Console.WriteLine("Шаг второй:");
             Console.WriteLine("Сформировать поезд, движущийся по указанному направлению");
-            Train train = FormTrain();
+            Train train = FormTrain(direction);
 
             Console.WriteLine("Шаг третий:");
             Console.WriteLine("Составить план поездки, учитывая поезд и план поездки");
-            TrainPlan trainPlan = FormTrainPlan(direction, train);
+            TrainPlan trainPlan = FormTrainPlan(train);
 
             Console.WriteLine("Шаг четвертый:");
             Console.WriteLine("Продажа билетов на поезд");
@@ -99,15 +104,15 @@ namespace Passenger_Train_Configurator
             return direction;
         }
 
-        private Train FormTrain()
+        private Train FormTrain(Direction direction)
         {
             string trainNumber = _trainCreator.GenerateTrainNumber();
-            int minWagonAmount = 1;
-            int maxWagonAmount = 15;
+            int minimumWagonAmount = 1;
+            int maximumWagonAmount = 15;
 
-            int wagonAmount = RandomProvider.Next(minWagonAmount, maxWagonAmount + 1);
+            int wagonAmount = RandomProvider.Next(minimumWagonAmount, maximumWagonAmount + 1);
 
-            Train train = _trainCreator.Create(trainNumber, wagonAmount);
+            Train train = _trainCreator.Create(trainNumber, direction, wagonAmount);
 
             ShowColoredText("Поезд сформирован: ", ConsoleColor.Yellow);
             ShowColoredText(train.ToString(), ConsoleColor.White);
@@ -115,9 +120,9 @@ namespace Passenger_Train_Configurator
             return train;
         }
 
-        private TrainPlan FormTrainPlan(Direction direction, Train train)
+        private TrainPlan FormTrainPlan(Train train)
         {
-            TrainPlan trainPlan = new TrainPlan(direction, train);
+            TrainPlan trainPlan = new TrainPlan(train);
             ShowColoredText("План сформирован: ", ConsoleColor.Yellow);
             ShowColoredText(trainPlan.ToString(), ConsoleColor.Magenta);
 
@@ -133,7 +138,7 @@ namespace Passenger_Train_Configurator
 
             List<Passenger> passengers = new List<Passenger>();
 
-            for(int j = 1; j <= passengerCount; j++)
+            for (int j = 1; j <= passengerCount; j++)
             {
                 Passenger passenger = _passengerCreator.CreatePassenger();
                 passengers.Add(passenger);
