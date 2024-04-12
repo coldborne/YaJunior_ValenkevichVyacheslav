@@ -132,7 +132,7 @@ namespace Passenger_Train_Configurator
         private void SellTickets(TrainPlan trainPlan, Train train)
         {
             int minPassengerCount = 0;
-            int maxPassengerCount = train.Capacity;
+            int maxPassengerCount = train.GetCapacity();
 
             int passengerCount = RandomProvider.Next(minPassengerCount, maxPassengerCount);
 

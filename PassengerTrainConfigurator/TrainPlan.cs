@@ -22,7 +22,7 @@ namespace Passenger_Train_Configurator
         public void SellTickets(List<Passenger> passengers)
         {
             int passengersCount = passengers.Count;
-            int seatsWithOutPassengersCount = _train.FreeSeatsCount;
+            int seatsWithOutPassengersCount = _train.GetFreeSeatsCount();
 
             if (passengersCount > seatsWithOutPassengersCount)
             {

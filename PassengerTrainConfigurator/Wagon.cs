@@ -65,12 +65,12 @@ namespace Passenger_Train_Configurator
             if (_seats.Count != 0)
             {
                 int lasWagonPosition = _seats.Count - 1;
-                
-                for(int i = 0; i < lasWagonPosition; i++)
+
+                for (int i = 0; i < lasWagonPosition; i++)
                 {
                     stringBuilder.AppendLine($"\t\tМесто {i + 1}. {_seats[i]}");
                 }
-                
+
                 stringBuilder.Append($"\t\tМесто {lasWagonPosition + 1}. {_seats[lasWagonPosition]}");
             }
             else

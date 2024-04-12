@@ -5,7 +5,7 @@ namespace Passenger_Train_Configurator
         public static void Main(string[] args)
         {
             RailwayStation railwayStation = new RailwayStation();
-            
+
             railwayStation.Work();
         }
     }

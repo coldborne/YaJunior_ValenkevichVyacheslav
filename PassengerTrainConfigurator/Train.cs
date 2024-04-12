@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using PassengerTrainConfigurator;
@@ -8,10 +7,6 @@ namespace Passenger_Train_Configurator
     public class Train
     {
         private List<Wagon> _wagons;
-
-        public Train(string number, Direction direction) : this(number, direction, new List<Wagon>())
-        {
-        }
 
         public Train(string number, Direction direction, List<Wagon> wagons)
         {
@@ -23,54 +18,28 @@ namespace Passenger_Train_Configurator
         public string Number { get; }
         public Direction Direction { get; private set; }
 
-        public int FreeSeatsCount
+        public int GetFreeSeatsCount()
         {
-            get
+            int count = 0;
+
+            foreach (Wagon wagon in _wagons)
             {
-                int count = 0;
-
-                foreach (Wagon wagon in _wagons)
-                {
-                    count += wagon.FreeSeatsCount;
-                }
-
-                return count;
+                count += wagon.FreeSeatsCount;
             }
+
+            return count;
         }
 
-        public int Capacity
+        public int GetCapacity()
         {
-            get
+            int capacity = 0;
+
+            foreach (Wagon wagon in _wagons)
             {
-                int capacity = 0;
-
-                foreach (Wagon wagon in _wagons)
-                {
-                    capacity += wagon.Capacity;
-                }
-
-                return capacity;
-            }
-        }
-
-        public void Add(Wagon wagon)
-        {
-            if (wagon == null)
-            {
-                throw new ArgumentNullException("Передан пустой вагон");
+                capacity += wagon.Capacity;
             }
 
-            if (_wagons.Contains(wagon))
-            {
-                throw new ArgumentException("Передан вагон, который уже существует в поезде");
-            }
-
-            _wagons.Add(wagon);
-        }
-
-        public void ChangeDirection(Direction direction)
-        {
-            Direction = direction;
+            return capacity;
         }
 
         public List<Seat> GetFreeSeats()

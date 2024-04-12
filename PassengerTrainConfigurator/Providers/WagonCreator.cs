@@ -53,7 +53,7 @@ namespace Passenger_Train_Configurator.Providers
         private int AddSeatsOfType(List<Seat> seats, SeatType seatType, int seatsAmount, char seatSymbol,
             int lastSeatNumber)
         {
-            for(int i = 0; i < seatsAmount; i++)
+            for (int i = 0; i < seatsAmount; i++)
             {
                 seats.Add(new Seat(seatType, $"{lastSeatNumber++}{seatSymbol}"));
             }

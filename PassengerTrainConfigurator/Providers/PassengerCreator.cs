@@ -27,7 +27,7 @@ namespace Passenger_Train_Configurator
 
             stringBuilder.Append(UpperChars[RandomProvider.Next(0, LowerChars.Length - 1)]);
 
-            for(int i = 1; i < length; i++)
+            for (int i = 1; i < length; i++)
             {
                 stringBuilder.Append(LowerChars[RandomProvider.Next(0, LowerChars.Length - 1)]);
             }
