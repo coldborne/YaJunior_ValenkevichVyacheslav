@@ -33,6 +33,17 @@ namespace Supermarket
             Console.WriteLine("Список доступных продуктов:");
             ShowProductsInStorage();
 
+            TakeProductsInBasket(customer);
+
+            Console.WriteLine("Вы перемещаетесь к кассе");
+            Console.WriteLine("Продукты в вашей корзине:");
+            ShowProductsInBasket(customer);
+
+            SellProducts(customer);
+        }
+
+        private void TakeProductsInBasket(Customer customer)
+        {
             bool isReadyGoToCheckout = false;
             const int ProductSelectionPoint = 1;
             const int CheckoutPoint = 2;
@@ -71,11 +82,10 @@ namespace Supermarket
                     isReadyGoToCheckout = true;
                 }
             }
+        }
 
-            Console.WriteLine("Вы перемещаетесь к кассе");
-            Console.WriteLine("Продукты в вашей корзине:");
-            ShowProductsInBasket(customer);
-
+        private void SellProducts(Customer customer)
+        {
             List<Product> customerProducts = customer.GetProductFromBasket();
 
             if (customerProducts.Count > 0)
@@ -97,19 +107,26 @@ namespace Supermarket
                     }
                 }
 
-                customer.TryTakeMoney(totalPrice);
-                _wallet.Deposit(totalPrice);
-
-                List<Product> finalProducts = customer.GetProductFromBasket();
-
-                foreach (Product product in finalProducts)
+                if (totalPrice > 0)
                 {
-                    customer.AddInBackpack(product);
+                    customer.TryTakeMoney(totalPrice);
+                    _wallet.Deposit(totalPrice);
+
+                    List<Product> finalProducts = customer.GetProductFromBasket();
+
+                    foreach (Product product in finalProducts)
+                    {
+                        customer.AddInBackpack(product);
+                    }
+
+                    customer.EmptyBasket();
+
+                    Console.WriteLine("Вы успешно оплатили корзину, всего доброго!");
                 }
-
-                customer.EmptyBasket();
-
-                Console.WriteLine("Вы успешно оплатили корзину, всего доброго!");
+                else
+                {
+                    Console.WriteLine("В вашей корзине не осталось товаров, извините, сегодня без покупок)");
+                }
             }
             else
             {

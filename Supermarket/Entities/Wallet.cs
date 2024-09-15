@@ -23,7 +23,7 @@ namespace Supermarket
             _balance += amount;
         }
 
-        public bool Withdraw(int amount)
+        public bool TryWithdraw(int amount)
         {
             if (amount <= 0)
             {

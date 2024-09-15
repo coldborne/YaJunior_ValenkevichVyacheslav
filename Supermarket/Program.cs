@@ -24,7 +24,7 @@ namespace Supermarket
             Customer secondCustomer = new Customer(new Wallet(5000), "Мишка");
             customers.Enqueue(firstCustomer);
             customers.Enqueue(secondCustomer);
-            
+
             supermarket.Work(customers);
         }
     }
