@@ -12,10 +12,7 @@ namespace Supermarket
 
             int storeProductAmount = 10;
 
-            for (int i = 1; i <= storeProductAmount; i++)
-            {
-                products.Add(productCreator.Create());
-            }
+            products = productCreator.Create(storeProductAmount);
 
             Supermarket supermarket = new Supermarket(products, new Wallet(0));
             Queue<Customer> customers = new Queue<Customer>();

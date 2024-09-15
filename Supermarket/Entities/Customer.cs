@@ -42,6 +42,7 @@ namespace Supermarket
         public bool TryRemoveRandomProductFromBasket()
         {
             const int MinProductAmount = 0;
+            
             int productCount = _basket.Count;
 
             if (productCount > MinProductAmount)
@@ -67,7 +68,7 @@ namespace Supermarket
             return products;
         }
 
-        public void EmptyBasket()
+        public void ClearBasket()
         {
             _basket.Clear();
         }

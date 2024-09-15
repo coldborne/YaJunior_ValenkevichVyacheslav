@@ -44,9 +44,10 @@ namespace Supermarket
 
         private void TakeProductsInBasket(Customer customer)
         {
-            bool isReadyGoToCheckout = false;
             const int ProductSelectionPoint = 1;
             const int CheckoutPoint = 2;
+            
+            bool isReadyGoToCheckout = false;
 
             while (isReadyGoToCheckout == false)
             {
@@ -119,7 +120,7 @@ namespace Supermarket
                         customer.AddInBackpack(product);
                     }
 
-                    customer.EmptyBasket();
+                    customer.ClearBasket();
 
                     Console.WriteLine("Вы успешно оплатили корзину, всего доброго!");
                 }
@@ -158,7 +159,7 @@ namespace Supermarket
             bool canParse = false;
             int userProductNumber = 0;
             bool isProductNumberCorrect = false;
-            int minProductNumber = 0;
+            int minProductNumber = 1;
             int maxProductNumber = _storage.Count;
 
             while (isProductNumberCorrect == false)
@@ -181,6 +182,7 @@ namespace Supermarket
                 else
                 {
                     Console.WriteLine("Продукта под таким номером нет на складе");
+                    canParse = false;
                 }
             }
 

@@ -13,9 +13,7 @@ namespace Supermarket.Entities
 
         public Product Copy()
         {
-            Product copyProduct = new Product(Name, Price);
-
-            return copyProduct;
+            return new Product(Name, Price);
         }
 
         public override string ToString()
