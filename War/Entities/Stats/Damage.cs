@@ -2,7 +2,7 @@ namespace War.Entities.Stats
 {
     public class Damage
     {
-        private static readonly int _minDamage = 0;
+        private static readonly int s_minDamage = 0;
 
         public Damage(int value)
         {

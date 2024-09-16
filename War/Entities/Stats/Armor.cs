@@ -4,11 +4,14 @@ namespace War.Entities.Stats
 {
     public class Armor
     {
-        private static readonly int _minArmor = 0;
-        private static readonly int _maxArmor = 400;
+        private readonly int _minArmor;
+        private readonly int _maxArmor;
 
         public Armor(int value)
         {
+            _minArmor = 0;
+            _maxArmor = 400;
+
             if (value < _minArmor)
                 throw new ArgumentException("Armor cannot be negative.");
 

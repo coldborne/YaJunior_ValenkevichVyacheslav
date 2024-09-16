@@ -8,21 +8,18 @@ namespace War
     {
         public static void Main(string[] args)
         {
-            // Создаем первый взвод
             Platoon platoon1 = new Platoon();
             platoon1.AddSoldier(new Rifleman(new Health(100), new Damage(20), new Armor(5)));
             platoon1.AddSoldier(new Sniper(new Health(100), new Damage(15), new Armor(5), 1.5));
             platoon1.AddSoldier(new Grenadier(new Health(100), new Damage(10), new Armor(5)));
             platoon1.AddSoldier(new Flamethrower(new Health(100), new Damage(10), new Armor(5)));
-
-            // Создаем второй взвод
+            
             Platoon platoon2 = new Platoon();
             platoon2.AddSoldier(new Rifleman(new Health(100), new Damage(20), new Armor(5)));
             platoon2.AddSoldier(new Sniper(new Health(100), new Damage(15), new Armor(5), 1.5));
             platoon2.AddSoldier(new Grenadier(new Health(100), new Damage(10), new Armor(5)));
             platoon2.AddSoldier(new Flamethrower(new Health(100), new Damage(10), new Armor(5)));
-
-            // Начинаем сражение
+            
             Game game = new Game(platoon1, platoon2);
             game.StartBattle();
         }

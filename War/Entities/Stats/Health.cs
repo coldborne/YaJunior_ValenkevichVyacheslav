@@ -4,11 +4,13 @@ namespace War.Entities.Stats
 {
     public class Health
     {
-        private static readonly int _minHealth = 0;
-        private static readonly int _maxHealth = 100;
+        private readonly int s_minHealth;
+        private readonly int s_maxHealth;
 
         public Health(int value)
         {
+            s_minHealth = 0;
+            s_maxHealth = 100;
             Value = value;
         }
 
@@ -19,7 +21,7 @@ namespace War.Entities.Stats
             if (amount < 0)
                 throw new ArgumentException("Damage cannot be negative.");
 
-            Value = Math.Max(Value - amount, _minHealth);
+            Value = Math.Max(Value - amount, s_minHealth);
         }
 
         public override string ToString()

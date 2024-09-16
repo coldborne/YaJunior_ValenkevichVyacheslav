@@ -51,7 +51,7 @@ namespace War.Entities
             else
             {
                 List<Soldier> shuffledSoldiers = _soldiers.OrderBy(soldier => _random.Next()).ToList();
-                
+
                 selectedSoldiers = shuffledSoldiers.Take(count).ToList();
             }
 
@@ -68,19 +68,28 @@ namespace War.Entities
             return _soldiers.Any(soldier => soldier.Health.Value > 0);
         }
 
-        public void Attack(Platoon enemyPlatoon)
+        public bool TryAttack(Platoon enemyPlatoon)
         {
-            foreach (var soldier in _soldiers)
+            bool canAllSoldiersAttack = true;
+
+            foreach (Soldier soldier in _soldiers)
             {
-                soldier.TryAttack(enemyPlatoon);
+                bool canAttack = soldier.TryAttack(enemyPlatoon);
+
+                if (canAttack == false)
+                {
+                    canAllSoldiersAttack = false;
+                }
             }
+
+            return canAllSoldiersAttack;
         }
 
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine("Отряд имеет следующих солдат:");
+            stringBuilder.AppendLine("Взвод имеет следующих солдат:");
 
             if (_soldiers.Count > 0)
             {
@@ -91,7 +100,7 @@ namespace War.Entities
             }
             else
             {
-                stringBuilder.AppendLine("В отряде закончились бойцы");
+                stringBuilder.AppendLine("В взводе закончились солдаты");
             }
 
             return stringBuilder.ToString();

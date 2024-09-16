@@ -1,7 +1,6 @@
 using System;
-using War.Entities;
 
-namespace War
+namespace War.Entities
 {
     public class Game
     {
@@ -20,21 +19,32 @@ namespace War
 
             while (_platoon1.HasAliveSoldiers() && _platoon2.HasAliveSoldiers())
             {
-                _platoon1.Attack(_platoon2);
+                bool canAllPlatoon1SoldiersAttack = _platoon1.TryAttack(_platoon2);
+                bool canAllPlatoon2SoldiersAttack = true;
+
                 _platoon2.RemoveDeadSoldiers();
 
                 if (_platoon2.HasAliveSoldiers())
                 {
-                    _platoon2.Attack(_platoon1);
+                    canAllPlatoon2SoldiersAttack = _platoon2.TryAttack(_platoon1);
                     _platoon1.RemoveDeadSoldiers();
                 }
 
                 Console.WriteLine($"Атака №{attackNumber}");
 
-                Console.WriteLine("Отряд 1:");
+                Console.WriteLine("Взвод 1:");
                 ShowPlatoon(_platoon1);
-                Console.WriteLine("Отряд 2:");
+                Console.WriteLine("Взвод 2:");
                 ShowPlatoon(_platoon2);
+
+                if (canAllPlatoon1SoldiersAttack && canAllPlatoon2SoldiersAttack)
+                {
+                    Console.WriteLine("Все солдаты обоих взводов провели свои атаки");
+                }
+                else
+                {
+                    Console.WriteLine("Взводы провели свои атаки, но не увсех солдат это получилось");
+                }
 
                 attackNumber++;
             }
