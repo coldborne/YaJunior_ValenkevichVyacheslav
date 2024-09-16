@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjectForDemoCSharp
+namespace UnityJuniorDeveloper_ValenkevichVyacheslav
 {
     internal class Program
     {
