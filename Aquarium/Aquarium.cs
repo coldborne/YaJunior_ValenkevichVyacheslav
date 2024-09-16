@@ -8,19 +8,43 @@ namespace Aquarium
         private readonly List<Fish> _fish;
         private List<Fish> _deadFish;
 
-        public int MaxFishAmount { get; private set; } = 5;
-
         public Aquarium()
         {
             _fish = new List<Fish>();
             _deadFish = new List<Fish>();
+            MaxFishAmount = 5;
+        }
+
+        public int MaxFishAmount { get; }
+
+        public void Fill()
+        {
+            Console.WriteLine("Введите начальное количество рыбок");
+            int fishCount = UserUtils.ReadFishCount(this);
+
+            for (int i = 0; i < fishCount; i++)
+            {
+                bool canAddNewFish = TryAddFish();
+
+                if (canAddNewFish)
+                {
+                    Console.WriteLine("Новая рыба успешно добавлена");
+                }
+                else
+                {
+                    Console.WriteLine("В аквариуме максимум рыбок");
+                }
+            }
         }
 
         public bool TryAddFish()
         {
             if (_fish.Count < MaxFishAmount)
             {
-                int number = UserUtils.Random.Next(0, 2);
+                int defualtColorNumber = 0;
+                int randomColorNumber = 1;
+
+                int number = UserUtils.Random.Next(defualtColorNumber, randomColorNumber + 1);
 
                 if (number == 0)
                 {
@@ -37,44 +61,21 @@ namespace Aquarium
                 return true;
             }
 
-            Console.WriteLine("В аквариуме максимум рыбок");
             return false;
         }
 
-        public bool TryPullOutRandomFish()
+        public bool TryTakeOutRandomFish()
         {
             if (_fish == null || _fish.Count == 0)
             {
-                Console.WriteLine("Аквариум уже пуст");
                 return false;
             }
 
-            int indexOfFish = UserUtils.Random.Next(0, _fish.Count);
+            int indexOfFish = UserUtils.Random.Next(_fish.Count);
 
             _fish.RemoveAt(indexOfFish);
 
             return true;
-        }
-
-        public void ShowAllFish()
-        {
-            for (int i = 0; i < _fish.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}-ая");
-                _fish[i].ShowInfo();
-            }
-        }
-
-        public void CleanAquariumOfDeadFish()
-        {
-            _deadFish = TryToFindDeadFish();
-
-            foreach (Fish deadFish in _deadFish)
-            {
-                _fish.Remove(deadFish);
-            }
-            
-            _deadFish.Clear();
         }
 
         public void ReduceFishAge()
@@ -85,25 +86,27 @@ namespace Aquarium
             }
         }
 
-        public void Init()
+        public void CleanAquariumOfDeadFish()
         {
-            Console.WriteLine("Введите начальное количество рыбок");
-            int fishCount = UserUtils.ReadFishCount(this);
-            
-            for (int i = 0; i < fishCount; i++)
+            _deadFish = FindDeadFish();
+
+            foreach (Fish deadFish in _deadFish)
             {
-                TryAddFish();
+                _fish.Remove(deadFish);
             }
+
+            _deadFish.Clear();
         }
 
-        private ConsoleColor GetRandomColor()
+        public void ShowAllFish()
         {
-            return (ConsoleColor)UserUtils.Random.Next(1, 16);
-        }
+            for (int fishIndex = 0; fishIndex < _fish.Count; fishIndex++)
+            {
+                int fishNumber = fishIndex + 1;
+                Fish fish = _fish[fishIndex];
 
-        private List<Fish> TryToFindDeadFish()
-        {
-            return _fish.FindAll(fish => fish.Age == 0);
+                Console.WriteLine($"{fishNumber}-ая рыба: {fish}");
+            }
         }
 
         private Fish CreateFish(ConsoleColor color)
@@ -114,6 +117,19 @@ namespace Aquarium
         private Fish CreateFish()
         {
             return new Fish();
+        }
+
+        private ConsoleColor GetRandomColor()
+        {
+            const int MinColorNumber = 1;
+            const int MaxColorNumber = 16;
+
+            return (ConsoleColor)UserUtils.Random.Next(MinColorNumber, MaxColorNumber + 1);
+        }
+
+        private List<Fish> FindDeadFish()
+        {
+            return _fish.FindAll(fish => fish.Age == 0);
         }
     }
 }

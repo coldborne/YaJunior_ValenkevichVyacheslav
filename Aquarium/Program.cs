@@ -4,10 +4,10 @@ namespace Aquarium
 {
     public enum Commands : byte
     {
-        First = 1,
-        Second,
-        Third,
-        Fourth
+        AddFishCommand = 1,
+        TakeOutFishCommand,
+        SkipCommand,
+        BrakeAquariumCommand
     }
 
     internal class Program
@@ -16,7 +16,7 @@ namespace Aquarium
         {
             Aquarium aquarium = new Aquarium();
 
-            aquarium.Init();
+            aquarium.Fill();
 
             bool isAquariumWithoutDamage = true;
 
@@ -25,10 +25,10 @@ namespace Aquarium
                 aquarium.ShowAllFish();
 
                 Console.WriteLine("Выберите действие");
-                Console.WriteLine($"{(int)Commands.First} - Добавить рыбку");
-                Console.WriteLine($"{(int)Commands.Second} - Вынуть рыбку");
-                Console.WriteLine($"{(int)Commands.Third} - Пропустить итерацию");
-                Console.WriteLine($"{(int)Commands.Fourth} - Сломать аквариум");
+                Console.WriteLine($"{(int)Commands.AddFishCommand} - Добавить рыбку");
+                Console.WriteLine($"{(int)Commands.TakeOutFishCommand} - Вынуть рыбку");
+                Console.WriteLine($"{(int)Commands.SkipCommand} - Пропустить итерацию");
+                Console.WriteLine($"{(int)Commands.BrakeAquariumCommand} - Сломать аквариум");
 
                 int userInput = UserUtils.ReadCommand();
 
@@ -38,15 +38,28 @@ namespace Aquarium
 
                 switch (userInput)
                 {
-                    case (int)Commands.First:
+                    case (int)Commands.AddFishCommand:
                         aquarium.TryAddFish();
                         break;
-                    case (int)Commands.Second:
-                        aquarium.TryPullOutRandomFish();
+
+                    case (int)Commands.TakeOutFishCommand:
+                        bool canTakeOut = aquarium.TryTakeOutRandomFish();
+
+                        if (canTakeOut)
+                        {
+                            Console.WriteLine("Успешно вытащена одна рыбка");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Аквариум уже пуст");
+                        }
+
                         break;
-                    case (int)Commands.Third:
+
+                    case (int)Commands.SkipCommand:
                         break;
-                    case (int)Commands.Fourth:
+
+                    case (int)Commands.BrakeAquariumCommand:
                         isAquariumWithoutDamage = false;
                         break;
                 }
