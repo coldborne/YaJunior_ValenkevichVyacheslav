@@ -7,24 +7,24 @@ namespace Aquarium
         private int _dyingRate;
         private string _name;
         private ConsoleColor _color;
-        
-        public int Age { get; private set; }
-        
+
         public Fish()
         {
-            Age = UserUtils.Random.Next(1, 11);
-            _color = ConsoleColor.Gray;
+            const int MinAge = 1;
+            const int MaxAge = 10;
+
             _dyingRate = 1;
-            _name = GenerateName();
+            _name = UserUtils.GenerateFishName();
+            _color = ConsoleColor.Gray;
+            Age = UserUtils.Random.Next(MinAge, MaxAge + 1);
         }
 
-        public Fish(ConsoleColor color)
+        public Fish(ConsoleColor color) : this()
         {
-            Age = UserUtils.Random.Next(1, 11);
             _color = color;
-            _dyingRate = 1;
-            _name = GenerateName();
         }
+
+        public int Age { get; private set; }
 
         public bool TryReduceAge()
         {
@@ -43,29 +43,9 @@ namespace Aquarium
             return true;
         }
 
-        public void ShowInfo()
+        public override string ToString()
         {
-            Console.WriteLine($"Возраст - {Age}");
-            Console.WriteLine($"Цвет - {_color}");
-            Console.WriteLine($"Имя - {_name}");
-        }
-
-        private string GenerateName()
-        {
-            const int nameLength = 5;
-            string name = "";
-
-            while (name.Length < nameLength)
-            {
-                char symbol = (char)UserUtils.Random.Next(97, 123);
-
-                if (char.IsLetterOrDigit(symbol))
-                {
-                    name += symbol;
-                }
-            }
-
-            return name;
+            return $"Возраст - {Age}, Цвет - {_color}, Имя - {_name}";
         }
     }
 }
