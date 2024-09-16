@@ -1,5 +1,7 @@
 using System.Collections.Generic;
-using GladiatorFights.Fighters;
+using GladiatorFights.Entities;
+using GladiatorFights.Entities.Fighters;
+using GladiatorFights.Entities.Stats;
 
 namespace GladiatorFights
 {

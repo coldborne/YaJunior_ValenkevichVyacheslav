@@ -1,4 +1,6 @@
-namespace GladiatorFights.Fighters
+using GladiatorFights.Entities.Stats;
+
+namespace GladiatorFights.Entities.Fighters
 {
     public abstract class Fighter
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace GladiatorFights.Fighters;
+namespace GladiatorFights.Entities.Stats;
 
 public class Health
 {

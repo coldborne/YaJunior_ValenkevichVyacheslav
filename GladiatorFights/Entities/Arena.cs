@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using GladiatorFights.Fighters;
+using GladiatorFights.Entities.Fighters;
 
-namespace GladiatorFights
+namespace GladiatorFights.Entities
 {
     public class Arena
     {

@@ -1,6 +1,7 @@
 using System;
+using GladiatorFights.Entities.Stats;
 
-namespace GladiatorFights.Fighters;
+namespace GladiatorFights.Entities.Fighters;
 
 public class Thief : Fighter
 {

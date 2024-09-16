@@ -1,6 +1,6 @@
 using System;
 
-namespace GladiatorFights;
+namespace GladiatorFights.Entities.Stats;
 
 public class Damage
 {
