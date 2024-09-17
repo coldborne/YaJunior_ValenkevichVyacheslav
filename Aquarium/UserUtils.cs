@@ -4,9 +4,19 @@ namespace Aquarium
 {
     public static class UserUtils
     {
-        public static Random Random { get; } = new Random();
+        private static Random _random = new Random();
 
-        public static int ReadFishCount(Aquarium aquarium)
+        public static int GetRandomValue(int startValue, int endValue)
+        {
+            return _random.Next(startValue, endValue);
+        }
+        
+        public static int GetRandomValue(int endValue)
+        {
+            return _random.Next(endValue);
+        }
+
+        public static int ReadFishCount(int maxFishAmount)
         {
             bool isInputInt = false;
             int number = 0;
@@ -22,9 +32,9 @@ namespace Aquarium
                 }
                 else
                 {
-                    if (number <= 0 || number > aquarium.MaxFishAmount)
+                    if (number <= 0 || number > maxFishAmount)
                     {
-                        Console.WriteLine("Число должно быть больше 0 и меньше/равно " + aquarium.MaxFishAmount);
+                        Console.WriteLine("Число должно быть больше 0 и меньше/равно " + maxFishAmount);
 
                         isInputInt = false;
                     }
@@ -62,27 +72,6 @@ namespace Aquarium
             }
 
             return userInputInt;
-        }
-        
-        public static string GenerateFishName()
-        {
-            const int nameLength = 5;
-            const int StartSymbolIndex = 97;
-            const int EndSymbolIndex = 122;
-
-            string name = "";
-
-            while (name.Length < nameLength)
-            {
-                char symbol = (char)UserUtils.Random.Next(StartSymbolIndex, EndSymbolIndex + 1);
-
-                if (char.IsLetterOrDigit(symbol))
-                {
-                    name += symbol;
-                }
-            }
-
-            return name;
         }
     }
 }

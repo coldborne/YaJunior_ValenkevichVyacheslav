@@ -14,9 +14,9 @@ namespace Aquarium
             const int MaxAge = 10;
 
             _dyingRate = 1;
-            _name = UserUtils.GenerateFishName();
+            _name = GenerateFishName();
             _color = ConsoleColor.Gray;
-            Age = UserUtils.Random.Next(MinAge, MaxAge + 1);
+            Age = UserUtils.GetRandomValue(MinAge, MaxAge + 1);
         }
 
         public Fish(ConsoleColor color) : this()
@@ -46,6 +46,27 @@ namespace Aquarium
         public override string ToString()
         {
             return $"Возраст - {Age}, Цвет - {_color}, Имя - {_name}";
+        }
+
+        private string GenerateFishName()
+        {
+            const int nameLength = 5;
+            const int StartSymbolIndex = 97;
+            const int EndSymbolIndex = 122;
+
+            string name = "";
+
+            while (name.Length < nameLength)
+            {
+                char symbol = (char)UserUtils.GetRandomValue(StartSymbolIndex, EndSymbolIndex + 1);
+
+                if (char.IsLetterOrDigit(symbol))
+                {
+                    name += symbol;
+                }
+            }
+
+            return name;
         }
     }
 }

@@ -20,13 +20,11 @@ namespace Aquarium
         public void Fill()
         {
             Console.WriteLine("Введите начальное количество рыбок");
-            int fishCount = UserUtils.ReadFishCount(this);
+            int fishCount = UserUtils.ReadFishCount(MaxFishAmount);
 
             for (int i = 0; i < fishCount; i++)
             {
-                bool canAddNewFish = TryAddFish();
-
-                if (canAddNewFish)
+                if (TryAddFish())
                 {
                     Console.WriteLine("Новая рыба успешно добавлена");
                 }
@@ -44,7 +42,7 @@ namespace Aquarium
                 int defualtColorNumber = 0;
                 int randomColorNumber = 1;
 
-                int number = UserUtils.Random.Next(defualtColorNumber, randomColorNumber + 1);
+                int number = UserUtils.GetRandomValue(defualtColorNumber, randomColorNumber + 1);
 
                 if (number == 0)
                 {
@@ -71,7 +69,7 @@ namespace Aquarium
                 return false;
             }
 
-            int indexOfFish = UserUtils.Random.Next(_fish.Count);
+            int indexOfFish = UserUtils.GetRandomValue(_fish.Count);
 
             _fish.RemoveAt(indexOfFish);
 
@@ -124,7 +122,7 @@ namespace Aquarium
             const int MinColorNumber = 1;
             const int MaxColorNumber = 16;
 
-            return (ConsoleColor)UserUtils.Random.Next(MinColorNumber, MaxColorNumber + 1);
+            return (ConsoleColor)UserUtils.GetRandomValue(MinColorNumber, MaxColorNumber + 1);
         }
 
         private List<Fish> FindDeadFish()
