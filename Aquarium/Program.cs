@@ -43,17 +43,7 @@ namespace Aquarium
                         break;
 
                     case (int)Commands.TakeOutFishCommand:
-                        bool canTakeOut = aquarium.TryTakeOutRandomFish();
-
-                        if (canTakeOut)
-                        {
-                            Console.WriteLine("Успешно вытащена одна рыбка");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Аквариум уже пуст");
-                        }
-
+                        TakeOutRandomFish(aquarium);
                         break;
 
                     case (int)Commands.SkipCommand:
@@ -63,6 +53,18 @@ namespace Aquarium
                         isAquariumWithoutDamage = false;
                         break;
                 }
+            }
+        }
+
+        private static void TakeOutRandomFish(Aquarium aquarium)
+        {
+            if (aquarium.TryTakeOutRandomFish())
+            {
+                Console.WriteLine("Успешно вытащена одна рыбка");
+            }
+            else
+            {
+                Console.WriteLine("Аквариум уже пуст");
             }
         }
     }
