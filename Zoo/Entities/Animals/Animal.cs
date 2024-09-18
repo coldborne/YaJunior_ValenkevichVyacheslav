@@ -1,6 +1,8 @@
+using Zoo.Entities.Interfaces;
+
 namespace Zoo.Entities.Animals
 {
-    public abstract class Animal
+    public abstract class Animal : ICopyable<Animal>
     {
         protected Animal(string name, string gender, string sound)
         {

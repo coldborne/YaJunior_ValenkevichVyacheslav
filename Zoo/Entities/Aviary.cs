@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Text;
 using Zoo.Entities.Animals;
+using Zoo.Entities.Interfaces;
 using Zoo.Extensions;
 
 namespace Zoo.Entities
 {
-    public class Aviary
+    public class Aviary : ICopyable<Aviary>
     {
         private readonly List<Animal> _animals;
 
