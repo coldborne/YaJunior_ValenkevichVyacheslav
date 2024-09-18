@@ -42,17 +42,19 @@ namespace Aquarium
 
                 int number = UserUtils.GetRandomValue(defualtColorNumber, randomColorNumber + 1);
 
+                Fish fish;
+
                 if (number == 0)
                 {
-                    Fish fish = CreateFish();
-                    _fish.Add(fish);
+                    fish = CreateFish();
                 }
                 else
                 {
                     ConsoleColor color = GetRandomColor();
-                    Fish fish = CreateFish(color);
-                    _fish.Add(fish);
+                    fish = CreateFish(color);
                 }
+
+                _fish.Add(fish);
 
                 return true;
             }
@@ -110,7 +112,7 @@ namespace Aquarium
 
         private Fish CreateFish()
         {
-            return new Fish();
+            return CreateFish(Fish.DefualtColor);
         }
 
         private ConsoleColor GetRandomColor()

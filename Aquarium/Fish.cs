@@ -17,7 +17,7 @@ namespace Aquarium
 
             _dyingRate = 1;
             _name = GenerateFishName();
-            _color = ConsoleColor.Gray;
+            _color = DefualtColor;
             Age = UserUtils.GetRandomValue(MinAge, MaxAge);
         }
 
@@ -26,8 +26,8 @@ namespace Aquarium
             _color = color;
         }
 
+        public static ConsoleColor DefualtColor { get; } = ConsoleColor.Gray;
         public int Age { get; private set; }
-
         public bool IsDead => Age == MaxAge;
 
         public bool TryIncreaseAge()
