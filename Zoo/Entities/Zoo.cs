@@ -38,14 +38,16 @@ namespace Zoo.Entities
             _aviaries.Add(aviary);
         }
 
-        public Aviary GetAviary(int index)
+        public bool TryGetAviary(int index, out Aviary aviary)
         {
             if (index >= 0 && index < _aviaries.Count)
             {
-                return _aviaries[index].Copy();
+                aviary = _aviaries[index].Copy();
+                return true;
             }
 
-            return null;
+            aviary = null;
+            return false;
         }
 
         public List<Aviary> GetAviaries()

@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Zoo.Entities;
 
 namespace Zoo
 {
     internal class Program
     {
+        
         public static void Main(string[] args)
         {
-            Zoo zoo = new Zoo();
+            Entities.Zoo zoo = Entities.Zoo.Instance;
+            ZooView zooView = new ZooView();
 
-            Console.WriteLine("Добро пожаловать в наш зоопарк, выберите вольер: ");
+            Game game = new Game(zoo, zooView);
+            game.Play();
         }
     }
 }
