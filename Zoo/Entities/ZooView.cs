@@ -74,13 +74,15 @@ namespace Zoo.Entities
 
             Random random = new Random();
             List<Animal> animals = aviary.GetAnimals();
+            int minActionCount = 1;
 
-            foreach (var animal in animals)
+            foreach (Animal animal in animals)
             {
-                int actionCount = random.Next(1, animal.GetActions().Count + 1); // Случайное количество действий
+                int maxActionCount = animal.GetActions().Count;
+                int actionCount = random.Next(minActionCount, maxActionCount + 1);
                 List<Func<string>> actions = animal.GetActions();
 
-                for (int i = 0; i < actionCount; i++)
+                for (int actionNumber = 1; actionNumber <= actionCount; actionNumber++)
                 {
                     int actionIndex = random.Next(actions.Count);
                     string actionResult = actions[actionIndex]();
