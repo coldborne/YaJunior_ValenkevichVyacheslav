@@ -52,7 +52,7 @@ namespace Aquarium
             }
         }
 
-        private static void AddFish(Aquarium aquarium)
+        private void AddFish(Aquarium aquarium)
         {
             if (aquarium.TryAddFish())
             {
@@ -64,7 +64,7 @@ namespace Aquarium
             }
         }
 
-        private static void TakeOutRandomFish(Aquarium aquarium)
+        private void TakeOutRandomFish(Aquarium aquarium)
         {
             if (aquarium.TryTakeOutRandomFish())
             {
