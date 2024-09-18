@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Zoo.Entities.Animals
 {
     public sealed class Penguin : Animal
@@ -18,6 +21,15 @@ namespace Zoo.Entities.Animals
         public string Slide()
         {
             return $"{Name} скользит по льду на животе, как на санках. Умеет ли летать: {_canFly}";
+        }
+
+        public override List<Func<string>> GetActions()
+        {
+            return new List<Func<string>>()
+            {
+                Swim,
+                Slide
+            };
         }
 
         public override Animal Copy()

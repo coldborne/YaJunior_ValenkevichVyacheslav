@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Zoo.Entities.Animals;
 
 namespace Zoo.Entities
 {
@@ -61,6 +62,34 @@ namespace Zoo.Entities
             {
                 Console.WriteLine(line);
             }
+        }
+
+        public void DisplayAnimalsActions(Aviary aviary)
+        {
+            Console.Clear();
+            Console.WriteLine("============================================");
+            Console.WriteLine($"   Наблюдение за {aviary.Name}   ");
+            Console.WriteLine("============================================\n");
+            Console.WriteLine("Животные в вольере начинают свои действия!");
+
+            Random random = new Random();
+            List<Animal> animals = aviary.GetAnimals();
+
+            foreach (var animal in animals)
+            {
+                int actionCount = random.Next(1, animal.GetActions().Count + 1); // Случайное количество действий
+                List<Func<string>> actions = animal.GetActions();
+
+                for (int i = 0; i < actionCount; i++)
+                {
+                    int actionIndex = random.Next(actions.Count);
+                    string actionResult = actions[actionIndex]();
+                    Console.WriteLine(actionResult);
+                }
+            }
+
+            Console.WriteLine("\nНажмите любую клавишу, чтобы продолжить...");
+            Console.ReadKey();
         }
     }
 }

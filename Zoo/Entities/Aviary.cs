@@ -30,6 +30,11 @@ namespace Zoo.Entities
             _animals.Add(animal);
         }
 
+        public List<Animal> GetAnimals()
+        {
+            return _animals.Copy();
+        }
+
         public Aviary Copy()
         {
             return new Aviary(Name, new List<Animal>(_animals.Copy()));

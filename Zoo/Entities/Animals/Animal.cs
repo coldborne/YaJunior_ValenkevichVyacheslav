@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Zoo.Entities.Interfaces;
 
 namespace Zoo.Entities.Animals
@@ -14,6 +16,8 @@ namespace Zoo.Entities.Animals
         public string Name { get; }
         public string Gender { get; }
         public string Sound { get; }
+
+        public abstract List<Func<string>> GetActions();
 
         public abstract Animal Copy();
 

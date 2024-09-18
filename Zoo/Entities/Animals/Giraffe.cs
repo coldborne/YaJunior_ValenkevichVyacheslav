@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Zoo.Entities.Animals
 {
     public sealed class Giraffe : Animal
@@ -18,6 +21,15 @@ namespace Zoo.Entities.Animals
         public string LookFar()
         {
             return $"{Name} осматривает окрестности с высоты своего роста.";
+        }
+
+        public override List<Func<string>> GetActions()
+        {
+            return new List<Func<string>>()
+            {
+                EatFromTree,
+                LookFar
+            };
         }
 
         public override Animal Copy()

@@ -76,6 +76,7 @@ namespace Zoo.Entities
                                 if (TryGetAsciiArt(fileName, out asciiArt, out errorInfo))
                                 {
                                     _zooView.DisplayAvairyInfo(aviary, asciiArt);
+                                    _zooView.DisplayAnimalsActions(aviary);
                                 }
                                 else
                                 {
