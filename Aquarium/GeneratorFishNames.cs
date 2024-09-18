@@ -4,13 +4,13 @@ namespace Aquarium
     {
         public static string GenerateFishName()
         {
-            const int nameLength = 5;
+            const int NameLength = 5;
             const int StartSymbolIndex = 97;
             const int EndSymbolIndex = 122;
 
             string name = "";
 
-            while (name.Length < nameLength)
+            while (name.Length < NameLength)
             {
                 char symbol = (char)UserUtils.GetRandomValue(StartSymbolIndex, EndSymbolIndex + 1);
 
