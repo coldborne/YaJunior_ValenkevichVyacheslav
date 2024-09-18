@@ -6,12 +6,12 @@ namespace Aquarium
     {
         private static Random s_random = new Random();
 
-        public static int GetRandomValue(int startValue, int endValue)
+        public static int GenerateRandomValue(int startValue, int endValue)
         {
             return s_random.Next(startValue, endValue);
         }
 
-        public static int GetRandomValue(int endValue)
+        public static int GenerateRandomValue(int endValue)
         {
             return s_random.Next(endValue);
         }
