@@ -35,11 +35,11 @@ namespace Aquarium
                 switch (userInput)
                 {
                     case (int)Commands.AddFish:
-                        AddFish(_aquarium);
+                        AddFish();
                         break;
 
                     case (int)Commands.TakeOutFish:
-                        TakeOutRandomFish(_aquarium);
+                        TakeOutRandomFish();
                         break;
 
                     case (int)Commands.Skip:
@@ -52,9 +52,9 @@ namespace Aquarium
             }
         }
 
-        private void AddFish(Aquarium aquarium)
+        private void AddFish()
         {
-            if (aquarium.TryAddFish())
+            if (_aquarium.TryAddFish())
             {
                 Console.WriteLine("Успешно добавлена одна рыбка");
             }
@@ -64,9 +64,9 @@ namespace Aquarium
             }
         }
 
-        private void TakeOutRandomFish(Aquarium aquarium)
+        private void TakeOutRandomFish()
         {
-            if (aquarium.TryTakeOutRandomFish())
+            if (_aquarium.TryTakeOutRandomFish())
             {
                 Console.WriteLine("Успешно вытащена одна рыбка");
             }
