@@ -53,7 +53,6 @@
         <Compile Include="Entities\Zoo.cs" />
         <Compile Include="Entities\ZooView.cs" />
         <Compile Include="Extensions\ListExtensions.cs" />
-        <Compile Include="Helsfdafa.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
