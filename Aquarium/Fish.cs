@@ -4,10 +4,11 @@ namespace Aquarium
 {
     public class Fish
     {
+        private readonly int MaxAge;
+
         private int _dyingRate;
         private string _name;
         private ConsoleColor _color;
-        private readonly int MaxAge;
 
         public Fish()
         {

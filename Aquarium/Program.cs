@@ -4,10 +4,10 @@ namespace Aquarium
 {
     public enum Commands : byte
     {
-        AddFishCommand = 1,
-        TakeOutFishCommand,
-        SkipCommand,
-        BrakeAquariumCommand
+        AddFish = 1,
+        TakeOutFish,
+        Skip,
+        BrakeAquarium
     }
 
     internal class Program
@@ -25,10 +25,10 @@ namespace Aquarium
                 aquarium.ShowAllFish();
 
                 Console.WriteLine("Выберите действие");
-                Console.WriteLine($"{(int)Commands.AddFishCommand} - Добавить рыбку");
-                Console.WriteLine($"{(int)Commands.TakeOutFishCommand} - Вынуть рыбку");
-                Console.WriteLine($"{(int)Commands.SkipCommand} - Пропустить итерацию");
-                Console.WriteLine($"{(int)Commands.BrakeAquariumCommand} - Сломать аквариум");
+                Console.WriteLine($"{(int)Commands.AddFish} - Добавить рыбку");
+                Console.WriteLine($"{(int)Commands.TakeOutFish} - Вынуть рыбку");
+                Console.WriteLine($"{(int)Commands.Skip} - Пропустить итерацию");
+                Console.WriteLine($"{(int)Commands.BrakeAquarium} - Сломать аквариум");
 
                 int commandsLength = Enum.GetNames(typeof(Commands)).Length;
                 int userInput = UserUtils.ReadInt(commandsLength);
@@ -39,18 +39,18 @@ namespace Aquarium
 
                 switch (userInput)
                 {
-                    case (int)Commands.AddFishCommand:
+                    case (int)Commands.AddFish:
                         AddFish(aquarium);
                         break;
 
-                    case (int)Commands.TakeOutFishCommand:
+                    case (int)Commands.TakeOutFish:
                         TakeOutRandomFish(aquarium);
                         break;
 
-                    case (int)Commands.SkipCommand:
+                    case (int)Commands.Skip:
                         break;
 
-                    case (int)Commands.BrakeAquariumCommand:
+                    case (int)Commands.BrakeAquarium:
                         isAquariumWithoutDamage = false;
                         break;
                 }

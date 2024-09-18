@@ -4,16 +4,16 @@ namespace Aquarium
 {
     public static class UserUtils
     {
-        private static Random _random = new Random();
+        private static Random s_random = new Random();
 
         public static int GetRandomValue(int startValue, int endValue)
         {
-            return _random.Next(startValue, endValue);
+            return s_random.Next(startValue, endValue);
         }
 
         public static int GetRandomValue(int endValue)
         {
-            return _random.Next(endValue);
+            return s_random.Next(endValue);
         }
 
         public static int ReadInt(int maxValue)
