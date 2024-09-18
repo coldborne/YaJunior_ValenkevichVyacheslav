@@ -78,13 +78,13 @@ namespace Zoo.Entities
 
             foreach (Animal animal in animals)
             {
-                int maxActionCount = animal.GetActions().Count;
-                int actionCount = random.Next(minActionCount, maxActionCount + 1);
                 List<Func<string>> actions = animal.GetActions();
+                int maxActionCount = actions.Count;
+                int actionCount = random.Next(minActionCount, maxActionCount + 1);
 
                 for (int actionNumber = 1; actionNumber <= actionCount; actionNumber++)
                 {
-                    int actionIndex = random.Next(actions.Count);
+                    int actionIndex = random.Next(actionCount);
                     string actionResult = actions[actionIndex]();
                     Console.WriteLine(actionResult);
                 }
