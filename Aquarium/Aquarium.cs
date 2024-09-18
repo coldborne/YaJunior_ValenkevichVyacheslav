@@ -18,7 +18,7 @@ namespace Aquarium
         public void Fill()
         {
             Console.WriteLine("Введите начальное количество рыбок");
-            int fishCount = UserUtils.ReadFishCount(MaxFishAmount);
+            int fishCount = UserUtils.ReadInt(MaxFishAmount);
 
             for (int i = 0; i < fishCount; i++)
             {

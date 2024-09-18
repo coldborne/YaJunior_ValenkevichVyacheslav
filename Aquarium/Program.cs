@@ -30,7 +30,8 @@ namespace Aquarium
                 Console.WriteLine($"{(int)Commands.SkipCommand} - Пропустить итерацию");
                 Console.WriteLine($"{(int)Commands.BrakeAquariumCommand} - Сломать аквариум");
 
-                int userInput = UserUtils.ReadCommand();
+                int commandsLength = Enum.GetNames(typeof(Commands)).Length;
+                int userInput = UserUtils.ReadInt(commandsLength);
 
                 aquarium.IncreaseFishAge();
 
