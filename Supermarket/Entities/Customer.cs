@@ -26,7 +26,7 @@ namespace Supermarket
 
         public bool TryTakeMoney(int moneyAmount)
         {
-            return _wallet.Withdraw(moneyAmount);
+            return _wallet.TryWithdraw(moneyAmount);
         }
 
         public void AddInBasket(Product product)
@@ -41,7 +41,8 @@ namespace Supermarket
 
         public bool TryRemoveRandomProductFromBasket()
         {
-            const int MinProductAmount = 1;
+            const int MinProductAmount = 0;
+            
             int productCount = _basket.Count;
 
             if (productCount > MinProductAmount)
@@ -67,7 +68,7 @@ namespace Supermarket
             return products;
         }
 
-        public void EmptyBasket()
+        public void ClearBasket()
         {
             _basket.Clear();
         }

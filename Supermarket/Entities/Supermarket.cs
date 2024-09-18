@@ -33,9 +33,21 @@ namespace Supermarket
             Console.WriteLine("Список доступных продуктов:");
             ShowProductsInStorage();
 
-            bool isReadyGoToCheckout = false;
+            TakeProductsInBasket(customer);
+
+            Console.WriteLine("Вы перемещаетесь к кассе");
+            Console.WriteLine("Продукты в вашей корзине:");
+            ShowProductsInBasket(customer);
+
+            SellProducts(customer);
+        }
+
+        private void TakeProductsInBasket(Customer customer)
+        {
             const int ProductSelectionPoint = 1;
             const int CheckoutPoint = 2;
+            
+            bool isReadyGoToCheckout = false;
 
             while (isReadyGoToCheckout == false)
             {
@@ -71,11 +83,10 @@ namespace Supermarket
                     isReadyGoToCheckout = true;
                 }
             }
+        }
 
-            Console.WriteLine("Вы перемещаетесь к кассе");
-            Console.WriteLine("Продукты в вашей корзине:");
-            ShowProductsInBasket(customer);
-
+        private void SellProducts(Customer customer)
+        {
             List<Product> customerProducts = customer.GetProductFromBasket();
 
             if (customerProducts.Count > 0)
@@ -97,19 +108,26 @@ namespace Supermarket
                     }
                 }
 
-                customer.TryTakeMoney(totalPrice);
-                _wallet.Deposit(totalPrice);
-
-                List<Product> finalProducts = customer.GetProductFromBasket();
-
-                foreach (Product product in finalProducts)
+                if (totalPrice > 0)
                 {
-                    customer.AddInBackpack(product);
+                    customer.TryTakeMoney(totalPrice);
+                    _wallet.Deposit(totalPrice);
+
+                    List<Product> finalProducts = customer.GetProductFromBasket();
+
+                    foreach (Product product in finalProducts)
+                    {
+                        customer.AddInBackpack(product);
+                    }
+
+                    customer.ClearBasket();
+
+                    Console.WriteLine("Вы успешно оплатили корзину, всего доброго!");
                 }
-
-                customer.EmptyBasket();
-
-                Console.WriteLine("Вы успешно оплатили корзину, всего доброго!");
+                else
+                {
+                    Console.WriteLine("В вашей корзине не осталось товаров, извините, сегодня без покупок)");
+                }
             }
             else
             {
@@ -141,7 +159,7 @@ namespace Supermarket
             bool canParse = false;
             int userProductNumber = 0;
             bool isProductNumberCorrect = false;
-            int minProductNumber = 0;
+            int minProductNumber = 1;
             int maxProductNumber = _storage.Count;
 
             while (isProductNumberCorrect == false)
@@ -164,6 +182,7 @@ namespace Supermarket
                 else
                 {
                     Console.WriteLine("Продукта под таким номером нет на складе");
+                    canParse = false;
                 }
             }
 
