@@ -56,7 +56,6 @@
         <Compile Include="Helsfdafa.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="RandomValuesGenerator.cs" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="bin\" />
