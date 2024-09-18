@@ -6,12 +6,10 @@ namespace Aquarium
     public class Aquarium
     {
         private readonly List<Fish> _fish;
-        private List<Fish> _deadFish;
 
         public Aquarium()
         {
             _fish = new List<Fish>();
-            _deadFish = new List<Fish>();
             MaxFishAmount = 5;
         }
 
@@ -20,7 +18,7 @@ namespace Aquarium
         public void Fill()
         {
             Console.WriteLine("Введите начальное количество рыбок");
-            int fishCount = UserUtils.ReadFishCount(MaxFishAmount);
+            int fishCount = UserUtils.ReadInt(MaxFishAmount);
 
             for (int i = 0; i < fishCount; i++)
             {
@@ -44,17 +42,19 @@ namespace Aquarium
 
                 int number = UserUtils.GetRandomValue(defualtColorNumber, randomColorNumber + 1);
 
+                Fish fish;
+
                 if (number == 0)
                 {
-                    Fish fish = CreateFish();
-                    _fish.Add(fish);
+                    fish = CreateFish();
                 }
                 else
                 {
                     ConsoleColor color = GetRandomColor();
-                    Fish fish = CreateFish(color);
-                    _fish.Add(fish);
+                    fish = CreateFish(color);
                 }
+
+                _fish.Add(fish);
 
                 return true;
             }
@@ -76,24 +76,22 @@ namespace Aquarium
             return true;
         }
 
-        public void ReduceFishAge()
+        public void IncreaseFishAge()
         {
             foreach (Fish fish in _fish)
             {
-                fish.TryReduceAge();
+                fish.TryIncreaseAge();
             }
         }
 
         public void CleanAquariumOfDeadFish()
         {
-            _deadFish = FindDeadFish();
+            List<Fish> deadFish = FindDeadFish();
 
-            foreach (Fish deadFish in _deadFish)
+            foreach (Fish fish in deadFish)
             {
-                _fish.Remove(deadFish);
+                _fish.Remove(fish);
             }
-
-            _deadFish.Clear();
         }
 
         public void ShowAllFish()
@@ -114,7 +112,7 @@ namespace Aquarium
 
         private Fish CreateFish()
         {
-            return new Fish();
+            return CreateFish(Fish.DefualtColor);
         }
 
         private ConsoleColor GetRandomColor()
@@ -127,7 +125,7 @@ namespace Aquarium
 
         private List<Fish> FindDeadFish()
         {
-            return _fish.FindAll(fish => fish.Age == 0);
+            return _fish.FindAll(fish => fish.IsDead);
         }
     }
 }

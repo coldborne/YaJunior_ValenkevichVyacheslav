@@ -4,56 +4,29 @@ namespace Aquarium
 {
     public static class UserUtils
     {
-        private static Random _random = new Random();
+        private static Random s_random = new Random();
 
         public static int GetRandomValue(int startValue, int endValue)
         {
-            return _random.Next(startValue, endValue);
+            return s_random.Next(startValue, endValue);
         }
-        
+
         public static int GetRandomValue(int endValue)
         {
-            return _random.Next(endValue);
+            return s_random.Next(endValue);
         }
 
-        public static int ReadFishCount(int maxFishAmount)
+        public static int ReadInt(int maxValue)
         {
-            bool isInputInt = false;
-            int number = 0;
-
-            while (isInputInt == false)
-            {
-                string userInput = Console.ReadLine();
-                isInputInt = int.TryParse(userInput, out number);
-
-                if (isInputInt == false)
-                {
-                    Console.WriteLine("Вводить можно только целые числа");
-                }
-                else
-                {
-                    if (number <= 0 || number > maxFishAmount)
-                    {
-                        Console.WriteLine("Число должно быть больше 0 и меньше/равно " + maxFishAmount);
-
-                        isInputInt = false;
-                    }
-                }
-            }
-
-            return number;
-        }
-
-        public static int ReadCommand()
-        {
-            int userInputInt = 0;
+            int minValue = 0;
+            int userInputValue = 0;
             bool isInputRight = false;
 
             while (isInputRight == false)
             {
                 string userInput = Console.ReadLine();
 
-                isInputRight = int.TryParse(userInput, out userInputInt);
+                isInputRight = int.TryParse(userInput, out userInputValue);
 
                 if (isInputRight == false)
                 {
@@ -61,17 +34,15 @@ namespace Aquarium
                 }
                 else
                 {
-                    int commandsLength = Enum.GetNames(typeof(Commands)).Length;
-
-                    if (userInputInt <= 0 || userInputInt > commandsLength)
+                    if (userInputValue <= minValue || userInputValue > maxValue)
                     {
-                        Console.WriteLine("Недопустимое число");
+                        Console.WriteLine("Число должно быть больше 0 и меньше/равно " + maxValue);
                         isInputRight = false;
                     }
                 }
             }
 
-            return userInputInt;
+            return userInputValue;
         }
     }
 }

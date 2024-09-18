@@ -4,6 +4,8 @@ namespace Aquarium
 {
     public class Fish
     {
+        private readonly int MaxAge;
+
         private int _dyingRate;
         private string _name;
         private ConsoleColor _color;
@@ -11,12 +13,12 @@ namespace Aquarium
         public Fish()
         {
             const int MinAge = 1;
-            const int MaxAge = 10;
+            MaxAge = 10;
 
             _dyingRate = 1;
             _name = GenerateFishName();
-            _color = ConsoleColor.Gray;
-            Age = UserUtils.GetRandomValue(MinAge, MaxAge + 1);
+            _color = DefualtColor;
+            Age = UserUtils.GetRandomValue(MinAge, MaxAge);
         }
 
         public Fish(ConsoleColor color) : this()
@@ -24,22 +26,18 @@ namespace Aquarium
             _color = color;
         }
 
+        public static ConsoleColor DefualtColor { get; } = ConsoleColor.Gray;
         public int Age { get; private set; }
+        public bool IsDead => Age == MaxAge;
 
-        public bool TryReduceAge()
+        public bool TryIncreaseAge()
         {
-            if (Age <= 0)
+            if (Age == MaxAge)
             {
                 return false;
             }
 
-            if (Age >= _dyingRate)
-            {
-                Age -= _dyingRate;
-                return true;
-            }
-
-            Age = 0;
+            Age += _dyingRate;
             return true;
         }
 
