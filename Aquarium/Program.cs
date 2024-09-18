@@ -32,14 +32,14 @@ namespace Aquarium
 
                 int userInput = UserUtils.ReadCommand();
 
-                aquarium.ReduceFishAge();
+                aquarium.IncreaseFishAge();
 
                 aquarium.CleanAquariumOfDeadFish();
 
                 switch (userInput)
                 {
                     case (int)Commands.AddFishCommand:
-                        aquarium.TryAddFish();
+                        AddFish(aquarium);
                         break;
 
                     case (int)Commands.TakeOutFishCommand:
@@ -53,6 +53,18 @@ namespace Aquarium
                         isAquariumWithoutDamage = false;
                         break;
                 }
+            }
+        }
+
+        private static void AddFish(Aquarium aquarium)
+        {
+            if (aquarium.TryAddFish())
+            {
+                Console.WriteLine("Успешно добавлена одна рыбка");
+            }
+            else
+            {
+                Console.WriteLine("Рыбка не добавлена");
             }
         }
 

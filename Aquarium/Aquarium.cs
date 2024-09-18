@@ -6,12 +6,10 @@ namespace Aquarium
     public class Aquarium
     {
         private readonly List<Fish> _fish;
-        private List<Fish> _deadFish;
 
         public Aquarium()
         {
             _fish = new List<Fish>();
-            _deadFish = new List<Fish>();
             MaxFishAmount = 5;
         }
 
@@ -76,24 +74,22 @@ namespace Aquarium
             return true;
         }
 
-        public void ReduceFishAge()
+        public void IncreaseFishAge()
         {
             foreach (Fish fish in _fish)
             {
-                fish.TryReduceAge();
+                fish.TryIncreaseAge();
             }
         }
 
         public void CleanAquariumOfDeadFish()
         {
-            _deadFish = FindDeadFish();
+            List<Fish> deadFish = FindDeadFish();
 
-            foreach (Fish deadFish in _deadFish)
+            foreach (Fish fish in deadFish)
             {
-                _fish.Remove(deadFish);
+                _fish.Remove(fish);
             }
-
-            _deadFish.Clear();
         }
 
         public void ShowAllFish()
@@ -127,7 +123,7 @@ namespace Aquarium
 
         private List<Fish> FindDeadFish()
         {
-            return _fish.FindAll(fish => fish.Age == 0);
+            return _fish.FindAll(fish => fish.IsDead);
         }
     }
 }
