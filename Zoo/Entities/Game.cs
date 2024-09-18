@@ -24,6 +24,14 @@ namespace Zoo.Entities
 
             bool isExit = false;
 
+            Dictionary<string, string> aviaryFileNames = new Dictionary<string, string>
+            {
+                { AviaryNames.Capybara, "CabybaraPicture.txt" },
+                { AviaryNames.Cat, "CatPicture.txt" },
+                { AviaryNames.Giraffe, "GiraffePicture.txt" },
+                { AviaryNames.Penguin, "PenguinPicture.txt" }
+            };
+
             _zooView.ShowStartWindow();
 
             while (isExit == false)
@@ -44,38 +52,19 @@ namespace Zoo.Entities
                     }
                     else
                     {
-                        int avairyIndex = userChoice - 1;
+                        int aviaryIndex = userChoice - 1;
 
-                        if (_zoo.TryGetAviary(avairyIndex, out Aviary aviary))
+                        if (_zoo.TryGetAviary(aviaryIndex, out Aviary aviary))
                         {
                             string[] asciiArt;
                             string errorInfo;
-                            string fileName = string.Empty;
-
-                            switch (aviary.Name)
-                            {
-                                case AviaryNames.Capybara:
-                                    fileName = "CabybaraPicture.txt";
-                                    break;
-
-                                case AviaryNames.Cat:
-                                    fileName = "CatPicture.txt";
-                                    break;
-
-                                case AviaryNames.Giraffe:
-                                    fileName = "GiraffePicture.txt";
-                                    break;
-
-                                case AviaryNames.Penguin:
-                                    fileName = "PenguinPicture.txt";
-                                    break;
-                            }
-
-                            if (fileName != string.Empty)
+                            
+                            if (aviaryFileNames.TryGetValue(aviary.Name, out string fileName))
                             {
                                 if (TryGetAsciiArt(fileName, out asciiArt, out errorInfo))
                                 {
                                     _zooView.DisplayAvairyInfo(aviary, asciiArt);
+                                    _zooView.DisplayAnimalsActions(aviary);
                                 }
                                 else
                                 {

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Zoo.Entities.Animals
 {
     public sealed class Cat : Animal
@@ -19,6 +22,15 @@ namespace Zoo.Entities.Animals
         {
             return
                 $"{Name} точит когти о дерево. Возможно, количество жизней уменьшится. Сейчас жизней осталось: {_livesCount}";
+        }
+        
+        public override List<Func<string>> GetActions()
+        {
+            return new List<Func<string>>()
+            {
+                Purr,
+                Scratch
+            };
         }
 
         public override Animal Copy()
