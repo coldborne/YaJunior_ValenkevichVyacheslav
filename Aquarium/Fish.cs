@@ -18,7 +18,7 @@ namespace Aquarium
             _dyingRate = 1;
             _name = GeneratorFishNames.GenerateFishName();
             _color = DefualtColor;
-            Age = UserUtils.GetRandomValue(MinAge, MaxAge);
+            Age = UserUtils.GenerateRandomValue(MinAge, MaxAge);
         }
 
         public Fish(ConsoleColor color) : this()

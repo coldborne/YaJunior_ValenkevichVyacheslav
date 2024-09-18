@@ -12,7 +12,7 @@ namespace Aquarium
 
             while (name.Length < NameLength)
             {
-                char symbol = (char)UserUtils.GetRandomValue(StartSymbolIndex, EndSymbolIndex + 1);
+                char symbol = (char)UserUtils.GenerateRandomValue(StartSymbolIndex, EndSymbolIndex + 1);
 
                 if (char.IsLetterOrDigit(symbol))
                 {

@@ -40,7 +40,7 @@ namespace Aquarium
                 int defualtColorNumber = 0;
                 int randomColorNumber = 1;
 
-                int number = UserUtils.GetRandomValue(defualtColorNumber, randomColorNumber + 1);
+                int number = UserUtils.GenerateRandomValue(defualtColorNumber, randomColorNumber + 1);
 
                 Fish fish;
 
@@ -69,7 +69,7 @@ namespace Aquarium
                 return false;
             }
 
-            int indexOfFish = UserUtils.GetRandomValue(_fish.Count);
+            int indexOfFish = UserUtils.GenerateRandomValue(_fish.Count);
 
             _fish.RemoveAt(indexOfFish);
 
@@ -120,7 +120,7 @@ namespace Aquarium
             const int MinColorNumber = 1;
             const int MaxColorNumber = 16;
 
-            return (ConsoleColor)UserUtils.GetRandomValue(MinColorNumber, MaxColorNumber + 1);
+            return (ConsoleColor)UserUtils.GenerateRandomValue(MinColorNumber, MaxColorNumber + 1);
         }
 
         private List<Fish> FindDeadFish()
