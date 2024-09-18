@@ -13,9 +13,9 @@ namespace Zoo.Entities.Animals
             Sound = sound;
         }
 
-        public string Name { get; }
-        public string Gender { get; }
-        public string Sound { get; }
+        protected string Name { get; }
+        protected string Gender { get; }
+        protected string Sound { get; }
 
         public abstract List<Func<string>> GetActions();
 
