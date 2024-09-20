@@ -31,16 +31,16 @@ public class AutoServiceView
         Console.Write("Выберите действие: ");
     }
 
-    public void DisplayInventory(Dictionary<string, int> parts)
+    public void DisplayInventory(List<Item> parts)
     {
         Console.Clear();
         Console.WriteLine("============================================");
         Console.WriteLine("                 Склад деталей              ");
         Console.WriteLine("============================================");
 
-        foreach (KeyValuePair<string, int> part in parts)
+        foreach (Item part in parts)
         {
-            Console.WriteLine($"{part.Key}: {part.Value} шт.");
+            Console.WriteLine($"{part.Name}: {part.Count} шт.");
         }
 
         Console.WriteLine("============================================\n");

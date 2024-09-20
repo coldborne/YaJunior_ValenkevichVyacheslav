@@ -8,7 +8,7 @@ public class AutoServiceModel
 
     private Inventory _inventory;
 
-    public AutoServiceModel(decimal balance, Inventory inventory)
+    public AutoServiceModel(Inventory inventory, decimal balance)
     {
         _fixedPenalty = 500;
 
@@ -65,5 +65,10 @@ public class AutoServiceModel
 
         Balance = finalBalance;
         return true;
+    }
+
+    public List<Item> GetAllParts()
+    {
+        return _inventory.GetAllParts();
     }
 }

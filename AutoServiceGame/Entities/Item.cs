@@ -1,23 +1,25 @@
 using AutoServiceGame.Entities.Interfaces;
+using AutoServiceGame.Entities.Parts;
 
 namespace AutoServiceGame.Entities;
 
-public class Item<T> : ICopyable<Item<T>> where T : ICopyable<T>
+public class Item : ICopyable<Item>
 {
-    private T _subject;
+    private Part _subject;
 
-    public Item(T subject, int count)
+    public Item(Part subject, int count)
     {
         _subject = subject;
         Count = count;
     }
 
-    public Item(T subject)
+    public Item(Part subject)
     {
         _subject = subject;
-        Count = 0;
+        Count = 1;
     }
-
+    
+    public string Name => _subject.Name;
     public int Count { get; private set; }
 
     public bool TryIncrease(int amount)
@@ -52,13 +54,13 @@ public class Item<T> : ICopyable<Item<T>> where T : ICopyable<T>
         return false;
     }
 
-    public bool Contains(T subject)
+    public bool Contains(Part subject)
     {
         return _subject.Equals(subject);
     }
 
-    public Item<T> Copy()
+    public Item Copy()
     {
-        return new Item<T>(_subject.Copy(), Count);
+        return new Item(_subject.Copy(), Count);
     }
 }

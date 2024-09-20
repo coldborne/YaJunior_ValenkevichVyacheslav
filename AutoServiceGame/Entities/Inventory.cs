@@ -5,16 +5,16 @@ namespace AutoServiceGame.Entities;
 
 public class Inventory
 {
-    private List<Item<Part>> _parts;
+    private List<Item> _parts;
 
-    public Inventory(List<Item<Part>> parts)
+    public Inventory(List<Item> parts)
     {
         _parts = parts;
     }
 
     public Inventory()
     {
-        _parts = new List<Item<Part>>();
+        _parts = new List<Item>();
     }
 
     public bool TryAddPart(Part part, int quantity)
@@ -26,7 +26,7 @@ public class Inventory
             return false;
         }
 
-        Item<Part> newPart = new Item<Part>(part, quantity);
+        Item newPart = new Item(part, quantity);
         _parts.Add(newPart);
         return true;
     }
@@ -38,7 +38,7 @@ public class Inventory
             return false;
         }
 
-        foreach (Item<Part> item in _parts)
+        foreach (Item item in _parts)
         {
             if (item.Contains(part))
             {
@@ -49,14 +49,14 @@ public class Inventory
         return false;
     }
 
-    public List<Item<Part>> GetAllParts()
+    public List<Item> GetAllParts()
     {
-        return _parts.Copy<Item<Part>>();
+        return _parts.Copy<Item>();
     }
 
     private bool Contains(Part part)
     {
-        foreach (Item<Part> item in _parts)
+        foreach (Item item in _parts)
         {
             if (item.Contains(part))
             {
