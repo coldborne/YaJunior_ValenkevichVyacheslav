@@ -16,21 +16,23 @@ public class AutoService
 
     public void RepairNewCar(Car car)
     {
+        const string StartRepairCommand = "1";
+        const string RefusalRepairCommand = "2";
+
         _autoServiceView.DisplayCarArrival(car);
 
         List<Part> brokenParts = car.GetBrokenParts();
         List<Part> unbrokenParts = car.GetUnbrokenParts();
         _autoServiceView.DisplayParts(unbrokenParts, brokenParts);
-
-        List<Part> allParts = new List<Part>();
-        allParts.AddRange(unbrokenParts);
-        allParts.AddRange(brokenParts);
-
+        
         _autoServiceView.DisplayRepairStartOption();
-        string choice = Console.ReadLine();
+        string userChoice = Console.ReadLine();
 
-        if (choice == "1")
+        if (userChoice == StartRepairCommand)
         {
+            const string RepairCommand = "1";
+            const string EndRepairCommand = "2";
+
             _autoServiceView.DisplayStartRepairing();
 
             bool isRepairingFinished = false;
@@ -40,24 +42,29 @@ public class AutoService
                 _autoServiceView.DisplayRepairOptions();
                 string repairChoice = Console.ReadLine();
 
-                if (repairChoice == "1")
+                if (repairChoice == RepairCommand)
                 {
+                    List<Part> allParts = new List<Part>();
+                    unbrokenParts = car.GetUnbrokenParts();
+                    brokenParts = car.GetBrokenParts();
+                    
+                    allParts.AddRange(unbrokenParts);
+                    allParts.AddRange(brokenParts);
+                    
                     _autoServiceView.DisplayPartRepairOptions(allParts);
 
-                    string partChoiceInput = Console.ReadLine();
-                    int partChoice;
+                    string partChoice = Console.ReadLine();
 
-                    if (int.TryParse(partChoiceInput, out partChoice) && partChoice > 0 &&
-                        partChoice <= allParts.Count)
+                    if (int.TryParse(partChoice, out int partNumber) && partNumber > 0 &&
+                        partNumber <= allParts.Count)
                     {
-                        Part selectedPart = allParts[partChoice - 1];
+                        Part selectedPart = allParts[partNumber - 1];
 
-                        bool success = PerformRepair(car, selectedPart);
+                        bool isSuccess = TryPerformRepair(car, selectedPart);
 
-                        if (success)
+                        if (isSuccess)
                         {
                             _autoServiceView.DisplayRepairSuccess(selectedPart.Name, selectedPart.Price);
-                            brokenParts.Remove(selectedPart);
                         }
                         else
                         {
@@ -69,7 +76,7 @@ public class AutoService
                         Console.WriteLine("Неверный выбор. Попробуйте снова.");
                     }
                 }
-                else if (repairChoice == "2")
+                else if (repairChoice == EndRepairCommand)
                 {
                     decimal penalty = CalculatePenalty(brokenParts.Count);
                     _autoServiceModel.TryTopUpBalance(penalty);
@@ -87,7 +94,7 @@ public class AutoService
                 _autoServiceView.DisplayRepairCompleted();
             }
         }
-        else if (choice == "2")
+        else if (userChoice == RefusalRepairCommand)
         {
             decimal penalty = _autoServiceModel.FixedPenalty;
             _autoServiceModel.TryTopUpBalance(penalty);
@@ -119,7 +126,7 @@ public class AutoService
         _autoServiceView.DisplayInventory(_autoServiceModel.GetAllParts());
     }
 
-    private bool PerformRepair(Car car, Part brokenPart)
+    private bool TryPerformRepair(Car car, Part brokenPart)
     {
         bool partAvailable = _autoServiceModel.TryDecreasePartQuantity(brokenPart);
 
@@ -147,7 +154,7 @@ public class AutoService
 
     private decimal CalculatePenalty(int remainingBrokenParts)
     {
-        decimal penaltyPerPart = 200m; // Пример значения
-        return remainingBrokenParts * penaltyPerPart;
+        decimal perPartPenalty = 200m;
+        return remainingBrokenParts * perPartPenalty;
     }
 }
