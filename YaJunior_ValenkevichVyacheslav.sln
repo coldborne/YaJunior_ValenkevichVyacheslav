@@ -113,6 +113,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Supermarket", "Supermarket\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GladiatorFights", "GladiatorFights\GladiatorFights.csproj", "{DD3402CE-9F3E-4B3D-A04A-6CC5A07575A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoServiceGame", "AutoServiceGame\AutoServiceGame.csproj", "{3942EE73-68D2-40C6-B7CA-DB770D946978}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -315,6 +317,10 @@ Global
 		{DD3402CE-9F3E-4B3D-A04A-6CC5A07575A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD3402CE-9F3E-4B3D-A04A-6CC5A07575A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD3402CE-9F3E-4B3D-A04A-6CC5A07575A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3942EE73-68D2-40C6-B7CA-DB770D946978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3942EE73-68D2-40C6-B7CA-DB770D946978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3942EE73-68D2-40C6-B7CA-DB770D946978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3942EE73-68D2-40C6-B7CA-DB770D946978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -369,6 +375,7 @@ Global
 		{1E3D92C3-9E5D-49EA-ADBC-A8E22FA6B665} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 		{275CA0D7-8B67-4D56-BE4D-81011910503B} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 		{DD3402CE-9F3E-4B3D-A04A-6CC5A07575A2} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
+		{3942EE73-68D2-40C6-B7CA-DB770D946978} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
