@@ -64,7 +64,7 @@ public class AutoServiceView
     {
         Console.Clear();
         Console.WriteLine("============================================");
-        Console.WriteLine("              Новая машина в ремонте        ");
+        Console.WriteLine("           Новая машина в ремонте           ");
         Console.WriteLine("============================================");
         Console.WriteLine($"Модель: {car.Model}");
         Console.WriteLine("============================================\n");
@@ -72,19 +72,52 @@ public class AutoServiceView
         Console.ReadKey();
     }
 
-    public void DisplayBrokenParts(List<Part> brokenParts)
+    public void DisplayParts(List<Part> unbrokenParts, List<Part> brokenParts)
     {
         Console.Clear();
+        Console.WriteLine("============================================");
+        Console.WriteLine("            Целые детали машины             ");
+        Console.WriteLine("============================================");
+
+        foreach (Part part in unbrokenParts)
+        {
+            Console.WriteLine($"- {part.Name} (Цена: {part.Price:C})");
+        }
+
+        Console.WriteLine("============================================\n");
+        Console.WriteLine();
+
         Console.WriteLine("============================================");
         Console.WriteLine("            Поломанные детали машины        ");
         Console.WriteLine("============================================");
 
         foreach (Part part in brokenParts)
         {
-            Console.WriteLine($"- {part.Name} (Цена: {part.Price:Currency})");
+            Console.WriteLine($"- {part.Name} (Цена: {part.Price:C})");
         }
 
         Console.WriteLine("============================================\n");
+    }
+
+    public void DisplayRepairStartOption()
+    {
+        Console.WriteLine("Вы хотите начать ремонт?");
+        Console.WriteLine("1. Да");
+        Console.WriteLine("2. Нет");
+        Console.Write("Ваш выбор: ");
+    }
+
+    public void DisplayPartRepairOptions(List<Part> allParts)
+    {
+        Console.WriteLine("Выберите деталь для починки:");
+
+        for (int i = 0; i < allParts.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {allParts[i].Name}");
+        }
+
+        Console.WriteLine("0. Назад");
+        Console.Write("Ваш выбор: ");
     }
 
     public void DisplayRepairOptions()
@@ -92,19 +125,6 @@ public class AutoServiceView
         Console.WriteLine("Выберите действие:");
         Console.WriteLine("1. Починить деталь");
         Console.WriteLine("2. Отказаться от ремонта");
-        Console.Write("Ваш выбор: ");
-    }
-
-    public void DisplayPartRepairOptions(List<Part> brokenParts)
-    {
-        Console.WriteLine("Выберите деталь для починки:");
-
-        for (int i = 0; i < brokenParts.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {brokenParts[i].Name}");
-        }
-
-        Console.WriteLine("0. Назад");
         Console.Write("Ваш выбор: ");
     }
 
@@ -117,16 +137,21 @@ public class AutoServiceView
 
     public void DisplayRepairFailure(string partName)
     {
-        Console.WriteLine($"На складе нет детали {partName} для замены.");
+        Console.WriteLine($"Не получилось починить: {partName}.");
         Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
         Console.ReadKey();
     }
 
     public void DisplayPenalty(decimal penalty)
     {
-        Console.WriteLine($"Вы отказались от ремонта. Штраф составил {penalty:Currency}.");
+        Console.WriteLine($"Вы отказались от ремонта. Штраф составил {penalty:C}.");
         Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
         Console.ReadKey();
+    }
+
+    public void DisplayStartRepairing()
+    {
+        Console.WriteLine("Вы согласились на ремонт.");
     }
 
     public void DisplayRepairCompleted()

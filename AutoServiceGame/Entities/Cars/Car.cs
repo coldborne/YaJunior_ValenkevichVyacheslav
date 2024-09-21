@@ -14,6 +14,37 @@ public class Car
 
     public string Model { get; }
 
+    public bool TryRepair(Part unbrokenPart)
+    {
+        for (int i = 0; i < _parts.Count; i++)
+        {
+            Part carPart = _parts[i];
+
+            if (carPart.Equals(unbrokenPart) && carPart.IsBroken)
+            {
+                _parts[i] = unbrokenPart;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<Part> GetUnbrokenParts()
+    {
+        List<Part> unbrokenParts = new List<Part>();
+
+        foreach (Part part in _parts)
+        {
+            if (part.IsBroken == false)
+            {
+                unbrokenParts.Add(part);
+            }
+        }
+
+        return unbrokenParts;
+    }
+
     public List<Part> GetBrokenParts()
     {
         List<Part> brokenParts = new List<Part>();

@@ -1,6 +1,6 @@
 ﻿using AutoServiceGame.Entities;
 using AutoServiceGame.Entities.AutoServices;
-using AutoServiceGame.Entities.Parts;
+using AutoServiceGame.Entities.Creators;
 
 namespace AutoServiceGame;
 
@@ -8,14 +8,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        List<Item> parts = new List<Item>()
-        {
-            new Item(new Part("Двигатель", 2), 5),
-            new Item(new Part("Колесо", 4), 3),
-            new Item(new Part("Тормоза", 3), 2),
-        };
-        
-        Inventory inventory = new Inventory(parts);
+        InventoryCreator inventoryCreator = new InventoryCreator();
+
+        Inventory inventory = inventoryCreator.CreateInventory();
         
         AutoServiceModel autoServiceModel = new AutoServiceModel(inventory, 5000);
         AutoServiceView autoServiceView = new AutoServiceView();
@@ -24,7 +19,5 @@ class Program
         Game game = new Game(autoService);
 
         game.Run();
-
-        
     }
 }

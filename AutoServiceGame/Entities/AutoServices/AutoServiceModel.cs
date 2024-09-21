@@ -4,19 +4,24 @@ namespace AutoServiceGame.Entities.AutoServices;
 
 public class AutoServiceModel
 {
-    private readonly int _fixedPenalty;
-
     private Inventory _inventory;
 
     public AutoServiceModel(Inventory inventory, decimal balance)
     {
-        _fixedPenalty = 500;
+        FixedPenalty = 500;
 
         _inventory = inventory;
         Balance = balance;
     }
 
     public decimal Balance { get; private set; }
+    public decimal FixedPenalty { get; }
+
+    public bool TryIncreasePartQuantity(Part part)
+    {
+        int quantity = 1;
+        return _inventory.TryIncreaseQuantity(part, quantity);
+    }
 
     public bool TryDecreasePartQuantity(Part part)
     {
@@ -54,21 +59,13 @@ public class AutoServiceModel
         return true;
     }
 
-    public bool TryPayPenalty()
-    {
-        decimal finalBalance = Balance - _fixedPenalty;
-
-        if (finalBalance < 0)
-        {
-            return false;
-        }
-
-        Balance = finalBalance;
-        return true;
-    }
-
     public List<Item> GetAllParts()
     {
         return _inventory.GetAllParts();
+    }
+
+    public decimal GetRepairPrice(Part part)
+    {
+        return part.Price * 0.1m;
     }
 }

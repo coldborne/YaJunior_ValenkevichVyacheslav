@@ -31,6 +31,24 @@ public class Inventory
         return true;
     }
 
+    public bool TryIncreaseQuantity(Part part, int amount)
+    {
+        if (amount <= 0)
+        {
+            return false;
+        }
+
+        foreach (Item item in _parts)
+        {
+            if (item.Contains(part))
+            {
+                return item.TryIncrease(amount);
+            }
+        }
+
+        return false;
+    }
+
     public bool TryDecreaseQuantity(Part part, int amount)
     {
         if (amount <= 0)

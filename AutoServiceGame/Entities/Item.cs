@@ -5,21 +5,21 @@ namespace AutoServiceGame.Entities;
 
 public class Item : ICopyable<Item>
 {
-    private Part _subject;
+    private Part _part;
 
-    public Item(Part subject, int count)
+    public Item(Part part, int count)
     {
-        _subject = subject;
+        _part = part;
         Count = count;
     }
 
-    public Item(Part subject)
+    public Item(Part part)
     {
-        _subject = subject;
+        _part = part;
         Count = 1;
     }
-    
-    public string Name => _subject.Name;
+
+    public string Name => _part.Name;
     public int Count { get; private set; }
 
     public bool TryIncrease(int amount)
@@ -56,11 +56,11 @@ public class Item : ICopyable<Item>
 
     public bool Contains(Part subject)
     {
-        return _subject.Equals(subject);
+        return _part.Equals(subject);
     }
 
     public Item Copy()
     {
-        return new Item(_subject.Copy(), Count);
+        return new Item(_part.Copy(), Count);
     }
 }
