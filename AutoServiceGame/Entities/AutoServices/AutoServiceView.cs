@@ -93,8 +93,7 @@ public class AutoServiceView
             Console.WriteLine($"- {part.Name} (Цена: {part.Price:C})");
         }
 
-        Console.WriteLine("\n============================================\n");
-
+        Console.WriteLine();
         Console.WriteLine("Поломанные детали машины:");
 
         foreach (Part part in brokenParts)
@@ -107,15 +106,16 @@ public class AutoServiceView
 
     public void DisplayRepairStartOption()
     {
-        Console.WriteLine("Вы хотите начать ремонт?");
-        Console.WriteLine("1. Да");
-        Console.WriteLine("2. Нет");
+        DisplayHeader("Вы хотите начать ремонт?");
+        Console.WriteLine($"{RepairCommands.StartRepair}. Да");
+        Console.WriteLine($"{RepairCommands.RefuseRepair}. Нет");
         Console.Write("Ваш выбор: ");
     }
 
     public void DisplayPartRepairOptions(List<Part> parts)
     {
         DisplayHeader("Выберите деталь для починки:");
+
         for (int i = 0; i < parts.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {parts[i].Name}");
@@ -127,7 +127,7 @@ public class AutoServiceView
 
     public void DisplayRepairOptions()
     {
-        Console.WriteLine("\nВыберите действие:");
+        DisplayHeader("Выберите действие:");
         Console.WriteLine("1. Починить деталь");
         Console.WriteLine("2. Отказаться от ремонта");
         Console.Write("Ваш выбор: ");
@@ -135,31 +135,41 @@ public class AutoServiceView
 
     public void DisplayChangeSuccess(string partName)
     {
-        DisplayMessage($"Деталь {partName} успешно заменена. За замену целой детали ничего не получено.");
+        DisplayHeader($"Деталь {partName} успешно заменена");
+        DisplayMessage("За замену целой детали ничего не получено.");
+        DisplayFooter();
     }
 
     public void DisplayChangeFailure(string partName)
     {
-        DisplayMessage($"Не получилось заменить: {partName}.");
+        DisplayHeader($"Не получилось заменить: {partName}.");
+        DisplayFooter();
     }
 
     public void DisplayRepairSuccess(string partName, decimal payment)
     {
-        DisplayMessage($"Деталь {partName} успешно починена. Получено {payment:C}.");
+        DisplayHeader($"Деталь {partName} успешно починена.");
+        DisplayMessage($"Получено {payment:C}.");
+        DisplayFooter();
     }
 
     public void DisplayPenalty(decimal penalty)
     {
-        DisplayMessage($"Вы отказались от ремонта. Штраф составил {penalty:C}.");
+        DisplayHeader("Вы отказались от ремонта");
+        DisplayMessage($"Штраф составил {penalty:C}.");
+        DisplayFooter();
     }
 
     public void DisplayStartRepairing()
     {
-        DisplayMessage("Вы согласились на ремонт.");
+        DisplayHeader("Вы согласились на ремонт.");
+        DisplayFooter();
     }
 
     public void DisplayRepairCompleted()
     {
-        DisplayMessage("Ремонт завершен! Все детали исправны.");
+        DisplayHeader("Ремонт завершен!");
+        DisplayMessage("Все детали исправны.");
+        DisplayFooter();
     }
 }
