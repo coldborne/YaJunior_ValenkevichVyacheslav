@@ -123,6 +123,8 @@ public class AutoService
         else
         {
             Console.WriteLine("Неверный выбор. Возвращение в главное меню.");
+            Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
+            Console.ReadKey();
         }
     }
 
@@ -166,7 +168,7 @@ public class AutoService
                     _model.TryTopUpBalance(payment);
                     isCarRepaired = true;
                 }
-                
+
                 return true;
             }
 

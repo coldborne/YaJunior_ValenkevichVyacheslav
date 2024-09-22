@@ -5,98 +5,104 @@ namespace AutoServiceGame.Entities.AutoServices;
 
 public class AutoServiceView
 {
-    public void ShowStartWindow()
+    private const int BorderWidth = 44;
+
+    private void DisplayHeader(string title)
     {
         Console.Clear();
-        Console.WriteLine("********************************************");
-        Console.WriteLine("*                                          *");
-        Console.WriteLine("*      Добро пожаловать в Автосервис!      *");
-        Console.WriteLine("*                                          *");
-        Console.WriteLine("********************************************");
+        string border = new string('=', BorderWidth);
+        Console.WriteLine(border);
+
+        if (title.Length >= BorderWidth)
+        {
+            Console.WriteLine(title);
+        }
+        else
+        {
+            int padding = (BorderWidth - title.Length) / 2;
+            string paddedTitle = title.PadLeft(padding + title.Length);
+            Console.WriteLine(paddedTitle);
+        }
+
+        Console.WriteLine(border);
+    }
+
+    private void DisplayFooter()
+    {
+        Console.WriteLine("============================================\n");
+        Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
+        Console.ReadKey();
+    }
+
+    private void DisplayMessage(string message)
+    {
+        Console.WriteLine($"{message}");
+    }
+
+    public void ShowStartWindow()
+    {
+        DisplayHeader("Добро пожаловать в Автосервис!");
         Console.WriteLine("\nНажмите любую клавишу, чтобы начать...");
         Console.ReadKey();
     }
 
     public void DisplayMainMenu()
     {
-        Console.Clear();
-        Console.WriteLine("============================================");
-        Console.WriteLine("              Меню Автосервиса              ");
-        Console.WriteLine("============================================");
+        DisplayHeader("Меню Автосервиса");
         Console.WriteLine("1. Начать ремонт машины");
         Console.WriteLine("2. Посмотреть баланс");
         Console.WriteLine("3. Посмотреть склад деталей");
-        Console.WriteLine("0. Выход");
-        Console.WriteLine("============================================\n");
+        Console.WriteLine("0. Выход\n");
         Console.Write("Выберите действие: ");
     }
 
     public void DisplayInventory(List<Part> parts)
     {
-        Console.Clear();
-        Console.WriteLine("============================================");
-        Console.WriteLine("                 Склад деталей              ");
-        Console.WriteLine("============================================");
+        DisplayHeader("Склад деталей");
 
         foreach (Part part in parts)
         {
             Console.WriteLine($"- {part.Name}, Цена: {part.Price:C}, Сломана: {part.IsBroken}");
         }
 
-        Console.WriteLine("============================================\n");
-        Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
-        Console.ReadKey();
+        DisplayFooter();
     }
 
     public void DisplayBalance(decimal balance)
     {
-        Console.Clear();
-        Console.WriteLine("============================================");
-        Console.WriteLine("                  Баланс                    ");
-        Console.WriteLine("============================================");
+        DisplayHeader("Баланс");
         Console.WriteLine($"Баланс автосервиса: {balance:C}");
-        Console.WriteLine("============================================\n");
-        Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
-        Console.ReadKey();
+        DisplayFooter();
     }
 
     public void DisplayCarArrival(Car car)
     {
-        Console.Clear();
-        Console.WriteLine("============================================");
-        Console.WriteLine("           Новая машина в ремонте           ");
-        Console.WriteLine("============================================");
-        Console.WriteLine($"Модель: {car.Model}");
-        Console.WriteLine("============================================\n");
-        Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
-        Console.ReadKey();
+        DisplayHeader("Новая машина в ремонте");
+        DisplayMessage($"Модель: {car.Model}");
+        DisplayFooter();
     }
 
     public void DisplayParts(List<Part> unbrokenParts, List<Part> brokenParts)
     {
-        Console.Clear();
-        Console.WriteLine("============================================");
-        Console.WriteLine("            Целые детали машины             ");
-        Console.WriteLine("============================================");
+        DisplayHeader("Детали машины");
+
+        Console.WriteLine("Целые детали машины:");
 
         foreach (Part part in unbrokenParts)
         {
             Console.WriteLine($"- {part.Name} (Цена: {part.Price:C})");
         }
 
-        Console.WriteLine("============================================\n");
-        Console.WriteLine();
+        Console.WriteLine("\n============================================\n");
 
-        Console.WriteLine("============================================");
-        Console.WriteLine("            Поломанные детали машины        ");
-        Console.WriteLine("============================================");
+        Console.WriteLine("Поломанные детали машины:");
 
         foreach (Part part in brokenParts)
         {
             Console.WriteLine($"- {part.Name} (Цена: {part.Price:C})");
         }
 
-        Console.WriteLine("============================================\n");
+        DisplayFooter();
     }
 
     public void DisplayRepairStartOption()
@@ -109,8 +115,7 @@ public class AutoServiceView
 
     public void DisplayPartRepairOptions(List<Part> parts)
     {
-        Console.WriteLine("Выберите деталь для починки:");
-
+        DisplayHeader("Выберите деталь для починки:");
         for (int i = 0; i < parts.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {parts[i].Name}");
@@ -122,7 +127,7 @@ public class AutoServiceView
 
     public void DisplayRepairOptions()
     {
-        Console.WriteLine("Выберите действие:");
+        Console.WriteLine("\nВыберите действие:");
         Console.WriteLine("1. Починить деталь");
         Console.WriteLine("2. Отказаться от ремонта");
         Console.Write("Ваш выбор: ");
@@ -130,41 +135,31 @@ public class AutoServiceView
 
     public void DisplayChangeSuccess(string partName)
     {
-        Console.WriteLine($"Деталь {partName} успешно заменена. За замену целой детали ничего не получено.");
-        Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
-        Console.ReadKey();
+        DisplayMessage($"Деталь {partName} успешно заменена. За замену целой детали ничего не получено.");
     }
 
     public void DisplayChangeFailure(string partName)
     {
-        Console.WriteLine($"Не получилось заменить: {partName}.");
-        Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
-        Console.ReadKey();
+        DisplayMessage($"Не получилось заменить: {partName}.");
     }
 
     public void DisplayRepairSuccess(string partName, decimal payment)
     {
-        Console.WriteLine($"Деталь {partName} успешно починена. Получено {payment:C}.");
-        Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
-        Console.ReadKey();
+        DisplayMessage($"Деталь {partName} успешно починена. Получено {payment:C}.");
     }
 
     public void DisplayPenalty(decimal penalty)
     {
-        Console.WriteLine($"Вы отказались от ремонта. Штраф составил {penalty:C}.");
-        Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
-        Console.ReadKey();
+        DisplayMessage($"Вы отказались от ремонта. Штраф составил {penalty:C}.");
     }
 
     public void DisplayStartRepairing()
     {
-        Console.WriteLine("Вы согласились на ремонт.");
+        DisplayMessage("Вы согласились на ремонт.");
     }
 
     public void DisplayRepairCompleted()
     {
-        Console.WriteLine("Ремонт завершен! Все детали исправны.");
-        Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
-        Console.ReadKey();
+        DisplayMessage("Ремонт завершен! Все детали исправны.");
     }
 }
