@@ -5,13 +5,13 @@ namespace AutoServiceGame.Entities.AutoServices;
 
 public class AutoService
 {
-    private AutoServiceModel _autoServiceModel;
-    private AutoServiceView _autoServiceView;
+    private AutoServiceModel _model;
+    private AutoServiceView _view;
 
-    public AutoService(AutoServiceModel autoServiceModel, AutoServiceView autoServiceView)
+    public AutoService(AutoServiceModel model, AutoServiceView view)
     {
-        _autoServiceModel = autoServiceModel;
-        _autoServiceView = autoServiceView;
+        _model = model;
+        _view = view;
     }
 
     public void RepairNewCar(Car car)
@@ -19,13 +19,30 @@ public class AutoService
         const string StartRepairCommand = "1";
         const string RefusalRepairCommand = "2";
 
-        _autoServiceView.DisplayCarArrival(car);
+        _view.DisplayCarArrival(car);
 
-        List<Part> brokenParts = car.GetBrokenParts();
-        List<Part> unbrokenParts = car.GetUnbrokenParts();
-        _autoServiceView.DisplayParts(unbrokenParts, brokenParts);
-        
-        _autoServiceView.DisplayRepairStartOption();
+        List<Part> parts = car.GetParts();
+        List<Part> brokenParts = new List<Part>();
+        List<Part> unbrokenParts = new List<Part>();
+
+        foreach (Part part in parts)
+        {
+            if (part.IsBroken)
+            {
+                brokenParts.Add(part);
+            }
+            else
+            {
+                unbrokenParts.Add(part);
+            }
+        }
+
+        unbrokenParts.Sort();
+        brokenParts.Sort();
+
+        _view.DisplayParts(unbrokenParts, brokenParts);
+
+        _view.DisplayRepairStartOption();
         string userChoice = Console.ReadLine();
 
         if (userChoice == StartRepairCommand)
@@ -33,42 +50,45 @@ public class AutoService
             const string RepairCommand = "1";
             const string EndRepairCommand = "2";
 
-            _autoServiceView.DisplayStartRepairing();
+            _view.DisplayStartRepairing();
 
             bool isRepairingFinished = false;
 
             while (isRepairingFinished == false && car.IsFullyRepaired() == false)
             {
-                _autoServiceView.DisplayRepairOptions();
+                _view.DisplayRepairOptions();
                 string repairChoice = Console.ReadLine();
 
                 if (repairChoice == RepairCommand)
                 {
-                    List<Part> allParts = new List<Part>();
-                    unbrokenParts = car.GetUnbrokenParts();
-                    brokenParts = car.GetBrokenParts();
-                    
-                    allParts.AddRange(unbrokenParts);
-                    allParts.AddRange(brokenParts);
-                    
-                    _autoServiceView.DisplayPartRepairOptions(allParts);
+                    parts = car.GetParts();
+                    parts.Sort();
+
+                    _view.DisplayPartRepairOptions(parts);
 
                     string partChoice = Console.ReadLine();
 
                     if (int.TryParse(partChoice, out int partNumber) && partNumber > 0 &&
-                        partNumber <= allParts.Count)
+                        partNumber <= parts.Count)
                     {
-                        Part selectedPart = allParts[partNumber - 1];
+                        Part selectedPart = parts[partNumber - 1];
 
-                        bool isSuccess = TryPerformRepair(car, selectedPart);
+                        bool isSuccess = TryChangePart(car, selectedPart, out bool isRepaired);
 
                         if (isSuccess)
                         {
-                            _autoServiceView.DisplayRepairSuccess(selectedPart.Name, selectedPart.Price);
+                            if (isRepaired)
+                            {
+                                _view.DisplayRepairSuccess(selectedPart.Name, selectedPart.Price);
+                            }
+                            else
+                            {
+                                _view.DisplayChangeSuccess(selectedPart.Name);
+                            }
                         }
                         else
                         {
-                            _autoServiceView.DisplayRepairFailure(selectedPart.Name);
+                            _view.DisplayChangeFailure(selectedPart.Name);
                         }
                     }
                     else
@@ -79,8 +99,8 @@ public class AutoService
                 else if (repairChoice == EndRepairCommand)
                 {
                     decimal penalty = CalculatePenalty(brokenParts.Count);
-                    _autoServiceModel.TryTopUpBalance(penalty);
-                    _autoServiceView.DisplayPenalty(penalty);
+                    _model.TryTopUpBalance(penalty);
+                    _view.DisplayPenalty(penalty);
                     isRepairingFinished = true;
                 }
                 else
@@ -91,61 +111,69 @@ public class AutoService
 
             if (car.IsFullyRepaired())
             {
-                _autoServiceView.DisplayRepairCompleted();
+                _view.DisplayRepairCompleted();
             }
         }
         else if (userChoice == RefusalRepairCommand)
         {
-            decimal penalty = _autoServiceModel.FixedPenalty;
-            _autoServiceModel.TryTopUpBalance(penalty);
-            _autoServiceView.DisplayPenalty(penalty);
+            decimal penalty = _model.FixedPenalty;
+            _model.TryTopUpBalance(penalty);
+            _view.DisplayPenalty(penalty);
         }
         else
         {
             Console.WriteLine("Неверный выбор. Возвращение в главное меню.");
+            Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
+            Console.ReadKey();
         }
     }
 
     public void DisplayStartWindow()
     {
-        _autoServiceView.ShowStartWindow();
+        _view.ShowStartWindow();
     }
 
     public void DisplayMainMenu()
     {
-        _autoServiceView.DisplayMainMenu();
+        _view.DisplayMainMenu();
     }
 
     public void DisplayBalance()
     {
-        _autoServiceView.DisplayBalance(_autoServiceModel.Balance);
+        _view.DisplayBalance(_model.Balance);
     }
 
     public void DisplayInventory()
     {
-        _autoServiceView.DisplayInventory(_autoServiceModel.GetAllParts());
+        List<Part> parts = _model.GetAllParts();
+        parts.Sort();
+        _view.DisplayInventory(parts);
     }
 
-    private bool TryPerformRepair(Car car, Part brokenPart)
+    private bool TryChangePart(Car car, Part brokenPart, out bool isCarRepaired)
     {
-        bool partAvailable = _autoServiceModel.TryDecreasePartQuantity(brokenPart);
+        isCarRepaired = false;
+        bool isPartAvailable = _model.TryGetUnbrokenPart(brokenPart.Name, brokenPart.Price, out Part unbrokenPart);
 
-        if (partAvailable)
+        if (isPartAvailable)
         {
-            Part newPart = new Part(brokenPart.Name, brokenPart.Price, isBroken: false);
+            bool isChangeSuccess = car.TryChangePart(unbrokenPart, out bool isRepaired);
 
-            bool repairSuccess = car.TryRepair(newPart);
-
-            if (repairSuccess)
+            if (isChangeSuccess)
             {
-                decimal repairPrice = _autoServiceModel.GetRepairPrice(brokenPart);
-                decimal payment = brokenPart.Price + repairPrice;
-                _autoServiceModel.TryTopUpBalance(payment);
+                if (isRepaired)
+                {
+                    decimal repairPrice = _model.GetRepairPrice(brokenPart);
+                    decimal payment = brokenPart.Price + repairPrice;
+                    _model.TryTopUpBalance(payment);
+                    isCarRepaired = true;
+                }
 
                 return true;
             }
 
-            _autoServiceModel.TryIncreasePartQuantity(brokenPart);
+            _model.TryAddPart(brokenPart);
+
             return false;
         }
 

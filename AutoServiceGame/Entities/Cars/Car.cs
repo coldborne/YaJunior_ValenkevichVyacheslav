@@ -1,3 +1,4 @@
+using AutoServiceGame.Entities.Extensions;
 using AutoServiceGame.Entities.Parts;
 
 namespace AutoServiceGame.Entities.Cars;
@@ -14,15 +15,33 @@ public class Car
 
     public string Model { get; }
 
-    public bool TryRepair(Part unbrokenPart)
+    public bool TryChangePart(Part unbrokenPart, out bool isRepaired)
     {
+        isRepaired = false;
+
+        if (unbrokenPart == null)
+        {
+            return false;
+        }
+
+        if (unbrokenPart.IsBroken)
+        {
+            return false;
+        }
+
         for (int i = 0; i < _parts.Count; i++)
         {
             Part carPart = _parts[i];
 
-            if (carPart.Equals(unbrokenPart) && carPart.IsBroken)
+            if (unbrokenPart.Equals(carPart))
             {
+                if (carPart.IsBroken)
+                {
+                    isRepaired = true;
+                }
+                
                 _parts[i] = unbrokenPart;
+
                 return true;
             }
         }
@@ -30,34 +49,9 @@ public class Car
         return false;
     }
 
-    public List<Part> GetUnbrokenParts()
+    public List<Part> GetParts()
     {
-        List<Part> unbrokenParts = new List<Part>();
-
-        foreach (Part part in _parts)
-        {
-            if (part.IsBroken == false)
-            {
-                unbrokenParts.Add(part);
-            }
-        }
-
-        return unbrokenParts;
-    }
-
-    public List<Part> GetBrokenParts()
-    {
-        List<Part> brokenParts = new List<Part>();
-
-        foreach (Part part in _parts)
-        {
-            if (part.IsBroken)
-            {
-                brokenParts.Add(part);
-            }
-        }
-
-        return brokenParts;
+        return _parts.Copy();
     }
 
     public bool IsFullyRepaired()

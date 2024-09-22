@@ -8,14 +8,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        InventoryCreator inventoryCreator = new InventoryCreator();
+        AutoServiceCreator autoServiceCreator = new AutoServiceCreator();
 
-        Inventory inventory = inventoryCreator.CreateInventory();
+        AutoService autoService = autoServiceCreator.CreateAutoService(5000);
         
-        AutoServiceModel autoServiceModel = new AutoServiceModel(inventory, 5000);
-        AutoServiceView autoServiceView = new AutoServiceView();
-
-        AutoService autoService = new AutoService(autoServiceModel, autoServiceView);
         Game game = new Game(autoService);
 
         game.Run();
