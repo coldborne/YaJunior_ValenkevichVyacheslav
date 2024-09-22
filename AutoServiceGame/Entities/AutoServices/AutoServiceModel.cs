@@ -1,12 +1,13 @@
+using AutoServiceGame.Entities.Extensions;
 using AutoServiceGame.Entities.Parts;
 
 namespace AutoServiceGame.Entities.AutoServices;
 
 public class AutoServiceModel
 {
-    private List<Item> _parts;
+    private List<Part> _parts;
 
-    public AutoServiceModel(List<Item> parts, decimal balance)
+    public AutoServiceModel(List<Part> parts, decimal balance)
     {
         FixedPenalty = 500;
 
@@ -18,23 +19,41 @@ public class AutoServiceModel
     {
         FixedPenalty = 500;
 
-        _parts = new List<Item>();
+        _parts = new List<Part>();
         Balance = balance;
     }
 
     public decimal Balance { get; private set; }
     public decimal FixedPenalty { get; }
 
-    public bool TryIncreasePartQuantity(Part part)
+    public bool TryAddPart(Part part)
     {
-        int quantity = 1;
-        return _inventory.TryIncreaseQuantity(part, quantity);
+        bool isFound = _parts.Contains(part);
+
+        if (isFound)
+        {
+            return false;
+        }
+
+        _parts.Add(part);
+        return true;
     }
 
-    public bool TryDecreasePartQuantity(Part part)
+    public bool TryGetUnbrokenPart(string name, decimal price, out Part part)
     {
-        int quantity = 1;
-        return _inventory.TryDecreaseQuantity(part, quantity);
+        bool isBroken = false;
+
+        int index = _parts.FindIndex(part => part.Name == name && part.Price == price && part.IsBroken == isBroken);
+
+        if (index >= 0)
+        {
+            part = _parts[index];
+            _parts.RemoveAt(index);
+            return true;
+        }
+
+        part = null;
+        return false;
     }
 
     public bool TryTopUpBalance(decimal amount)
@@ -67,9 +86,9 @@ public class AutoServiceModel
         return true;
     }
 
-    public List<Item> GetAllParts()
+    public List<Part> GetAllParts()
     {
-        return _parts.Copy<Item>();
+        return _parts.Copy();
     }
 
     public decimal GetRepairPrice(Part part)

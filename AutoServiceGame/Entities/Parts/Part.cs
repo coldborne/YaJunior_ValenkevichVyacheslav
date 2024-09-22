@@ -2,7 +2,7 @@ using AutoServiceGame.Entities.Interfaces;
 
 namespace AutoServiceGame.Entities.Parts;
 
-public class Part : IEquatable<Part>, ICopyable<Part>
+public class Part : IEquatable<Part>, IComparable<Part>, ICopyable<Part>
 {
     public Part(string name, decimal price, bool isBroken = false)
     {
@@ -59,5 +59,34 @@ public class Part : IEquatable<Part>, ICopyable<Part>
     public Part Copy()
     {
         return new Part(Name, Price, IsBroken);
+    }
+
+    public int CompareTo(Part? other)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return 0;
+        }
+
+        if (other is null)
+        {
+            return 1;
+        }
+
+        int nameComparison = string.Compare(Name, other.Name, StringComparison.Ordinal);
+
+        if (nameComparison != 0)
+        {
+            return nameComparison;
+        }
+
+        int priceComparison = Price.CompareTo(other.Price);
+
+        if (priceComparison != 0)
+        {
+            return priceComparison;
+        }
+
+        return IsBroken.CompareTo(other.IsBroken);
     }
 }

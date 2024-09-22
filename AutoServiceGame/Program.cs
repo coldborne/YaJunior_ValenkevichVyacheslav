@@ -11,7 +11,7 @@ class Program
         AutoServiceCreator autoServiceCreator = new AutoServiceCreator();
 
         AutoService autoService = autoServiceCreator.CreateAutoService(5000);
-
+        
         Game game = new Game(autoService);
 
         game.Run();

@@ -17,17 +17,21 @@ public class AutoServiceCreator
     {
         int minPartsCount = 1;
         int maxPartsCount = 10;
-        List<Item> parts = new List<Item>();
+        List<Part> parts = new List<Part>();
 
         foreach (Part part in PartsCatalog.GetAvailableParts())
         {
             int quantity = _random.Next(minPartsCount, maxPartsCount + 1);
 
-            Item item = new Item(part, quantity);
-            parts.Add(item);
+            for (int partNumber = 1; partNumber <= quantity; partNumber++)
+            {
+                parts.Add(part.Copy());
+            }
         }
+        
+        parts = parts.OrderBy(part => _random.Next()).ToList();
 
-        AutoServiceModel autoServiceModel = new AutoServiceModel(balance);
+        AutoServiceModel autoServiceModel = new AutoServiceModel(parts, balance);
         AutoServiceView autoServiceView = new AutoServiceView();
 
         return new AutoService(autoServiceModel, autoServiceView);

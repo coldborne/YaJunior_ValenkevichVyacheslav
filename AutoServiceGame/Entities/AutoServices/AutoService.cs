@@ -21,8 +21,25 @@ public class AutoService
 
         _view.DisplayCarArrival(car);
 
-        List<Part> brokenParts = car.GetBrokenParts();
-        List<Part> unbrokenParts = car.GetUnbrokenParts();
+        List<Part> parts = car.GetParts();
+        List<Part> brokenParts = new List<Part>();
+        List<Part> unbrokenParts = new List<Part>();
+
+        foreach (Part part in parts)
+        {
+            if (part.IsBroken)
+            {
+                brokenParts.Add(part);
+            }
+            else
+            {
+                unbrokenParts.Add(part);
+            }
+        }
+
+        unbrokenParts.Sort();
+        brokenParts.Sort();
+
         _view.DisplayParts(unbrokenParts, brokenParts);
 
         _view.DisplayRepairStartOption();
@@ -44,31 +61,34 @@ public class AutoService
 
                 if (repairChoice == RepairCommand)
                 {
-                    List<Part> allParts = new List<Part>();
-                    unbrokenParts = car.GetUnbrokenParts();
-                    brokenParts = car.GetBrokenParts();
+                    parts = car.GetParts();
+                    parts.Sort();
 
-                    allParts.AddRange(unbrokenParts);
-                    allParts.AddRange(brokenParts);
-
-                    _view.DisplayPartRepairOptions(allParts);
+                    _view.DisplayPartRepairOptions(parts);
 
                     string partChoice = Console.ReadLine();
 
                     if (int.TryParse(partChoice, out int partNumber) && partNumber > 0 &&
-                        partNumber <= allParts.Count)
+                        partNumber <= parts.Count)
                     {
-                        Part selectedPart = allParts[partNumber - 1];
+                        Part selectedPart = parts[partNumber - 1];
 
-                        bool isSuccess = TryPerformRepair(car, selectedPart);
+                        bool isSuccess = TryChangePart(car, selectedPart, out bool isRepaired);
 
                         if (isSuccess)
                         {
-                            _view.DisplayRepairSuccess(selectedPart.Name, selectedPart.Price);
+                            if (isRepaired)
+                            {
+                                _view.DisplayRepairSuccess(selectedPart.Name, selectedPart.Price);
+                            }
+                            else
+                            {
+                                _view.DisplayChangeSuccess(selectedPart.Name);
+                            }
                         }
                         else
                         {
-                            _view.DisplayRepairFailure(selectedPart.Name);
+                            _view.DisplayChangeFailure(selectedPart.Name);
                         }
                     }
                     else
@@ -123,30 +143,35 @@ public class AutoService
 
     public void DisplayInventory()
     {
-        _view.DisplayInventory(_model.GetAllParts());
+        List<Part> parts = _model.GetAllParts();
+        parts.Sort();
+        _view.DisplayInventory(parts);
     }
 
-    private bool TryPerformRepair(Car car, Part brokenPart)
+    private bool TryChangePart(Car car, Part brokenPart, out bool isCarRepaired)
     {
-        bool isPartAvailable = _model.TryGetPart(brokenPart.Name, out Part unbrokenPart);
+        isCarRepaired = false;
+        bool isPartAvailable = _model.TryGetUnbrokenPart(brokenPart.Name, brokenPart.Price, out Part unbrokenPart);
 
-        if (partAvailable)
+        if (isPartAvailable)
         {
-            Part newPart = new Part(brokenPart.Name, brokenPart.Price, isBroken: false);
+            bool isChangeSuccess = car.TryChangePart(unbrokenPart, out bool isRepaired);
 
-            bool repairSuccess = car.TryRepair(newPart);
-
-            if (repairSuccess)
+            if (isChangeSuccess)
             {
-                decimal repairPrice = _model.GetRepairPrice(brokenPart);
-                decimal payment = brokenPart.Price + repairPrice;
-                _model.TryTopUpBalance(payment);
-
+                if (isRepaired)
+                {
+                    decimal repairPrice = _model.GetRepairPrice(brokenPart);
+                    decimal payment = brokenPart.Price + repairPrice;
+                    _model.TryTopUpBalance(payment);
+                    isCarRepaired = true;
+                }
+                
                 return true;
             }
 
-            _model.TryAddPart(brokenPart, 1);
-            
+            _model.TryAddPart(brokenPart);
+
             return false;
         }
 

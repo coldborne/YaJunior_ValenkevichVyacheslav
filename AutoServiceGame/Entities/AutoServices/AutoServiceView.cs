@@ -31,16 +31,16 @@ public class AutoServiceView
         Console.Write("Выберите действие: ");
     }
 
-    public void DisplayInventory(List<Item> parts)
+    public void DisplayInventory(List<Part> parts)
     {
         Console.Clear();
         Console.WriteLine("============================================");
         Console.WriteLine("                 Склад деталей              ");
         Console.WriteLine("============================================");
 
-        foreach (Item part in parts)
+        foreach (Part part in parts)
         {
-            Console.WriteLine($"{part.Name}: {part.Count} шт.");
+            Console.WriteLine($"- {part.Name}, Цена: {part.Price:C}, Сломана: {part.IsBroken}");
         }
 
         Console.WriteLine("============================================\n");
@@ -107,13 +107,13 @@ public class AutoServiceView
         Console.Write("Ваш выбор: ");
     }
 
-    public void DisplayPartRepairOptions(List<Part> allParts)
+    public void DisplayPartRepairOptions(List<Part> parts)
     {
         Console.WriteLine("Выберите деталь для починки:");
 
-        for (int i = 0; i < allParts.Count; i++)
+        for (int i = 0; i < parts.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. {allParts[i].Name}");
+            Console.WriteLine($"{i + 1}. {parts[i].Name}");
         }
 
         Console.WriteLine("0. Назад");
@@ -128,16 +128,23 @@ public class AutoServiceView
         Console.Write("Ваш выбор: ");
     }
 
-    public void DisplayRepairSuccess(string partName, decimal payment)
+    public void DisplayChangeSuccess(string partName)
     {
-        Console.WriteLine($"Деталь {partName} успешно починена. Получено {payment:C}.");
+        Console.WriteLine($"Деталь {partName} успешно заменена. За замену целой детали ничего не получено.");
         Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
         Console.ReadKey();
     }
 
-    public void DisplayRepairFailure(string partName)
+    public void DisplayChangeFailure(string partName)
     {
-        Console.WriteLine($"Не получилось починить: {partName}.");
+        Console.WriteLine($"Не получилось заменить: {partName}.");
+        Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
+        Console.ReadKey();
+    }
+
+    public void DisplayRepairSuccess(string partName, decimal payment)
+    {
+        Console.WriteLine($"Деталь {partName} успешно починена. Получено {payment:C}.");
         Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
         Console.ReadKey();
     }
