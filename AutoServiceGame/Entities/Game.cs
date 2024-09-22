@@ -17,6 +17,10 @@ public class Game
 
     public void Run()
     {
+        const string RepairNewCarCommand = "1";
+        const string DisplayBalanceCommand = "2";
+        const string DisplayWarehousePartsCommand = "3";
+        const string ExitCommand = "0";
         _autoService.DisplayStartWindow();
         bool isExit = false;
 
@@ -27,19 +31,19 @@ public class Game
 
             switch (choice)
             {
-                case "1":
+                case RepairNewCarCommand:
                     RepairNewCar(_carCreator.CreateCar());
                     break;
 
-                case "2":
+                case DisplayBalanceCommand:
                     _autoService.DisplayBalance();
                     break;
 
-                case "3":
-                    _autoService.DisplayInventory();
+                case DisplayWarehousePartsCommand:
+                    _autoService.DisplayWarehouseParts();
                     break;
 
-                case "0":
+                case ExitCommand:
                     isExit = true;
                     break;
 

@@ -143,7 +143,7 @@ public class AutoService
         _view.DisplayBalance(_model.Balance);
     }
 
-    public void DisplayInventory()
+    public void DisplayWarehouseParts()
     {
         List<Part> parts = _model.GetAllParts();
         parts.Sort();
