@@ -45,7 +45,7 @@ public class AutoService
         _view.DisplayRepairStartOption();
         string userChoice = Console.ReadLine();
 
-        if (userChoice == StartRepairCommand)
+        if (userChoice == RepairCommands.StartRepair)
         {
             const string RepairCommand = "1";
             const string EndRepairCommand = "2";
@@ -114,7 +114,7 @@ public class AutoService
                 _view.DisplayRepairCompleted();
             }
         }
-        else if (userChoice == RefusalRepairCommand)
+        else if (userChoice == RepairCommands.RefuseRepair)
         {
             decimal penalty = _model.FixedPenalty;
             _model.TryTopUpBalance(penalty);
@@ -143,7 +143,7 @@ public class AutoService
         _view.DisplayBalance(_model.Balance);
     }
 
-    public void DisplayInventory()
+    public void DisplayWarehouseParts()
     {
         List<Part> parts = _model.GetAllParts();
         parts.Sort();
