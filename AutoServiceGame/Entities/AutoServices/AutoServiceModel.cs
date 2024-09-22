@@ -4,13 +4,21 @@ namespace AutoServiceGame.Entities.AutoServices;
 
 public class AutoServiceModel
 {
-    private Inventory _inventory;
+    private List<Item> _parts;
 
-    public AutoServiceModel(Inventory inventory, decimal balance)
+    public AutoServiceModel(List<Item> parts, decimal balance)
     {
         FixedPenalty = 500;
 
-        _inventory = inventory;
+        _parts = parts;
+        Balance = balance;
+    }
+
+    public AutoServiceModel(decimal balance)
+    {
+        FixedPenalty = 500;
+
+        _parts = new List<Item>();
         Balance = balance;
     }
 
@@ -61,11 +69,13 @@ public class AutoServiceModel
 
     public List<Item> GetAllParts()
     {
-        return _inventory.GetAllParts();
+        return _parts.Copy<Item>();
     }
 
     public decimal GetRepairPrice(Part part)
     {
-        return part.Price * 0.1m;
+        decimal commissionSize = 0.1m;
+
+        return part.Price * commissionSize;
     }
 }
