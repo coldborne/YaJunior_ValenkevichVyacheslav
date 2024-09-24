@@ -48,10 +48,41 @@ public class Car
 
         return false;
     }
-
+    
     public List<Part> GetParts()
     {
         return _parts.Copy();
+    }
+
+
+    public List<Part> GetBrokenParts()
+    {
+        List<Part> brokenParts = new List<Part>();
+
+        foreach (Part part in _parts)
+        {
+            if (part.IsBroken)
+            {
+                brokenParts.Add(part.Copy());
+            }
+        }
+
+        return brokenParts;
+    }
+    
+    public List<Part> GetUnbrokenParts()
+    {
+        List<Part> unbrokenParts = new List<Part>();
+
+        foreach (Part part in _parts)
+        {
+            if (part.IsBroken == false)
+            {
+                unbrokenParts.Add(part.Copy());
+            }
+        }
+
+        return unbrokenParts;
     }
 
     public bool IsFullyRepaired()

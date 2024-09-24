@@ -27,14 +27,14 @@ public class AutoServiceView
         Console.WriteLine(border);
     }
 
-    private void DisplayFooter()
+    public void DisplayFooter()
     {
         Console.WriteLine("============================================\n");
         Console.WriteLine("Нажмите любую клавишу, чтобы продолжить...");
         Console.ReadKey();
     }
 
-    private void DisplayMessage(string message)
+    public void DisplayMessage(string message)
     {
         Console.WriteLine($"{message}");
     }
