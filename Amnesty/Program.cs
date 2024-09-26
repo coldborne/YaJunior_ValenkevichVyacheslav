@@ -1,6 +1,4 @@
-﻿using Amnesty;
-
-namespace CriminalSearching;
+﻿namespace Amnesty;
 
 public class Program
 {
