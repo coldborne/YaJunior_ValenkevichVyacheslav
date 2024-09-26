@@ -2,28 +2,28 @@ namespace CriminalSearching;
 
 public class CriminalCreator
 {
-    private Random random;
-    private List<string> firstNames;
-    private List<string> lastNames;
-    private List<string> nationalities;
+    private Random _random;
+    private List<string> _firstNames;
+    private List<string> _lastNames;
+    private List<string> _nationalities;
 
     public CriminalCreator()
     {
-        random = new Random();
+        _random = new Random();
 
-        firstNames = new List<string>
+        _firstNames = new List<string>
         {
             "Иван", "Алексей", "Дмитрий", "Сергей", "Михаил",
             "Андрей", "Николай", "Павел", "Владимир", "Егор"
         };
 
-        lastNames = new List<string>
+        _lastNames = new List<string>
         {
             "Иванов", "Петров", "Сидоров", "Смирнов", "Кузнецов",
             "Попов", "Лебедев", "Козлов", "Новиков", "Морозов"
         };
 
-        nationalities = new List<string>
+        _nationalities = new List<string>
         {
             "Русский", "Украинец", "Белорус", "Казах", "Армянин",
             "Грузин", "Узбек", "Таджик", "Киргиз", "Молдаванин"
@@ -37,16 +37,16 @@ public class CriminalCreator
 
         int freeStateNumber = 0;
         int underArrestStateNumber = 1;
-        int criminalStateNumber = random.Next(freeStateNumber, underArrestStateNumber + 1);
+        int criminalStateNumber = _random.Next(freeStateNumber, underArrestStateNumber + 1);
         bool isUnderArrest = criminalStateNumber == underArrestStateNumber;
 
         int minHeight = 170;
         int maxHeight = 190;
-        int height = random.Next(minHeight, maxHeight + 1);
+        int height = _random.Next(minHeight, maxHeight + 1);
 
         int minWeight = 70;
         int maxWeight = 100;
-        int weight = random.Next(minWeight, maxWeight + 1);
+        int weight = _random.Next(minWeight, maxWeight + 1);
 
         return new Criminal(fullName, nationality, isUnderArrest, height, weight);
     }
@@ -65,13 +65,13 @@ public class CriminalCreator
 
     private string GenerateRandomFullName()
     {
-        string firstName = firstNames[random.Next(firstNames.Count)];
-        string lastName = lastNames[random.Next(lastNames.Count)];
+        string firstName = _firstNames[_random.Next(_firstNames.Count)];
+        string lastName = _lastNames[_random.Next(_lastNames.Count)];
         return $"{firstName} {lastName}";
     }
 
     private string GenerateRandomNationality()
     {
-        return nationalities[random.Next(nationalities.Count)];
+        return _nationalities[_random.Next(_nationalities.Count)];
     }
 }
