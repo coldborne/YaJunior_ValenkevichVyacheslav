@@ -121,6 +121,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriminalSearching", "Crimin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amnesty", "Amnesty\Amnesty.csproj", "{D73C7E2B-39BF-4EF9-9C05-116CAFAAA7E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalAnarchy", "HospitalAnarchy\HospitalAnarchy.csproj", "{40330D98-E612-4318-8F03-C6129463F2CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -335,6 +337,10 @@ Global
 		{D73C7E2B-39BF-4EF9-9C05-116CAFAAA7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73C7E2B-39BF-4EF9-9C05-116CAFAAA7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D73C7E2B-39BF-4EF9-9C05-116CAFAAA7E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40330D98-E612-4318-8F03-C6129463F2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40330D98-E612-4318-8F03-C6129463F2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40330D98-E612-4318-8F03-C6129463F2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40330D98-E612-4318-8F03-C6129463F2CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -392,6 +398,7 @@ Global
 		{3942EE73-68D2-40C6-B7CA-DB770D946978} = {845A2AD8-7C0F-4D37-82B6-02003A4529DA}
 		{23E1D368-61BE-4C6F-BC68-D5A95F8C7AA3} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 		{D73C7E2B-39BF-4EF9-9C05-116CAFAAA7E6} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
+		{40330D98-E612-4318-8F03-C6129463F2CF} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
