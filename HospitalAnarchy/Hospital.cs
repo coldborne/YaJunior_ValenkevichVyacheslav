@@ -49,19 +49,14 @@ namespace HospitalAnarchy
 
         private void SortByFullName()
         {
-            List<Patient> sortedByName = new List<Patient>(_patients);
-
-            sortedByName.Sort((patient, otherPatient) =>
-                String.Compare(patient.FullName, otherPatient.FullName, StringComparison.Ordinal));
+            List<Patient> sortedByName = _patients.OrderBy(patient => patient.FullName).ToList();
 
             _view.DisplayPatients(sortedByName);
         }
 
         private void SortByAge()
         {
-            List<Patient> sortedByAge = new List<Patient>(_patients);
-
-            sortedByAge.Sort((patient, otherPatient) => patient.Age.CompareTo(otherPatient.Age));
+            List<Patient> sortedByAge = _patients.OrderBy(patient => patient.Age).ToList();
 
             _view.DisplayPatients(sortedByAge);
         }
@@ -72,8 +67,8 @@ namespace HospitalAnarchy
 
             string illness = Console.ReadLine();
 
-            List<Patient> filteredPatients = _patients.FindAll(patient =>
-                patient.Illness.Equals(illness, StringComparison.OrdinalIgnoreCase));
+            List<Patient> filteredPatients = _patients
+                .Where(patient => patient.Illness.Equals(illness, StringComparison.OrdinalIgnoreCase)).ToList();
 
             if (filteredPatients.Count > 0)
             {
