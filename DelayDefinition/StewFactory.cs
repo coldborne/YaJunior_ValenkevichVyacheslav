@@ -11,13 +11,13 @@ public class StewFactory
     
     public List<Stew> Create(int count)
     {
-        List<Stew> patients = new List<Stew>();
+        List<Stew> stews = new List<Stew>();
 
         for (int i = 0; i < count; i++)
         {
-            patients.Add(_stewCreator.Create());
+            stews.Add(_stewCreator.Create());
         }
 
-        return patients;
+        return stews;
     }
 }
