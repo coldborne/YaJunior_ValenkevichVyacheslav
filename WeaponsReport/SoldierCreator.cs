@@ -4,9 +4,9 @@ public class SoldierCreator
 {
     private static Random _random;
 
-    private static List<string> _names;
-    private static List<string> _weapons;
-    private static List<string> _ranks;
+    private List<string> _names;
+    private List<string> _weapons;
+    private List<string> _ranks;
 
     public SoldierCreator()
     {
