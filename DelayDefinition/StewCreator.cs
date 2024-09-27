@@ -17,7 +17,7 @@ public class StewCreator
         };
     }
 
-    public Stew CreateRandomStew()
+    public Stew Create()
     {
         string name = _names[_random.Next(_names.Count)];
 
@@ -30,17 +30,5 @@ public class StewCreator
         int productionYear = _random.Next(minProductionYear, maxProductionYear + 1);
 
         return new Stew(name, productionYear, shelfYearCount);
-    }
-
-    public List<Stew> CreateRandomStews(int count)
-    {
-        List<Stew> patients = new List<Stew>();
-
-        for (int i = 0; i < count; i++)
-        {
-            patients.Add(CreateRandomStew());
-        }
-
-        return patients;
     }
 }
