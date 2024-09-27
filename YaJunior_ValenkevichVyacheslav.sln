@@ -129,6 +129,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelayDefinition", "DelayDef
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeaponsReport", "WeaponsReport\WeaponsReport.csproj", "{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightersTransfer", "FightersTransfer\FightersTransfer.csproj", "{861296CA-B3D6-4FED-969A-535D614F8D83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -359,6 +361,10 @@ Global
 		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{861296CA-B3D6-4FED-969A-535D614F8D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{861296CA-B3D6-4FED-969A-535D614F8D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{861296CA-B3D6-4FED-969A-535D614F8D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{861296CA-B3D6-4FED-969A-535D614F8D83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -420,6 +426,7 @@ Global
 		{32CC7D21-8691-4746-99F4-4F5C1D028DD9} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 		{9BAF5B9D-1421-44B4-BC1A-8F5D492EE1F2} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
+		{861296CA-B3D6-4FED-969A-535D614F8D83} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
