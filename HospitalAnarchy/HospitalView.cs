@@ -16,7 +16,8 @@ namespace HospitalAnarchy
             }
             else
             {
-                int padding = (BorderWidth - title.Length) / 2;
+                int borderWidthDivider = 2;
+                int padding = (BorderWidth - title.Length) / borderWidthDivider;
                 string paddedTitle = title.PadLeft(padding + title.Length);
                 Console.WriteLine(paddedTitle);
             }
