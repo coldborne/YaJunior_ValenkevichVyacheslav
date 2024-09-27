@@ -127,6 +127,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopServerPlayers", "TopServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelayDefinition", "DelayDefinition\DelayDefinition.csproj", "{9BAF5B9D-1421-44B4-BC1A-8F5D492EE1F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeaponsReport", "WeaponsReport\WeaponsReport.csproj", "{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -353,6 +355,10 @@ Global
 		{9BAF5B9D-1421-44B4-BC1A-8F5D492EE1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BAF5B9D-1421-44B4-BC1A-8F5D492EE1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BAF5B9D-1421-44B4-BC1A-8F5D492EE1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -413,6 +419,7 @@ Global
 		{40330D98-E612-4318-8F03-C6129463F2CF} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 		{32CC7D21-8691-4746-99F4-4F5C1D028DD9} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 		{9BAF5B9D-1421-44B4-BC1A-8F5D492EE1F2} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
+		{B04DCE2D-E12A-43A9-A0DD-43DC36ADFC65} = {0F06548E-A321-46D7-9D72-73C941DF79E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9AEA198-0FD0-4C57-B8E6-5DCA44FA3086}
