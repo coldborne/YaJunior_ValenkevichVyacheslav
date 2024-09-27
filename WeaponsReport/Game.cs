@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace WeaponsReport;
 
 public class Game
@@ -17,21 +19,41 @@ public class Game
         int soldierCount = 30;
         _soldiers = _soldierFactory.Create(soldierCount);
 
-        Console.WriteLine("Все солдаты:");
+        ShowSoldiers(_soldiers, "Все солдаты:");
 
-        foreach (Soldier soldier in _soldiers)
+        var soldiersInfo =
+            _soldiers.Select(soldier => new { Name = soldier.Name, Rank = soldier.Rank }).ToList();
+
+        Show(soldiersInfo, "\nОсновная информация о солдатах:");
+    }
+
+    private void ShowSoldiers(List<Soldier> soldiers, string message)
+    {
+        Console.WriteLine(message);
+
+        foreach (Soldier soldier in soldiers)
         {
             Console.WriteLine(soldier);
         }
+    }
 
-        var soldiersInfo =
-            _soldiers.Select(soldier => new { Name = soldier.Name, Rank = soldier.Rank });
+    private void Show<T>(IEnumerable<T> items, string message)
+    {
+        Console.WriteLine(message);
 
-        Console.WriteLine("\nОсновная информация о солдатах:");
+        char[] splitters = new char[] { ',', ' ' };
 
-        foreach (var soldierInfo in soldiersInfo)
+        foreach (T item in items)
         {
-            Console.WriteLine($"Имя: {soldierInfo.Name}, ранг: {soldierInfo.Rank}");
+            PropertyInfo[] properties = item.GetType().GetProperties();
+            string itemInfo = String.Empty;
+
+            foreach (var propertyInfo in properties)
+            {
+                itemInfo += $"{propertyInfo.Name}: {propertyInfo.GetValue(item)}, ";
+            }
+
+            Console.WriteLine(itemInfo.TrimEnd(splitters));
         }
     }
 }
